@@ -13,8 +13,8 @@ This is the source of truth for what we're building and how the pieces fit toget
 | Phase | Feature | Done when |
 |---|---|---|
 | 3 | Backend vehicles API | `GET /api/vehicles` returns in-service vehicles from cache. 511 is called only by the poller. Tests pass offline. |
-| 4 | Map with vehicles | `localhost:8000` shows a Leaflet map of SF with a bus icon per vehicle. The icons refresh every 30 s without flicker. |
-| 5 | Route lines | Every route is drawn in its official GTFS color beneath the vehicles, and vehicle icons use the same color. |
+| 4 | Map with vehicles | `localhost:8000` shows a Leaflet map of SF with a route-number badge per vehicle. The markers refresh every 30 s without flicker. |
+| 5 | Route lines | Every route is drawn in its official GTFS color beneath the vehicles, and vehicle badges use the same color. |
 | 6 | Line filter | A searchable picker groups routes by bus, light rail, streetcar and cable car. Selecting routes shows only their lines and vehicles. The selection is in the URL (`#routes=38,N`) so it can be shared. |
 | 7 | Vehicle popup | Clicking a vehicle shows the route, direction, destination, next stop and "moved X s ago". Vehicles that haven't moved in more than 3 minutes are faded. |
 | 8 | Stops and predictions | Stops appear at zoom 16 and closer. Clicking a stop shows the upcoming arrivals, or "predictions temporarily unavailable" when the budget is used up. |
@@ -106,10 +106,9 @@ This is a one-off script run by hand after downloading GTFS with `scripts/fetch_
 
 ## 8. Frontend (`static/`)
 
-Plain HTML, CSS and JS with no framework or build step. The files are `index.html`, `app.js`, `style.css`, `icons/` and `data/`. Leaflet is loaded from a pinned CDN version over OpenStreetMap tiles.
+Plain HTML, CSS and JS with no framework or build step. The files are `index.html`, `app.js`, `style.css` and `data/`. Leaflet is loaded from a pinned CDN version over OpenStreetMap tiles.
 
-- **Markers:** a bus, tram or cable-car icon matching the route category, tinted with the route color, with a small heading arrow rotated to `bearing` and a route label.
-  - The icons are openly licensed SVGs, such as Tabler Icons (MIT), stored in `static/icons/` with their license.
+- **Markers:** a badge showing the route name (13px bold, or 12px and 10px for 3- and 4-character names), in the route's GTFS `color` with its `text_color`. Buses are round and rail (light rail, streetcar, cable car) is a rounded square. A small arrow outside the badge points along `bearing`.
   - **Don't use the SFMTA/Muni logo or branding**: it's trademarked, and the site must not look like an official SFMTA product. The page footer says it is unofficial and credits 511.org and OpenStreetMap.
 - **Polling:** fetch `/api/vehicles` every 30 s and update markers by vehicle id: move the existing ones, add new ones, remove missing ones. Never clear and redraw everything.
 - **Layers:** route lines go below vehicles. Stops are drawn only at zoom 16 and closer, and only for stops in view.
@@ -124,7 +123,6 @@ Plain HTML, CSS and JS with no framework or build step. The files are `index.htm
 app/            FastAPI backend (section 5)
 static/         frontend + generated data (sections 7–8)
   data/         routes.geojson, stops.geojson, routes.json (committed)
-  icons/        vehicle SVGs + LICENSE
 scripts/        fetch_vehicles.py, fetch_gtfs.py, build_geojson.py
 tests/          pytest; fixtures/ holds saved 511 responses
 notes/          data findings

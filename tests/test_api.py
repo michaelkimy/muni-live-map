@@ -57,7 +57,7 @@ def test_frontend_is_served_at_root():
         page = c.get("/")
         assert page.status_code == 200 and "leaflet" in page.text
         assert c.get("/app.js").status_code == 200
-        assert c.get("/icons/bus.svg").status_code == 200
+        assert c.get("/style.css").status_code == 200
         # API routes still win over the static mount
         assert c.get("/api/health").json()["poller"] == "disabled"
 

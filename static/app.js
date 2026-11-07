@@ -14,13 +14,6 @@ const TICK_MS = 15_000;            // how often to refresh "moved X ago" and fad
 
 const DIRECTION_LABEL = { IB: 'Inbound', OB: 'Outbound', N: 'Northbound', S: 'Southbound' };
 
-const ICON_BY_CATEGORY = {
-  bus: 'icons/bus.svg',
-  lightrail: 'icons/train.svg',
-  streetcar: 'icons/train.svg',
-  cablecar: 'icons/train.svg',
-};
-
 // Panel group order and headings.
 const CATEGORIES = [
   ['lightrail', 'Light rail'],
@@ -76,7 +69,8 @@ function styleFor(route) {
   const info = routeInfo.get(route);
   return {
     color: info ? info.color : FALLBACK_COLOR,
-    icon: ICON_BY_CATEGORY[info ? info.category : 'bus'],
+    textColor: info ? info.text_color : '#FFFFFF',   // Muni's GTFS says which text color reads well
+    rail: info ? info.category !== 'bus' : false,
   };
 }
 
@@ -154,16 +148,18 @@ function makeIcon(v, stale) {
   const arrow = v.bearing == null
     ? ''
     : `<div class="heading" style="transform: rotate(${v.bearing}deg)"></div>`;
+  // Longer names like 14R or KBUS get a wider badge and slightly smaller text.
+  const size = v.route.length >= 4 ? ' long' : v.route.length === 3 ? ' medium' : '';
+  const classes = `vehicle${style.rail ? ' rail' : ''}${stale ? ' stale' : ''}`;
   // Backtick strings are "template literals": ${...} inserts a value.
-  // CSS custom properties (--route-color, --icon) pass values into style.css.
+  // CSS custom properties (--route-color, --text-color) pass values into style.css.
   return L.divIcon({
     className: '',              // drop Leaflet's default white-box styling
     iconSize: [28, 28],
-    iconAnchor: [14, 14],       // the center of the circle sits on the vehicle's position
-    html: `<div class="vehicle${stale ? ' stale' : ''}" style="--route-color:${style.color}; --icon:url('${style.icon}')">
+    iconAnchor: [14, 14],       // the center of the badge sits on the vehicle's position
+    html: `<div class="${classes}" style="--route-color:${style.color}; --text-color:${style.textColor}">
              ${arrow}
-             <div class="badge"></div>
-             <div class="label">${escapeHtml(v.route)}</div>
+             <div class="badge${size}">${escapeHtml(v.route)}</div>
            </div>`,
   });
 }

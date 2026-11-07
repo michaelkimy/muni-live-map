@@ -27,9 +27,9 @@ html, body {
 
 /* ---- Vehicle marker ----
    .vehicle is a 28x28 box centered on the vehicle's position. Inside it:
-   .heading: full-size layer rotated to the bearing, with an arrow tip at its top edge
-   .badge:   colored circle holding the icon
-   .label:   route name under the circle                                   */
+   .heading: full-size layer rotated to the bearing, with an arrow tip just outside the badge
+   .badge:   the route name on the route color. Round for buses; rounded
+             square for rail (.rail) so trains stand out without a picture. */
 .vehicle {
   position: relative;
   width: 28px;
@@ -43,7 +43,7 @@ html, body {
 .vehicle .heading::before {
   content: "";
   position: absolute;
-  top: -7px;
+  top: -9px;
   left: 50%;
   transform: translateX(-50%);
   border-left: 5px solid transparent;
@@ -52,38 +52,35 @@ html, body {
 }
 
 .vehicle .badge {
+  /* Centered on the box, so wider badges grow evenly to both sides. */
   position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  background: var(--route-color);
-  border: 2px solid #fff;
-  box-sizing: border-box;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
-}
-
-/* The SVG is used as a mask, so its shape is "painted" in background-color.
-   That lets one SVG file show in any color. */
-.vehicle .badge::after {
-  content: "";
-  position: absolute;
-  inset: 4px;
-  background: #fff;
-  -webkit-mask: var(--icon) center / contain no-repeat;
-  mask: var(--icon) center / contain no-repeat;
-}
-
-.vehicle .label {
-  position: absolute;
-  top: 28px;
+  top: 50%;
   left: 50%;
-  transform: translateX(-50%);
-  padding: 0 3px;
-  border-radius: 3px;
-  background: rgba(255, 255, 255, 0.85);
-  font-size: 10px;
-  font-weight: 700;
-  line-height: 13px;
+  transform: translate(-50%, -50%);
+  box-sizing: border-box;
+  min-width: 26px;
+  height: 26px;
+  padding: 0 4px;
+  border: 2px solid #fff;
+  border-radius: 13px;
+  background: var(--route-color);
+  color: var(--text-color);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.45);
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 22px;
+  letter-spacing: -0.02em;
+  text-align: center;
   white-space: nowrap;
+}
+.vehicle .badge.medium {
+  font-size: 12px;
+}
+.vehicle .badge.long {
+  font-size: 10px;
+}
+.vehicle.rail .badge {
+  border-radius: 6px;
 }
 
 /* ---- Route panel (Phase 6) ---- */
