@@ -230,3 +230,14 @@ html, body {
   color: #b9770e;
   font-weight: 600;
 }
+
+/* Category headings double as "select all in this category" checkboxes. */
+.group-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+.group-toggle input {
+  margin: 0 0 0 0;
+}

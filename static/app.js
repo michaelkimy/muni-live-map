@@ -265,17 +265,45 @@ function applyFilter({ updateUrl = true } = {}) {
   updateCount(shown);
 }
 
-// Zooms the map to fit the selected routes' lines (used for shared links).
-function zoomToSelection() {
-  if (selected.size && linesLayer.getLayers().length) {
-    // Leave room for the panel so the routes aren't hidden under it.
-    // On phones the panel spans the top instead of the left side.
-    const wide = window.innerWidth >= 640 && !panel.classList.contains('collapsed');
-    map.fitBounds(linesLayer.getBounds(), {
-      paddingTopLeft: wide ? [panel.offsetWidth + 30, 30] : [30, 70],
-      paddingBottomRight: [30, 30],
-      animate: false,   // jump straight there; animating on page load just delays the tiles
-    });
+// Zooms the map to fit the selected routes' lines, or back to the whole city
+// when nothing is selected. Animate for clicks; jump instantly on page load,
+// where animating would just delay the map tiles.
+function zoomToSelection({ animate = true } = {}) {
+  if (!selected.size) {
+    map.setView(SF_CENTER, 13, { animate });
+    return;
+  }
+  if (!linesLayer.getLayers().length) return;
+  // Leave room for the panel so the routes aren't hidden under it.
+  // On phones the panel spans the top instead of the left side.
+  const wide = window.innerWidth >= 640 && !panel.classList.contains('collapsed');
+  map.fitBounds(linesLayer.getBounds(), {
+    paddingTopLeft: wide ? [panel.offsetWidth + 30, 30] : [30, 70],
+    paddingBottomRight: [30, 30],
+    maxZoom: 16,   // a short route shouldn't zoom in to street-corner level
+    animate,
+  });
+}
+
+// Every user change to the selection goes through here: redraw at once, then
+// zoom once the clicking pauses. Waiting a moment ("debouncing") means ticking
+// five routes quickly gives one smooth zoom instead of five jumpy ones.
+let zoomTimer = null;
+function selectionChanged() {
+  applyFilter();
+  clearTimeout(zoomTimer);
+  zoomTimer = setTimeout(zoomWhenIdle, 350);
+}
+
+// Leaflet ignores a new zoom while a zoom animation is still running, so if
+// one is, wait for it to end ('zoomend' event) and then zoom.
+function zoomWhenIdle() {
+  // _animatingZoom is Leaflet-internal (the leading _ means "private"), but
+  // it's the only way to ask "is a zoom animation running right now?"
+  if (map._animatingZoom) {
+    map.once('zoomend', zoomWhenIdle);
+  } else {
+    zoomToSelection();
   }
 }
 
@@ -296,8 +324,24 @@ function buildPanel() {
 
     const group = document.createElement('section');
     group.className = 'route-group';
+    // The group heading is itself a checkbox that selects or clears every
+    // route in the category at once.
     const h = document.createElement('h3');
-    h.textContent = heading;
+    const groupLabel = document.createElement('label');
+    groupLabel.className = 'group-toggle';
+    const groupBox = document.createElement('input');
+    groupBox.type = 'checkbox';
+    groupBox.className = 'group-box';
+    groupBox.dataset.category = category;
+    groupBox.addEventListener('change', () => {
+      for (const r of routes) {
+        if (groupBox.checked) selected.add(r.route_id);
+        else selected.delete(r.route_id);
+      }
+      selectionChanged();
+    });
+    groupLabel.append(groupBox, ` ${heading} (${routes.length})`);
+    h.append(groupLabel);
     group.append(h);
 
     for (const r of routes) {
@@ -308,12 +352,13 @@ function buildPanel() {
 
       const box = document.createElement('input');
       box.type = 'checkbox';
+      box.className = 'route-box';
       box.value = r.route_id;
       // 'change' fires when the box is ticked or unticked.
       box.addEventListener('change', () => {
         if (box.checked) selected.add(r.route_id);
         else selected.delete(r.route_id);
-        applyFilter();
+        selectionChanged();
       });
 
       const chip = document.createElement('span');
@@ -335,8 +380,18 @@ function buildPanel() {
 
 // Ticks the checkboxes that match `selected` (e.g. after loading a shared link).
 function syncPanel() {
-  for (const box of routeListEl.querySelectorAll('input[type=checkbox]')) {
+  for (const box of routeListEl.querySelectorAll('.route-box')) {
     box.checked = selected.has(box.value);
+  }
+  // A group box is ticked when all its routes are selected, and shows a dash
+  // ("indeterminate") when only some are.
+  for (const groupBox of routeListEl.querySelectorAll('.group-box')) {
+    const ids = [...routeInfo.values()]
+      .filter((r) => r.category === groupBox.dataset.category)
+      .map((r) => r.route_id);
+    const count = ids.filter((id) => selected.has(id)).length;
+    groupBox.checked = count === ids.length;
+    groupBox.indeterminate = count > 0 && count < ids.length;
   }
   clearButton.disabled = selected.size === 0;
   panelToggle.textContent = selected.size ? `Routes (${selected.size})` : 'Routes';
@@ -359,7 +414,7 @@ function filterPanel() {
 searchInput.addEventListener('input', filterPanel);
 clearButton.addEventListener('click', () => {
   selected.clear();
-  applyFilter();
+  selectionChanged();
 });
 panelToggle.addEventListener('click', () => panel.classList.toggle('collapsed'));
 // Start collapsed on phones so the map isn't covered.
@@ -421,7 +476,7 @@ async function start() {
     buildPanel();
     readHash().forEach((id) => selected.add(id));
     applyFilter({ updateUrl: false });
-    zoomToSelection();
+    if (selected.size) zoomToSelection({ animate: false });
   } catch (err) {
     console.error('Failed to load route data:', err);
   }
