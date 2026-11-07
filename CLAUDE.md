@@ -16,11 +16,13 @@ PLAN.md (imported above) is the project's phased plan and progress tracker.
 
 ## Commands
 
+Use the project virtualenv (Python 3.13): run everything with `.venv/bin/python`, or run `source .venv/bin/activate` first. The system `python3` is 3.8; don't use it. Recreate the venv with `python3.13 -m venv .venv`.
+
 Phase 1 scripts use only the standard library and read `API_KEY_511` from `.env`. Each live call spends one 511 request.
 
-- `python3 scripts/fetch_vehicles.py`: fetch live vehicles, save the raw JSON to `data/raw/`, and print a table plus counts of missing fields
-- `python3 scripts/fetch_vehicles.py data/raw/vehicles_X.json`: re-parse a saved response without calling 511 (use this while iterating)
-- `python3 scripts/fetch_gtfs.py`: download and unzip Muni GTFS to `data/raw/gtfs/` and summarize routes, shapes, and stops
+- `.venv/bin/python scripts/fetch_vehicles.py`: fetch live vehicles, save the raw JSON to `data/raw/`, and print a table plus counts of missing fields
+- `.venv/bin/python scripts/fetch_vehicles.py data/raw/vehicles_X.json`: re-parse a saved response without calling 511 (use this while iterating)
+- `.venv/bin/python scripts/fetch_gtfs.py`: download and unzip Muni GTFS to `data/raw/gtfs/` and summarize routes, shapes, and stops
 
 No lint or test commands exist yet.
 

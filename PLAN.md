@@ -13,7 +13,7 @@ Streamlit would keep everything in Python, but live updates and click interactio
 ## Phase 0: Setup (one evening)
 
 - [x] Request a free 511.org API key from its open data page. It arrives by email, sometimes not right away, so start here.
-- [ ] Install Python 3.11+, Git, a GitHub account, an editor, and Claude Code per Anthropic's official setup docs.
+- [x] Install Python 3.11+, Git, a GitHub account, an editor, and Claude Code per Anthropic's official setup docs.
 - [x] Make an empty project folder, run `git init`, start Claude Code inside it, and run `/init` to create CLAUDE.md for project notes across sessions.
 
 ## Phase 1: Explore the data in Python (one or two sessions)
