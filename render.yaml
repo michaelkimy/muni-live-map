@@ -1,0 +1,16 @@
+# Render Blueprint: https://render.com/docs/blueprint-spec
+# One free web service. Keep it to a single instance and worker: all state
+# (vehicle cache, 511 request budget) lives in memory, and a second copy would
+# poll 511 separately and exceed the 60 requests/hour limit.
+services:
+  - type: web
+    name: muni-live-map
+    runtime: python                 # version from .python-version (3.13)
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT --workers 1
+    healthCheckPath: /api/health
+    autoDeployTrigger: commit       # redeploy on every push to main
+    envVars:
+      - key: API_KEY_511
+        sync: false                 # secret: entered in the Render dashboard, never in git
