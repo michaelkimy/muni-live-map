@@ -79,7 +79,7 @@ The trickiest feature, because of the rate limit.
 
 ## Phase 10: Deploy publicly
 
-- [ ] Push to GitHub after confirming `.env` isn't in the repo.
+- [x] Push to GitHub after confirming `.env` isn't in the repo.
 - [ ] Deploy to Render, Railway or Fly.io and set the 511 key as an environment variable in the host's dashboard. Free tiers sleep when idle, so the first visit after a lull may take a few seconds.
 - [ ] Share the link with a few friends and fix whatever confuses them.
 
