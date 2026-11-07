@@ -151,12 +151,17 @@ html, body {
 .panel.collapsed .panel-body {
   display: none;
 }
+.panel-search {
+  display: flex;
+  padding: 0 5px 5px;
+}
 #route-search {
+  flex: 1;
+  min-width: 0;
   font: inherit;
   padding: 4px 7px;
   border: 1px solid #ccc;
   border-radius: 6px;
-  margin-bottom: 3px;
 }
 
 #route-list {
@@ -405,7 +410,7 @@ html, body {
 @media (max-width: 640px) {
   /* Status pill sits under the panel header instead of fighting the map credits. */
   .status {
-    top: 56px;
+    top: 96px;
     right: auto;
     left: 10px;
     font-size: 12px;

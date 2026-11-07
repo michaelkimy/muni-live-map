@@ -630,7 +630,11 @@ function filterPanel() {
   }
 }
 
-searchInput.addEventListener('input', filterPanel);
+// Typing in the (always visible) search box opens the list so the matches show.
+searchInput.addEventListener('input', () => {
+  filterPanel();
+  if (searchInput.value.trim()) setPanelOpen(true);
+});
 clearButton.addEventListener('click', () => {
   selected.clear();
   selectionChanged();

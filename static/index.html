@@ -22,9 +22,12 @@
       <button id="panel-toggle" type="button" class="panel-toggle" aria-expanded="true" aria-controls="panel-body">Routes</button>
       <button id="clear-routes" type="button" class="clear" disabled>Show all</button>
     </div>
-    <div class="panel-body" id="panel-body">
+    <!-- Outside the collapsible body, so the search box is always visible. -->
+    <div class="panel-search">
       <input id="route-search" type="search" placeholder="Search, e.g. 38 or Geary"
              autocomplete="off" aria-label="Search routes">
+    </div>
+    <div class="panel-body" id="panel-body">
       <div id="route-list"></div>
     </div>
   </aside>
