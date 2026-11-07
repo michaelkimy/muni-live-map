@@ -47,8 +47,8 @@ def test_health_reports_disabled_poller():
     app, _ = make_app()
     with TestClient(app) as c:
         body = c.get("/api/health").json()
-    assert body == {"poller": "disabled", "snapshot_age_s": None,
-                    "requests_last_hour": 0, "prediction_budget_left": 10}
+    assert body == {"poller": "disabled", "snapshot_age_s": None, "requests_last_hour": 0,
+                    "prediction_budget_left": 10, "remaining_511": None}
 
 
 def test_frontend_is_served_at_root():

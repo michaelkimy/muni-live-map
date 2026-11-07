@@ -19,13 +19,12 @@
 
   <aside id="panel" class="panel">
     <div class="panel-header">
-      <button id="panel-toggle" type="button" class="panel-toggle">Routes</button>
+      <button id="panel-toggle" type="button" class="panel-toggle" aria-expanded="true" aria-controls="panel-body">Routes</button>
       <button id="clear-routes" type="button" class="clear" disabled>Show all</button>
     </div>
-    <div class="panel-body">
+    <div class="panel-body" id="panel-body">
       <input id="route-search" type="search" placeholder="Search, e.g. 38 or Geary"
              autocomplete="off" aria-label="Search routes">
-      <p class="panel-hint">Tip: click a line on the map to pick its route.</p>
       <div id="route-list"></div>
     </div>
   </aside>

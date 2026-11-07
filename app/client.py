@@ -45,7 +45,11 @@ class Client511:
                                         timeout=timeout)
         except httpx.HTTPError as e:
             raise Upstream511Error(f"network error: {type(e).__name__}") from None
+        remaining = resp.headers.get("ratelimit-remaining")
+        if remaining is not None and remaining.isdigit():
+            self._budget.note_remaining(int(remaining))
         if resp.status_code == 429:
+            self._budget.note_remaining(0)
             raise RateLimited("511 returned 429 Too Many Requests")
         if resp.status_code != 200:
             raise Upstream511Error(f"511 returned HTTP {resp.status_code}")

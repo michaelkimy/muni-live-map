@@ -40,6 +40,7 @@ See `notes/data.md` for field paths, presence counts and quirks. These include t
 - **The prediction budget** is `RATE_LIMIT_PER_HOUR − ceil(3600 / POLL_INTERVAL_S) − 2`, so about 10 per hour by default. A StopMonitoring call is allowed only while the predictions made in the window stay under this budget. Otherwise the endpoint returns `source: "unavailable"`.
 - **Predictions come from the feed first.** Before spending a request, the endpoint combines two free sources. The first is the cached vehicle snapshot (`MonitoredCall` + `OnwardCalls`), which gives live times for buses already on their trip. The second is the GTFS timetable (`app/schedule.py`), which covers trips that haven't started, since buses waiting at their first stop aren't in the feed. If the timetable is current, its answer is final, including "nothing in the next 90 minutes" (some stops are served once a day). StopMonitoring is only used when the timetable is missing or expired. Those results are cached per stop for 90 s.
 - **Empty answers:** a 200 response with no vehicles is treated as a 511 failure. The last snapshot is kept and goes stale, rather than blanking the map.
+- **511's own count:** every 511 response carries `RateLimit-Limit: 60` (confirmed 2026-11-06) and `RateLimit-Remaining`. The server records the remaining count, which also includes requests it can't see, such as ones from before a restart or from the fetch scripts. Predictions stop when fewer than 10 are left. A 429 sets it to 0. `/api/health` shows it as `remaining_511`.
 - **Errors:** on a 429, 5xx or network error, the poller keeps the last good snapshot and backs off exponentially, up to 10 minutes. The API marks data `stale` once the snapshot is older than 3 poll intervals.
 - **Tests never call 511.**
 
@@ -119,7 +120,7 @@ Plain HTML, CSS and JS with no framework or build step. The files are `index.htm
 - **State:** the filter selection lives in `location.hash`.
 - **Pick on the map:** clicking a route line selects only that route; Shift-click adds or removes it. Every visible line within 8px of the click (16px on touch screens) counts. If several routes overlap there (e.g. 38/38R on Geary), a small "Which route?" popup lists them. Vehicle and stop clicks don't reach the map, so they never pick a route.
 - **Filter panel:** compact (220px wide, at most 420px tall, with the list scrolling inside). Each category heading is a checkbox that selects or clears all of that category's routes. It shows a dash when only some are selected. After any selection change, the map zooms to fit the selected lines, or back to the whole city when the selection is cleared. The zoom waits about 350 ms after the last click so several quick clicks give one zoom. Shared links zoom on load without animation.
-- **Staleness:** fade a vehicle when `now − last_moved > 3 min`. Show a banner when `stale` is true or the fetch fails.
+- **Staleness:** when `now − last_moved > 3 min`, a vehicle's badge gets a dashed dark outline. Nothing on the map is drawn transparent: badges and route lines are fully opaque. Show a banner when `stale` is true or the fetch fails.
 - **Mobile:** a full-screen map with the filter in a collapsible panel.
 
 ### Security headers

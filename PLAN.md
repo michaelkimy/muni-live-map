@@ -62,7 +62,7 @@ Done when you have a working app; everything after this is a feature.
 ## Phase 7: Click a vehicle for details
 
 - [x] Clicking a vehicle opens a popup: route, direction, destination, next stop, "updated X seconds ago."
-- [x] Fade any vehicle whose position is more than a few minutes old.
+- [x] Fade any vehicle whose position is more than a few minutes old. (Changed later: a dashed outline instead of fading, so nothing is transparent.)
 
 ## Phase 8: Arrival predictions
 

@@ -26,10 +26,22 @@ class RequestBudget:
     won't need: limit - ceil(3600 / poll_interval) - 2.
     """
 
+    # Predictions stop when 511 says fewer than this many requests are left,
+    # keeping the rest for the vehicle poller.
+    REMAINING_RESERVE = 10
+
     def __init__(self, limit_per_hour: int, poll_interval_s: float):
         self.limit = limit_per_hour
         self.prediction_limit = max(0, limit_per_hour - math.ceil(3600 / poll_interval_s) - 2)
         self._calls: deque[tuple[datetime, str]] = deque()
+        # 511's own count from its RateLimit-Remaining header. It includes
+        # requests this process can't see: from before a restart, or from
+        # running the fetch scripts with the same key.
+        self.remaining_511: int | None = None
+
+    def note_remaining(self, remaining: int | None) -> None:
+        if remaining is not None:
+            self.remaining_511 = remaining
 
     def _prune(self, now: datetime) -> None:
         while self._calls and now - self._calls[0][0] >= WINDOW:
@@ -48,6 +60,8 @@ class RequestBudget:
 
     def can_predict(self, now: datetime | None = None) -> bool:
         now = now or utcnow()
+        if self.remaining_511 is not None and self.remaining_511 < self.REMAINING_RESERVE:
+            return False
         return self.predictions_used(now) < self.prediction_limit and self.used(now) < self.limit
 
     def record(self, kind: str, now: datetime | None = None) -> None:
@@ -121,4 +135,5 @@ class AppState:
             "snapshot_age_s": age,
             "requests_last_hour": self.budget.used(now),
             "prediction_budget_left": max(0, self.budget.prediction_limit - self.budget.predictions_used(now)),
+            "remaining_511": self.budget.remaining_511,   # 511's own count for this key
         }

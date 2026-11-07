@@ -105,7 +105,7 @@ const linesLayer = L.geoJSON(null, {
   style: (feature) => ({
     color: feature.properties.color,
     weight: feature.properties.category === 'bus' ? 3 : 5,
-    opacity: 0.55,
+    opacity: 1,
   }),
   // `onEachFeature` runs once per route line; here it attaches a hover tooltip.
   onEachFeature: (feature, layer) => {
@@ -635,9 +635,14 @@ clearButton.addEventListener('click', () => {
   selected.clear();
   selectionChanged();
 });
-panelToggle.addEventListener('click', () => panel.classList.toggle('collapsed'));
+// Open/close the route list. aria-expanded tells screen readers whether it's open.
+function setPanelOpen(open) {
+  panel.classList.toggle('collapsed', !open);
+  panelToggle.setAttribute('aria-expanded', String(open));
+}
+panelToggle.addEventListener('click', () => setPanelOpen(panel.classList.contains('collapsed')));
 // Start collapsed on phones so the map isn't covered.
-if (window.innerWidth < 640) panel.classList.add('collapsed');
+if (window.innerWidth < 640) setPanelOpen(false);
 
 // If someone edits the URL by hand or pastes a link into this tab, follow it.
 window.addEventListener('hashchange', () => {
