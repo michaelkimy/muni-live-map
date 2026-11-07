@@ -42,3 +42,16 @@ Per vehicle, under `MonitoredVehicleJourney`:
 ## Implications for later phases
 - Phase 3 `/vehicles` should drop vehicles without a route and convert lat/lon to floats. Consider including `bearing`.
 - Phase 8: `OnwardCalls` already gives predictions for stops that vehicles are approaching. These could cover many stop clicks without spending StopMonitoring requests.
+
+## StopMonitoring (Phase 8, 2026-11-06)
+
+`transit/StopMonitoring?agency=SF&stopcode=<stop_id>&format=json`. Sample: `tests/fixtures/stop_sample.json`.
+
+- **Different envelope from VehicleMonitoring:** there is **no `Siri` wrapper** (top level is `ServiceDelivery`) and **no BOM**. `app/parse.py` handles both shapes.
+- `ServiceDelivery.StopMonitoringDelivery.MonitoredStopVisit[]`. Each visit has a full `MonitoredVehicleJourney` with `MonitoredCall` for this stop.
+- Includes **trips that haven't started yet**, which have `VehicleRef: null`. The vehicle feed can't know about these.
+- `MonitoredCall.DestinationDisplay` is the short headsign ("Ocean Beach"), nicer than `DestinationName` ("Ortega St & 48th Ave"). The vehicle feed's calls have it too.
+- Times: `ExpectedArrivalTime` (live) and `AimedArrivalTime` (schedule). `ExpectedDepartureTime` is usually null.
+
+### Feed coverage
+In one snapshot, the vehicle feed's `MonitoredCall` + `OnwardCalls` covered **2,578 of 3,240 stops**, with an average of 23.6 onward calls per vehicle (max 91). Only 69 of 7,196 calls lacked an expected time. So most stop clicks cost no 511 request, and StopMonitoring is only the fallback.

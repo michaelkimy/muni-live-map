@@ -52,6 +52,7 @@ Python 3.13 with FastAPI and uvicorn, plus httpx for the 511 calls. It runs as *
 | `client.py` | The only code that talks to 511. It decodes with `utf-8-sig`, enforces and records the budget, and never logs request URLs, because they contain the key. |
 | `parse.py` | Pure functions: SIRI dict → vehicle list (dropping vehicles with no route; lat, lon and bearing as floats), and SIRI dict → arrivals for a stop. No I/O. |
 | `state.py` | The in-memory store: latest vehicles, `updated_at`, `last_moved` per vehicle id, the per-stop prediction cache and the budget counter. |
+| `predictions.py` | Stop predictions: the vehicle feed's arrivals first, then a 90 s per-stop cache, then StopMonitoring if the prediction budget allows. One lock prevents duplicate fetches. |
 | `main.py` | The FastAPI app. Its lifespan starts and stops the background poller task. It mounts `static/` and defines the endpoints. |
 
 **`last_moved`:** the feed has no per-vehicle GPS time. On each poll, if a vehicle's lat/lon changed or it is new, set `last_moved = now`. Otherwise keep the previous value. A vehicle missing from a poll is dropped from the snapshot.
@@ -80,12 +81,13 @@ GET /api/vehicles
 GET /api/predictions/{stop_id}
 {
   "stop_id": "15694",
+  "now": "...",
   "source": "feed" | "511" | "unavailable",
   "updated_at": "...",
   "arrivals": [{"route": "F", "destination": "Castro", "vehicle_id": "1010", "expected": "..."}]
 }
 ```
-Arrivals are sorted by `expected` and include only future times. If the source is `unavailable`, `arrivals` is `[]`.
+Arrivals are sorted by `expected`. Times up to 60 s in the past are still shown (as "Now"), with at most 10 arrivals. `vehicle_id` is `null` for trips that haven't started. If the source is `unavailable`, `arrivals` is `[]`. Stop ids must be numeric and exist in `static/data/stops.geojson`; otherwise the response is 404, so made-up ids can't spend budget.
 
 ```
 GET /api/health

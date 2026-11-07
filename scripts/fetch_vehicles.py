@@ -12,11 +12,10 @@ import json
 import sys
 import urllib.error
 import urllib.parse
-import urllib.request
 from datetime import datetime
 from pathlib import Path
 
-from _env import PROJECT_ROOT, get_api_key
+from _env import PROJECT_ROOT, get_api_key, urlopen
 
 URL = "https://api.511.org/transit/VehicleMonitoring"
 RAW_DIR = PROJECT_ROOT / "data" / "raw"
@@ -25,7 +24,7 @@ RAW_DIR = PROJECT_ROOT / "data" / "raw"
 def fetch_raw() -> bytes:
     query = urllib.parse.urlencode({"api_key": get_api_key(), "agency": "SF", "format": "json"})
     try:
-        with urllib.request.urlopen(f"{URL}?{query}", timeout=30) as resp:
+        with urlopen(f"{URL}?{query}", timeout=30) as resp:
             return resp.read()
     except urllib.error.HTTPError as e:
         # Don't print the URL: it contains the API key.

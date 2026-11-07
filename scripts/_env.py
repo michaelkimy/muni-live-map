@@ -20,3 +20,20 @@ def get_api_key() -> str:
     if not key:
         sys.exit("API_KEY_511 not found. Add a line API_KEY_511=your_key to .env")
     return key
+
+
+def urlopen(url: str, timeout: float = 30):
+    """urllib.request.urlopen with a trusted certificate list.
+
+    The python.org macOS installer ships without one, so plain urlopen fails with
+    CERTIFICATE_VERIFY_FAILED. certifi (installed with httpx) provides it. Under
+    a Python without certifi, this falls back to the system default.
+    """
+    import ssl
+    import urllib.request
+    try:
+        import certifi
+        context = ssl.create_default_context(cafile=certifi.where())
+    except ImportError:
+        context = ssl.create_default_context()
+    return urllib.request.urlopen(url, timeout=timeout, context=context)

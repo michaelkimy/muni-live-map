@@ -1,6 +1,7 @@
 """In-memory state: the latest vehicle snapshot and the 511 request budget."""
 from __future__ import annotations
 
+import asyncio
 import math
 from collections import deque
 from datetime import datetime, timedelta, timezone
@@ -62,8 +63,14 @@ class AppState:
         self.poller_status = "starting"
         self._positions: dict[str, tuple[float, float]] = {}
         self._last_moved: dict[str, datetime] = {}
+        # Predictions (Phase 8)
+        self.feed_arrivals: dict[str, list[dict]] = {}   # stop_id -> arrivals from the vehicle feed
+        self.prediction_cache: dict[str, tuple[datetime, list[dict]]] = {}  # stop_id -> (fetched, arrivals)
+        self.known_stops: set[str] | None = None        # None = don't validate (no stops file)
+        self.prediction_lock = asyncio.Lock()             # one 511 prediction fetch at a time
 
-    def update_vehicles(self, vehicles: list[dict], now: datetime | None = None) -> None:
+    def update_vehicles(self, vehicles: list[dict], now: datetime | None = None,
+                        arrivals: dict[str, list[dict]] | None = None) -> None:
         """Replace the snapshot. A vehicle's last_moved changes only when its position does,
         because the feed has no per-vehicle timestamp (notes/data.md)."""
         now = now or utcnow()
@@ -77,6 +84,8 @@ class AppState:
                 last_moved[v["id"]] = now
         self._positions, self._last_moved = positions, last_moved
         self.vehicles = {v["id"]: v for v in vehicles}
+        if arrivals is not None:
+            self.feed_arrivals = arrivals
         self.updated_at = now
 
     def is_stale(self, now: datetime | None = None) -> bool:

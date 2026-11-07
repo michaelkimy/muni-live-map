@@ -11,6 +11,7 @@ const SF_CENTER = [37.7599, -122.4370];
 const FALLBACK_COLOR = '#666666';  // used if a route isn't in routes.json
 const STALE_AFTER_S = 180;         // fade vehicles that haven't moved in 3 minutes
 const TICK_MS = 15_000;            // how often to refresh "moved X ago" and fading
+const STOPS_MIN_ZOOM = 16;         // stops only appear this close in; 3,000+ dots would bury the city
 
 const DIRECTION_LABEL = { IB: 'Inbound', OB: 'Outbound', N: 'Northbound', S: 'Southbound' };
 
@@ -255,6 +256,7 @@ function writeHash() {
 // Called whenever the selection changes: redraw lines, markers, panel and URL.
 function applyFilter({ updateUrl = true } = {}) {
   drawLines();
+  drawStops();
   const shown = updateMarkers(lastVehicles);
   syncPanel();
   if (updateUrl) writeHash();
@@ -300,6 +302,138 @@ function zoomWhenIdle() {
     map.once('zoomend', zoomWhenIdle);
   } else {
     zoomToSelection();
+  }
+}
+
+// ---- Stops and arrival predictions (Phase 8) ----
+// Stops get their own map "pane" (layer) between the route lines (z-index 400)
+// and the vehicles (600), so dots sit on the lines but under the buses.
+map.createPane('stops').style.zIndex = 450;
+// Drawing 3,000 dots as separate HTML/SVG elements is slow; a canvas paints
+// them all as one image, which stays fast even on phones.
+const stopRenderer = L.canvas({ pane: 'stops', padding: 0.3 });
+
+let stopsData = null;            // stops.geojson, downloaded the first time you zoom in far enough
+let stopsLoading = null;         // the in-flight download, so we only start it once
+const stopsLayer = L.geoJSON(null, {
+  pane: 'stops',
+  // Only stops served by a visible route (all stops when there's no filter).
+  filter: (feature) => feature.properties.routes.some(isVisible),
+  // Draw each stop as a small circle instead of Leaflet's default pin.
+  pointToLayer: (feature, latlng) => L.circleMarker(latlng, {
+    renderer: stopRenderer,
+    radius: 5,
+    weight: 2,
+    color: '#333',
+    fillColor: '#fff',
+    fillOpacity: 1,
+  }),
+  onEachFeature: (feature, layer) => {
+    layer.on('click', () => openStop(feature.properties, layer.getLatLng()));
+  },
+});
+
+async function drawStops() {
+  if (map.getZoom() < STOPS_MIN_ZOOM) {
+    stopsLayer.remove();
+    return;
+  }
+  if (!stopsData) {
+    // Reuse a download already in progress, so quick zooms only fetch the file once.
+    stopsLoading = stopsLoading || fetch('data/stops.geojson').then((r) => r.json());
+    try {
+      stopsData = await stopsLoading;
+    } catch (err) {
+      console.error('Failed to load stops:', err);
+      stopsLoading = null;     // allow a retry on the next zoom
+      return;
+    }
+    if (map.getZoom() < STOPS_MIN_ZOOM) return;  // zoomed back out while downloading
+  }
+  stopsLayer.clearLayers();
+  stopsLayer.addData(stopsData);
+  stopsLayer.addTo(map);
+}
+
+// 'zoomend' fires after every zoom; show or hide stops when crossing zoom 16.
+map.on('zoomend', drawStops);
+
+// The stop popup that's open right now, so the 15 s ticker can update its countdowns.
+let openStopState = null;        // { stop, latlng, data, popup }
+let stopRequest = 0;             // increases per click, so a slow old answer can't overwrite a newer one
+
+function minutesUntil(iso) {
+  return (Date.parse(iso) - serverNowMs()) / 60000;
+}
+
+function formatEta(iso) {
+  const minutes = minutesUntil(iso);
+  if (minutes < 1) return 'Now';
+  return `${Math.floor(minutes)} min`;
+}
+
+function chipHtml(routeId) {
+  const info = routeInfo.get(routeId);
+  const bg = info ? info.color : FALLBACK_COLOR;
+  const fg = info ? info.text_color : '#FFFFFF';
+  return `<span class="chip" style="background:${bg};color:${fg}">${escapeHtml(routeId)}</span>`;
+}
+
+function stopPopupHtml(stop, data) {
+  const routes = stop.routes.map(chipHtml).join(' ');
+  let body;
+  if (!data) {
+    body = '<p class="muted">Loading arrivals…</p>';
+  } else if (data.source === 'unavailable') {
+    body = '<p class="warn">Predictions temporarily unavailable. Try again in a few minutes.</p>';
+  } else if (!data.arrivals.length) {
+    body = '<p class="muted">No upcoming arrivals reported.</p>';
+  } else {
+    const rows = data.arrivals.map((a) => `
+      <li>
+        ${chipHtml(a.route)}
+        <span class="dest">${escapeHtml(a.destination || '')}</span>
+        <span class="eta">${formatEta(a.expected)}</span>
+      </li>`).join('');
+    const note = data.source === 'feed' ? 'Live, from vehicle positions' : 'Live, from 511';
+    body = `<ul class="arrivals">${rows}</ul><p class="muted small">${note}</p>`;
+  }
+  return `
+    <div class="popup stop-popup">
+      <div class="popup-title">${escapeHtml(stop.name)}</div>
+      <div class="stop-routes">${routes}</div>
+      ${body}
+    </div>`;
+}
+
+async function openStop(stop, latlng) {
+  const requestId = ++stopRequest;
+  const popup = L.popup({ maxWidth: 280, minWidth: 220 })
+    .setLatLng(latlng)
+    .setContent(stopPopupHtml(stop, null))
+    .openOn(map);
+  openStopState = { stop, latlng, data: null, popup };
+  popup.on('remove', () => { if (openStopState && openStopState.popup === popup) openStopState = null; });
+
+  let data;
+  try {
+    // encodeURIComponent makes any value safe to put in a URL path.
+    const response = await fetch(`/api/predictions/${encodeURIComponent(stop.stop_id)}`);
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    data = await response.json();
+    clockOffsetMs = Date.parse(data.now) - Date.now();
+  } catch (err) {
+    console.error('Failed to load predictions:', err);
+    data = { source: 'unavailable', arrivals: [] };
+  }
+  if (requestId !== stopRequest || !openStopState || openStopState.popup !== popup) return;  // user moved on
+  openStopState.data = data;
+  popup.setContent(stopPopupHtml(stop, data));
+}
+
+function refreshStopPopup() {
+  if (openStopState && openStopState.data) {
+    openStopState.popup.setContent(stopPopupHtml(openStopState.stop, openStopState.data));
   }
 }
 
@@ -479,7 +613,10 @@ async function start() {
   refresh();
   setInterval(refresh, POLL_MS);
   // Between data updates, keep ages and fading current (no network needed).
-  setInterval(() => markers.forEach(refreshMarker), TICK_MS);
+  setInterval(() => {
+    markers.forEach(refreshMarker);
+    refreshStopPopup();
+  }, TICK_MS);
 }
 
 start();

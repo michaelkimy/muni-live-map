@@ -12,10 +12,9 @@ import io
 import sys
 import urllib.error
 import urllib.parse
-import urllib.request
 import zipfile
 
-from _env import PROJECT_ROOT, get_api_key
+from _env import PROJECT_ROOT, get_api_key, urlopen
 
 URL = "https://api.511.org/transit/datafeeds"
 OUT_DIR = PROJECT_ROOT / "data" / "raw" / "gtfs"
@@ -24,7 +23,7 @@ OUT_DIR = PROJECT_ROOT / "data" / "raw" / "gtfs"
 def main() -> None:
     query = urllib.parse.urlencode({"api_key": get_api_key(), "operator_id": "SF"})
     try:
-        with urllib.request.urlopen(f"{URL}?{query}", timeout=120) as resp:
+        with urlopen(f"{URL}?{query}", timeout=120) as resp:
             payload = resp.read()
     except urllib.error.HTTPError as e:
         sys.exit(f"511 returned HTTP {e.code} {e.reason}.")

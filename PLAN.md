@@ -68,9 +68,9 @@ Done when you have a working app; everything after this is a feature.
 
 The trickiest feature, because of the rate limit.
 
-- [ ] Show stops as small dots only when zoomed in; all 3,000+ at once clutters the map.
-- [ ] Clicking a stop calls `/predictions/{stop_id}`, which calls 511's StopMonitoring and caches each stop's result for a minute or two.
-- [ ] Track the hourly request count so predictions never starve the vehicle poller; when the budget runs low, show "predictions temporarily unavailable." With real traffic, request a higher limit from 511 by email.
+- [x] Show stops as small dots only when zoomed in; all 3,000+ at once clutters the map.
+- [x] Clicking a stop calls `/predictions/{stop_id}`, which calls 511's StopMonitoring and caches each stop's result for a minute or two.
+- [x] Track the hourly request count so predictions never starve the vehicle poller; when the budget runs low, show "predictions temporarily unavailable." With real traffic, request a higher limit from 511 by email.
 
 ## Phase 9: Polish
 

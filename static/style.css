@@ -238,3 +238,53 @@ html, body {
 .group-toggle input {
   margin: 0 0 0 0;
 }
+
+/* ---- Stop popup (Phase 8) ---- */
+.stop-popup .popup-title {
+  margin-bottom: 4px;
+}
+.stop-routes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  margin-bottom: 8px;
+}
+.stop-routes .chip,
+.arrivals .chip {
+  min-width: 28px;
+  font-size: 11px;
+}
+.arrivals {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.arrivals li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 0;
+  border-top: 1px solid #eee;
+}
+.arrivals .dest {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.arrivals .eta {
+  font-weight: 700;
+  white-space: nowrap;
+}
+.popup .muted {
+  color: #666;
+  margin: 4px 0 0;
+}
+.popup .small {
+  font-size: 11px;
+}
+.popup .warn {
+  color: #b9770e;
+  font-weight: 600;
+  margin: 4px 0 0;
+}

@@ -55,3 +55,8 @@ class Client511:
 
     async def vehicle_monitoring(self) -> dict:
         return await self._get("/VehicleMonitoring", {"agency": "SF", "format": "json"}, "poll")
+
+    async def stop_monitoring(self, stop_id: str) -> dict:
+        """Predictions for one stop. Counts against the (smaller) prediction budget."""
+        return await self._get("/StopMonitoring",
+                               {"agency": "SF", "stopcode": stop_id, "format": "json"}, "prediction")
