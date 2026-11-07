@@ -95,6 +95,11 @@ class Schedule:
         exc = self.exceptions.get(key, {})
         return (active | set(exc.get("add", []))) - set(exc.get("remove", []))
 
+    def in_service(self, now: datetime) -> bool:
+        """True if the timetable covers today, i.e. it hasn't expired. When it
+        does, "nothing scheduled" is a real answer and 511 can't add to it."""
+        return bool(self.active_services(now.astimezone(TZ).date()))
+
     def upcoming(self, stop_id: str, now: datetime, exclude_trips: set[str],
                  window: timedelta = WINDOW, grace: timedelta = timedelta(seconds=60)) -> list[dict]:
         """Scheduled arrivals at a stop between now - grace and now + window,

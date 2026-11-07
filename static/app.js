@@ -393,7 +393,10 @@ function stopPopupHtml(stop, data) {
   } else if (data.source === 'unavailable') {
     body = '<p class="warn">Predictions temporarily unavailable. Try again in a few minutes.</p>';
   } else if (!data.arrivals.length) {
-    body = '<p class="muted">No upcoming arrivals reported.</p>';
+    // "feed" answers include the timetable's next 90 minutes, so say exactly that.
+    body = data.source === 'feed'
+      ? '<p class="muted">No arrivals in the next 90 minutes.</p>'
+      : '<p class="muted">No upcoming arrivals reported.</p>';
   } else {
     // Scheduled = the bus hasn't started its trip yet, so the time comes from
     // Muni's timetable rather than a live position. Shown with "~" in grey.
@@ -628,17 +631,23 @@ function renderStatus() {
 // ---- Polling ----
 // `async` functions can use `await`, which pauses until a network request
 // finishes without freezing the page.
+let refreshSeq = 0;
 async function refresh() {
+  // Number each request. If an older, slower one finishes after a newer one,
+  // its (out-of-date) answer is ignored.
+  const seq = ++refreshSeq;
   try {
     const response = await fetch('/api/vehicles');
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     const data = await response.json();
+    if (seq !== refreshSeq) return;
     clockOffsetMs = Date.parse(data.now) - Date.now();
     lastVehicles = data.vehicles;
     statusState.data = data;
     statusState.fetchFailed = false;
     statusState.shown = updateMarkers(lastVehicles);
   } catch (err) {
+    if (seq !== refreshSeq) return;
     console.error('Failed to load vehicles:', err);
     statusState.fetchFailed = true;
   }

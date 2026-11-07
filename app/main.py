@@ -25,11 +25,35 @@ from app.state import AppState, RequestBudget
 log = logging.getLogger("muni.poller")
 MAX_BACKOFF_S = 600
 
+# Content-Security-Policy: the browser refuses anything not listed here, so even
+# if some text slipped past escapeHtml, injected scripts or calls to other
+# sites wouldn't run. Leaflet comes from unpkg; map tiles from OpenStreetMap.
+# 'unsafe-inline' for styles is needed because Leaflet positions everything
+# with inline style attributes. Scripts stay strict.
+SECURITY_HEADERS = {
+    "Content-Security-Policy": (
+        "default-src 'self'; "
+        "script-src 'self' https://unpkg.com; "
+        "style-src 'self' 'unsafe-inline' https://unpkg.com; "
+        "img-src 'self' data: https://unpkg.com https://tile.openstreetmap.org; "
+        "connect-src 'self'; "
+        "frame-ancestors 'self'; base-uri 'self'; form-action 'self'"
+    ),
+    "X-Content-Type-Options": "nosniff",
+    # Sends only our origin to OpenStreetMap; their tile policy requires a referer.
+    "Referrer-Policy": "strict-origin-when-cross-origin",
+}
+
 
 async def poll_once(client: Client511, state: AppState) -> None:
     siri = await client.vehicle_monitoring()
-    state.update_vehicles(parse_vehicles(siri), arrivals=feed_arrivals(siri),
-                          live_trips=live_trip_ids(siri))
+    vehicles = parse_vehicles(siri)
+    if not vehicles:
+        # Muni always has vehicles out, even overnight. An empty answer means a
+        # 511 problem, so keep the last good snapshot; it goes stale and the
+        # page shows the "delayed" banner instead of an empty map.
+        raise Upstream511Error("511 returned no vehicles")
+    state.update_vehicles(vehicles, arrivals=feed_arrivals(siri), live_trips=live_trip_ids(siri))
 
 
 def load_stop_ids() -> set[str] | None:
@@ -101,6 +125,13 @@ def create_app(settings: Settings | None = None, state: AppState | None = None,
 
     app = FastAPI(title="Muni Live Map", lifespan=lifespan)
     app.state.muni = state
+
+    @app.middleware("http")
+    async def security_headers(request, call_next):
+        response = await call_next(request)
+        response.headers.update(SECURITY_HEADERS)
+        return response
+
     # GeoJSON compresses about 5x; browsers decompress automatically.
     app.add_middleware(GZipMiddleware, minimum_size=1000)
 

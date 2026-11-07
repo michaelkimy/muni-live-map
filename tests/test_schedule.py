@@ -82,3 +82,34 @@ def test_predictions_merge_live_and_scheduled(schedule):
         ("2026-11-06T15:02:00Z", False),   # live bus on wk_0700, running 2 min late
         ("2026-11-06T15:15:00Z", True),    # next trip hasn't started: timetable
     ]
+
+
+class CountingClient:
+    def __init__(self):
+        self.calls = 0
+
+    async def stop_monitoring(self, stop_id):
+        self.calls += 1
+        return {}
+
+
+def test_no_511_request_when_timetable_says_nothing(schedule):
+    state = AppState(RequestBudget(60, 75), 75)
+    now = pst(2026, 11, 6, 3, 0)             # timetable in service, nothing due at stop 100
+    state.update_vehicles([], now, arrivals={}, live_trips=set())
+    state.schedule = schedule
+    client = CountingClient()
+    result = asyncio.run(get_predictions("100", state, client, now=now))
+    assert result["source"] == "feed" and result["arrivals"] == []
+    assert client.calls == 0
+
+
+def test_expired_timetable_falls_back_to_511(schedule):
+    state = AppState(RequestBudget(60, 75), 75)
+    now = pst(2027, 3, 1, 7, 0)              # after every calendar's end date
+    state.update_vehicles([], now, arrivals={}, live_trips=set())
+    state.schedule = schedule
+    assert not schedule.in_service(now)
+    client = CountingClient()
+    asyncio.run(get_predictions("100", state, client, now=now))
+    assert client.calls == 1

@@ -35,13 +35,14 @@ class Client511:
     async def aclose(self) -> None:
         await self._http.aclose()
 
-    async def _get(self, path: str, params: dict, kind: str) -> dict:
+    async def _get(self, path: str, params: dict, kind: str, timeout: float = 30) -> dict:
         allowed = self._budget.can_poll() if kind == "poll" else self._budget.can_predict()
         if not allowed:
             raise RateLimited(f"local {kind} budget used up")
         self._budget.record(kind)  # count it even if it fails: 511 still counts it
         try:
-            resp = await self._http.get(path, params={**params, "api_key": self._api_key})
+            resp = await self._http.get(path, params={**params, "api_key": self._api_key},
+                                        timeout=timeout)
         except httpx.HTTPError as e:
             raise Upstream511Error(f"network error: {type(e).__name__}") from None
         if resp.status_code == 429:
@@ -58,5 +59,8 @@ class Client511:
 
     async def stop_monitoring(self, stop_id: str) -> dict:
         """Predictions for one stop. Counts against the (smaller) prediction budget."""
+        # Short timeout: someone is waiting on this popup, and the prediction
+        # lock makes other stops' 511 lookups wait too.
         return await self._get("/StopMonitoring",
-                               {"agency": "SF", "stopcode": stop_id, "format": "json"}, "prediction")
+                               {"agency": "SF", "stopcode": stop_id, "format": "json"},
+                               "prediction", timeout=10)

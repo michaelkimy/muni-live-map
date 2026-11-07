@@ -1,7 +1,7 @@
 """Stop arrival predictions (SPEC.md section 4): the vehicle feed first, 511 only as a fallback."""
 from __future__ import annotations
 
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 from app.client import Client511, RateLimited, Upstream511Error
 from app.parse import parse_stop_monitoring
@@ -18,8 +18,10 @@ def _upcoming(arrivals: list[dict], now: datetime) -> list[dict]:
     for a in arrivals:
         try:
             when = datetime.fromisoformat(a["expected"])
-        except ValueError:
+        except (TypeError, ValueError):
             continue
+        if when.tzinfo is None:  # 511 times end in Z; treat any without a zone as UTC
+            when = when.replace(tzinfo=timezone.utc)
         key = (a["route"], a["vehicle_id"], a["expected"], a.get("scheduled"))
         if when >= now - GRACE and key not in seen:
             seen.add(key)
@@ -46,7 +48,11 @@ async def get_predictions(stop_id: str, state: AppState, client: Client511 | Non
     if state.schedule is not None and state.updated_at is not None:
         combined += state.schedule.upcoming(stop_id, now, state.live_trips)
     from_feed = _upcoming(combined, now)
-    if from_feed:
+    timetable_ok = (state.schedule is not None and state.updated_at is not None
+                    and state.schedule.in_service(now))
+    if from_feed or timetable_ok:
+        # With a current timetable, an empty list is a real answer (e.g. a stop
+        # served once a day). 511 would only say the same, so don't spend a request.
         return _response(stop_id, "feed", now, state.updated_at, from_feed)
 
     # 2. A recent 511 answer for this stop.

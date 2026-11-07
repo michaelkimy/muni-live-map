@@ -1,3 +1,5 @@
 [tool.pytest.ini_options]
 pythonpath = ["."]
 testpaths = ["tests"]
+# Starlette's TestClient warns about its own httpx dependency; nothing for us to change.
+filterwarnings = ["ignore:Using `httpx` with `starlette.testclient`"]

@@ -38,7 +38,8 @@ See `notes/data.md` for field paths, presence counts and quirks. These include t
 - **One shared counter** records the times of all 511 calls in a sliding 60-minute window. Every call goes through `client.py`, which checks and records it.
 - **The vehicle poller** runs every `POLL_INTERVAL_S` (default 75 s), which is about 48 calls per hour. It always gets priority.
 - **The prediction budget** is `RATE_LIMIT_PER_HOUR − ceil(3600 / POLL_INTERVAL_S) − 2`, so about 10 per hour by default. A StopMonitoring call is allowed only while the predictions made in the window stay under this budget. Otherwise the endpoint returns `source: "unavailable"`.
-- **Predictions come from the feed first.** Before spending a request, the endpoint combines two free sources. The first is the cached vehicle snapshot (`MonitoredCall` + `OnwardCalls`), which gives live times for buses already on their trip. The second is the GTFS timetable (`app/schedule.py`), which covers trips that haven't started, since buses waiting at their first stop aren't in the feed. Only stops with nothing from either fall back to StopMonitoring. Those results are cached per stop for 90 s.
+- **Predictions come from the feed first.** Before spending a request, the endpoint combines two free sources. The first is the cached vehicle snapshot (`MonitoredCall` + `OnwardCalls`), which gives live times for buses already on their trip. The second is the GTFS timetable (`app/schedule.py`), which covers trips that haven't started, since buses waiting at their first stop aren't in the feed. If the timetable is current, its answer is final, including "nothing in the next 90 minutes" (some stops are served once a day). StopMonitoring is only used when the timetable is missing or expired. Those results are cached per stop for 90 s.
+- **Empty answers:** a 200 response with no vehicles is treated as a 511 failure. The last snapshot is kept and goes stale, rather than blanking the map.
 - **Errors:** on a 429, 5xx or network error, the poller keeps the last good snapshot and backs off exponentially, up to 10 minutes. The API marks data `stale` once the snapshot is older than 3 poll intervals.
 - **Tests never call 511.**
 
@@ -119,6 +120,9 @@ Plain HTML, CSS and JS with no framework or build step. The files are `index.htm
 - **Filter panel:** each category heading is a checkbox that selects or clears all of that category's routes. It shows a dash when only some are selected. After any selection change, the map zooms to fit the selected lines, or back to the whole city when the selection is cleared. The zoom waits about 350 ms after the last click so several quick clicks give one zoom. Shared links zoom on load without animation.
 - **Staleness:** fade a vehicle when `now − last_moved > 3 min`. Show a banner when `stale` is true or the fetch fails.
 - **Mobile:** a full-screen map with the filter in a collapsible panel.
+
+### Security headers
+Every response sets a Content-Security-Policy. It allows scripts only from this site and unpkg (Leaflet, pinned with SRI), images from OpenStreetMap tiles, and API calls only to this site; inline styles are allowed because Leaflet needs them. Responses also set `X-Content-Type-Options: nosniff` and `Referrer-Policy: strict-origin-when-cross-origin`. OSM's tile policy needs the referer.
 
 ## 9. Folder structure
 

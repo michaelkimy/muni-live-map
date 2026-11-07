@@ -74,8 +74,8 @@ The trickiest feature, because of the rate limit.
 
 ## Phase 9: Polish
 
-- [ ] Add loading indicators, an error banner if 511 is down, a "last updated" timestamp, and a phone-friendly layout.
-- [ ] Ask Claude Code to review the whole codebase for bugs, security problems (especially key handling) and cleanup.
+- [x] Add loading indicators, an error banner if 511 is down, a "last updated" timestamp, and a phone-friendly layout.
+- [x] Ask Claude Code to review the whole codebase for bugs, security problems (especially key handling) and cleanup.
 
 ## Phase 10: Deploy publicly
 

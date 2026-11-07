@@ -5,11 +5,13 @@ Field paths and quirks are documented in notes/data.md.
 from __future__ import annotations
 
 import json
+import math
 from typing import Any
 
 
 def decode_511(raw: bytes) -> dict:
-    """511 responses start with a UTF-8 byte-order mark; utf-8-sig strips it."""
+    """VehicleMonitoring starts with a UTF-8 byte-order mark (StopMonitoring doesn't).
+    utf-8-sig strips it when present and is harmless when not."""
     return json.loads(raw.decode("utf-8-sig"))
 
 
@@ -31,10 +33,13 @@ def _text(value: Any) -> str | None:
 
 
 def _float(value: Any) -> float | None:
+    """A finite float, or None. float("nan") parses fine but can't be sent as
+    JSON, so one bad value would break /api/vehicles for everyone."""
     try:
-        return float(value)
+        number = float(value)
     except (TypeError, ValueError):
         return None
+    return number if math.isfinite(number) else None
 
 
 def _service_delivery(data: dict) -> dict:
