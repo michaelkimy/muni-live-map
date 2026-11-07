@@ -20,7 +20,7 @@ def _upcoming(arrivals: list[dict], now: datetime) -> list[dict]:
             when = datetime.fromisoformat(a["expected"])
         except ValueError:
             continue
-        key = (a["route"], a["vehicle_id"], a["expected"])
+        key = (a["route"], a["vehicle_id"], a["expected"], a.get("scheduled"))
         if when >= now - GRACE and key not in seen:
             seen.add(key)
             result.append((when, a))
@@ -38,8 +38,14 @@ async def get_predictions(stop_id: str, state: AppState, client: Client511 | Non
                           now: datetime | None = None) -> dict:
     now = now or utcnow()
 
-    # 1. Free: arrivals already in the latest vehicle snapshot.
-    from_feed = _upcoming(state.feed_arrivals.get(stop_id, []), now)
+    # 1. Free: live arrivals from the latest vehicle snapshot, plus timetable
+    # times for trips that haven't started yet (buses waiting at their first
+    # stop aren't in the feed). Live trips are excluded from the timetable, so
+    # nothing is listed twice.
+    combined = list(state.feed_arrivals.get(stop_id, []))
+    if state.schedule is not None and state.updated_at is not None:
+        combined += state.schedule.upcoming(stop_id, now, state.live_trips)
+    from_feed = _upcoming(combined, now)
     if from_feed:
         return _response(stop_id, "feed", now, state.updated_at, from_feed)
 

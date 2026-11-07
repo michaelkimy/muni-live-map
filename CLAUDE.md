@@ -23,6 +23,7 @@ Phase 1 scripts use only the standard library (plus `certifi` when available: th
 - `.venv/bin/python scripts/fetch_vehicles.py`: fetch live vehicles, save the raw JSON to `data/raw/`, and print a table plus counts of missing fields
 - `.venv/bin/python scripts/fetch_vehicles.py data/raw/vehicles_X.json`: re-parse a saved response without calling 511 (use this while iterating)
 - `.venv/bin/python scripts/fetch_gtfs.py`: download and unzip Muni GTFS to `data/raw/gtfs/` and summarize routes, shapes, and stops
+- `.venv/bin/python scripts/build_schedule.py`: rebuild `app/data/schedule.bin.gz` (the timetable used for trips that haven't started). The current GTFS is valid until **2027-01-15**; before then, rerun `fetch_gtfs.py`, both build scripts, and commit the output.
 - `.venv/bin/python scripts/build_geojson.py`: rebuild `static/data/` (routes.geojson, stops.geojson, routes.json) from the downloaded GTFS. Rerun it after Muni changes service, and commit the output.
 
 Backend and tests:

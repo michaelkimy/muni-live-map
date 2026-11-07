@@ -288,3 +288,8 @@ html, body {
   font-weight: 600;
   margin: 4px 0 0;
 }
+.arrivals li.scheduled .eta {
+  color: #777;
+  font-weight: 600;
+  font-style: italic;
+}

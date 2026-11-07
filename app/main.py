@@ -17,8 +17,9 @@ from fastapi.staticfiles import StaticFiles
 
 from app.client import Client511, RateLimited, Upstream511Error
 from app.config import PROJECT_ROOT, Settings, load_settings
-from app.parse import feed_arrivals, parse_vehicles
+from app.parse import feed_arrivals, live_trip_ids, parse_vehicles
 from app.predictions import get_predictions
+from app.schedule import Schedule
 from app.state import AppState, RequestBudget
 
 log = logging.getLogger("muni.poller")
@@ -27,7 +28,8 @@ MAX_BACKOFF_S = 600
 
 async def poll_once(client: Client511, state: AppState) -> None:
     siri = await client.vehicle_monitoring()
-    state.update_vehicles(parse_vehicles(siri), arrivals=feed_arrivals(siri))
+    state.update_vehicles(parse_vehicles(siri), arrivals=feed_arrivals(siri),
+                          live_trips=live_trip_ids(siri))
 
 
 def load_stop_ids() -> set[str] | None:
@@ -70,6 +72,8 @@ def create_app(settings: Settings | None = None, state: AppState | None = None,
         state = AppState(budget, settings.poll_interval_s)
     if state.known_stops is None:
         state.known_stops = load_stop_ids()
+    if state.schedule is None:
+        state.schedule = Schedule.load()
     holder = {"client": client}  # the 511 client the endpoints use (None = no 511 access)
 
     @asynccontextmanager

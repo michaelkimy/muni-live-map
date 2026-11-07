@@ -389,13 +389,17 @@ function stopPopupHtml(stop, data) {
   } else if (!data.arrivals.length) {
     body = '<p class="muted">No upcoming arrivals reported.</p>';
   } else {
+    // Scheduled = the bus hasn't started its trip yet, so the time comes from
+    // Muni's timetable rather than a live position. Shown with "~" in grey.
     const rows = data.arrivals.map((a) => `
-      <li>
+      <li class="${a.scheduled ? 'scheduled' : ''}">
         ${chipHtml(a.route)}
         <span class="dest">${escapeHtml(a.destination || '')}</span>
-        <span class="eta">${formatEta(a.expected)}</span>
+        <span class="eta">${a.scheduled ? '~' : ''}${formatEta(a.expected)}</span>
       </li>`).join('');
-    const note = data.source === 'feed' ? 'Live, from vehicle positions' : 'Live, from 511';
+    const anyScheduled = data.arrivals.some((a) => a.scheduled);
+    const source = data.source === 'feed' ? 'Live from vehicle positions' : 'Live from 511';
+    const note = anyScheduled ? `${source} · ~ = scheduled, bus not on its route yet` : source;
     body = `<ul class="arrivals">${rows}</ul><p class="muted small">${note}</p>`;
   }
   return `

@@ -55,3 +55,8 @@ Per vehicle, under `MonitoredVehicleJourney`:
 
 ### Feed coverage
 In one snapshot, the vehicle feed's `MonitoredCall` + `OnwardCalls` covered **2,578 of 3,240 stops**, with an average of 23.6 onward calls per vehicle (max 91). Only 69 of 7,196 calls lacked an expected time. So most stop clicks cost no 511 request, and StopMonitoring is only the fallback.
+
+### Feed gap: trips that haven't started (found 2026-11-06)
+I compared the vehicle feed with StopMonitoring for the same stops at the same moment (05:04 UTC). For every vehicle both list, the expected times are **identical**. But the feed has **no entry for a trip until its bus starts the trip**. A bus waiting at its first stop (e.g. 7 #6607 at Transit Center Bay E) is either missing or shown without a route. So for stops near a terminal, the **soonest arrival could be missing**: Market & Stockton showed the next 7 as 24 min when one was 4 min away. StopMonitoring lists those trips with `VehicleRef: null`, using timetable times (within 1–2 min of GTFS `stop_times`).
+
+Fix: `app/schedule.py` fills in timetable arrivals from GTFS for trips **not** in the live feed. Live trips are matched by `DatedVehicleJourneyRef` = GTFS `trip_id`, so nothing is listed twice. These arrivals are flagged `scheduled: true`. GTFS times have no leading zero (`7:15:00`) and go past 24:00 for after-midnight trips.

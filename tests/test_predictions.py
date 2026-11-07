@@ -39,10 +39,11 @@ def test_stop_monitoring_has_no_siri_wrapper_but_parses(stop_raw):
     arrivals = parse_stop_monitoring(data)
     assert len(arrivals) == 10
     first = arrivals[0]
-    assert first == {"route": "7", "destination": "Ocean Beach",
-                     "vehicle_id": "6607", "expected": "2026-11-07T05:05:52Z"}
-    # trips that haven't started yet have no vehicle
-    assert any(a["vehicle_id"] is None for a in arrivals)
+    assert first == {"route": "7", "destination": "Ocean Beach", "vehicle_id": "6607",
+                     "expected": "2026-11-07T05:05:52Z", "scheduled": False}
+    # trips that haven't started yet have no vehicle, and their time is the timetable's
+    unstarted = [a for a in arrivals if a["vehicle_id"] is None]
+    assert unstarted and all(a["scheduled"] for a in unstarted)
 
 
 def test_feed_arrivals_indexes_next_and_onward_stops(vehicles_raw):

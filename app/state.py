@@ -65,12 +65,15 @@ class AppState:
         self._last_moved: dict[str, datetime] = {}
         # Predictions (Phase 8)
         self.feed_arrivals: dict[str, list[dict]] = {}   # stop_id -> arrivals from the vehicle feed
+        self.live_trips: set[str] = set()                 # trips running now (excluded from the timetable)
+        self.schedule = None                              # app.schedule.Schedule, or None if not built
         self.prediction_cache: dict[str, tuple[datetime, list[dict]]] = {}  # stop_id -> (fetched, arrivals)
         self.known_stops: set[str] | None = None        # None = don't validate (no stops file)
         self.prediction_lock = asyncio.Lock()             # one 511 prediction fetch at a time
 
     def update_vehicles(self, vehicles: list[dict], now: datetime | None = None,
-                        arrivals: dict[str, list[dict]] | None = None) -> None:
+                        arrivals: dict[str, list[dict]] | None = None,
+                        live_trips: set[str] | None = None) -> None:
         """Replace the snapshot. A vehicle's last_moved changes only when its position does,
         because the feed has no per-vehicle timestamp (notes/data.md)."""
         now = now or utcnow()
@@ -86,6 +89,8 @@ class AppState:
         self.vehicles = {v["id"]: v for v in vehicles}
         if arrivals is not None:
             self.feed_arrivals = arrivals
+        if live_trips is not None:
+            self.live_trips = live_trips
         self.updated_at = now
 
     def is_stale(self, now: datetime | None = None) -> bool:

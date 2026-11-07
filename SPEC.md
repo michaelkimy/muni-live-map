@@ -27,7 +27,7 @@ This is the source of truth for what we're building and how the pieces fit toget
 |---|---|---|
 | 511 `transit/VehicleMonitoring?agency=SF&format=json` | vehicle positions and next stops, plus upcoming stops in `OnwardCalls` | 1 request per poll |
 | 511 `transit/StopMonitoring?agency=SF&stopcode=<id>&format=json` | fallback predictions for one stop | 1 request per stop, cached |
-| 511 `transit/datafeeds?operator_id=SF` (GTFS zip) | route shapes, colors and stops | only when the static data is rebuilt by hand |
+| 511 `transit/datafeeds?operator_id=SF` (GTFS zip) | route shapes, colors, stops, and the timetable for trips that haven't started | only when the static data is rebuilt by hand |
 
 See `notes/data.md` for field paths, presence counts and quirks. These include the byte-order mark (BOM), vehicles with no route, the lack of per-vehicle timestamps, and T Third's N/S directions.
 
@@ -38,7 +38,7 @@ See `notes/data.md` for field paths, presence counts and quirks. These include t
 - **One shared counter** records the times of all 511 calls in a sliding 60-minute window. Every call goes through `client.py`, which checks and records it.
 - **The vehicle poller** runs every `POLL_INTERVAL_S` (default 75 s), which is about 48 calls per hour. It always gets priority.
 - **The prediction budget** is `RATE_LIMIT_PER_HOUR − ceil(3600 / POLL_INTERVAL_S) − 2`, so about 10 per hour by default. A StopMonitoring call is allowed only while the predictions made in the window stay under this budget. Otherwise the endpoint returns `source: "unavailable"`.
-- **Predictions come from the feed first.** Before spending a request, the endpoint looks for the stop in the cached vehicle snapshot (`MonitoredCall` + `OnwardCalls`). Only stops with no listed arrivals fall back to StopMonitoring. Those results are cached per stop for 90 s.
+- **Predictions come from the feed first.** Before spending a request, the endpoint combines two free sources. The first is the cached vehicle snapshot (`MonitoredCall` + `OnwardCalls`), which gives live times for buses already on their trip. The second is the GTFS timetable (`app/schedule.py`), which covers trips that haven't started, since buses waiting at their first stop aren't in the feed. Only stops with nothing from either fall back to StopMonitoring. Those results are cached per stop for 90 s.
 - **Errors:** on a 429, 5xx or network error, the poller keeps the last good snapshot and backs off exponentially, up to 10 minutes. The API marks data `stale` once the snapshot is older than 3 poll intervals.
 - **Tests never call 511.**
 
@@ -52,7 +52,8 @@ Python 3.13 with FastAPI and uvicorn, plus httpx for the 511 calls. It runs as *
 | `client.py` | The only code that talks to 511. It decodes with `utf-8-sig`, enforces and records the budget, and never logs request URLs, because they contain the key. |
 | `parse.py` | Pure functions: SIRI dict → vehicle list (dropping vehicles with no route; lat, lon and bearing as floats), and SIRI dict → arrivals for a stop. No I/O. |
 | `state.py` | The in-memory store: latest vehicles, `updated_at`, `last_moved` per vehicle id, the per-stop prediction cache and the budget counter. |
-| `predictions.py` | Stop predictions: the vehicle feed's arrivals first, then a 90 s per-stop cache, then StopMonitoring if the prediction budget allows. One lock prevents duplicate fetches. |
+| `schedule.py` | Loads `app/data/schedule.bin.gz` (built by `scripts/build_schedule.py`; stdlib only, about 75 MB in memory). It returns timetable arrivals at a stop for the next 90 min, honoring service calendars, holiday exceptions and after-midnight trips, and skips trips that are live. |
+| `predictions.py` | Stop predictions: the vehicle feed's arrivals plus timetable arrivals for unstarted trips first, then a 90 s per-stop cache, then StopMonitoring if the prediction budget allows. One lock prevents duplicate fetches. |
 | `main.py` | The FastAPI app. Its lifespan starts and stops the background poller task. It mounts `static/` and defines the endpoints. |
 
 **`last_moved`:** the feed has no per-vehicle GPS time. On each poll, if a vehicle's lat/lon changed or it is new, set `last_moved = now`. Otherwise keep the previous value. A vehicle missing from a poll is dropped from the snapshot.
@@ -84,10 +85,10 @@ GET /api/predictions/{stop_id}
   "now": "...",
   "source": "feed" | "511" | "unavailable",
   "updated_at": "...",
-  "arrivals": [{"route": "F", "destination": "Castro", "vehicle_id": "1010", "expected": "..."}]
+  "arrivals": [{"route": "F", "destination": "Castro", "vehicle_id": "1010", "expected": "...", "scheduled": false}]
 }
 ```
-Arrivals are sorted by `expected`. Times up to 60 s in the past are still shown (as "Now"), with at most 10 arrivals. `vehicle_id` is `null` for trips that haven't started. If the source is `unavailable`, `arrivals` is `[]`. Stop ids must be numeric and exist in `static/data/stops.geojson`; otherwise the response is 404, so made-up ids can't spend budget.
+Arrivals are sorted by `expected`. Times up to 60 s in the past are still shown (as "Now"), with at most 10 arrivals. `scheduled: true` means the trip hasn't started, so the time is the timetable's. `vehicle_id` is `null` for those, and the popup shows them as "~N min" in grey. If the source is `unavailable`, `arrivals` is `[]`. Stop ids must be numeric and exist in `static/data/stops.geojson`; otherwise the response is 404, so made-up ids can't spend budget.
 
 ```
 GET /api/health
@@ -125,7 +126,8 @@ Plain HTML, CSS and JS with no framework or build step. The files are `index.htm
 app/            FastAPI backend (section 5)
 static/         frontend + generated data (sections 7–8)
   data/         routes.geojson, stops.geojson, routes.json (committed)
-scripts/        fetch_vehicles.py, fetch_gtfs.py, build_geojson.py
+app/data/       schedule.bin.gz: timetable index built from GTFS (committed)
+scripts/        fetch_vehicles.py, fetch_gtfs.py, build_geojson.py, build_schedule.py
 tests/          pytest; fixtures/ holds saved 511 responses
 notes/          data findings
 data/raw/       downloaded 511 responses and GTFS (gitignored)

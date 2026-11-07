@@ -63,6 +63,8 @@ def _arrival(mvj: dict, call: dict) -> dict | None:
         "destination": _text(call.get("DestinationDisplay")) or _text(mvj.get("DestinationName")),
         "vehicle_id": _text(mvj.get("VehicleRef")),  # null for trips that haven't started yet
         "expected": expected,
+        # No vehicle yet means the trip hasn't started: the time is the timetable's.
+        "scheduled": _text(mvj.get("VehicleRef")) is None,
     }
 
 
@@ -120,3 +122,14 @@ def parse_stop_monitoring(data: dict) -> list[dict]:
             if arrival:
                 arrivals.append(arrival)
     return arrivals
+
+
+def live_trip_ids(siri: dict) -> set[str]:
+    """GTFS trip ids of trips vehicles are running right now (they match trips.txt)."""
+    trips = set()
+    for activity in _activities(siri):
+        mvj = activity.get("MonitoredVehicleJourney") or {}
+        ref = _text((mvj.get("FramedVehicleJourneyRef") or {}).get("DatedVehicleJourneyRef"))
+        if ref and _text(mvj.get("LineRef")):
+            trips.add(ref)
+    return trips
