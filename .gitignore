@@ -1,0 +1,14 @@
+# Secrets
+.env
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# Raw downloads (large, regenerable)
+data/raw/
+
+# macOS
+.DS_Store

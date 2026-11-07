@@ -1,0 +1,2453 @@
+﻿{
+ "Siri": {
+  "ServiceDelivery": {
+   "ResponseTimestamp": "2026-11-07T04:09:15Z",
+   "ProducerRef": "SF",
+   "Status": true,
+   "VehicleMonitoringDelivery": {
+    "version": "1.4",
+    "ResponseTimestamp": "2026-11-07T04:09:15Z",
+    "VehicleActivity": [
+     {
+      "RecordedAtTime": "2026-11-07T04:09:04Z",
+      "ValidUntilTime": "",
+      "MonitoredVehicleJourney": {
+       "LineRef": "F",
+       "DirectionRef": "OB",
+       "FramedVehicleJourneyRef": {
+        "DataFrameRef": "2026-11-06",
+        "DatedVehicleJourneyRef": "12131799_M11"
+       },
+       "PublishedLineName": "MARKET & WHARVES",
+       "OperatorRef": "SF",
+       "OriginRef": "15184",
+       "OriginName": "Jones St & Beach St",
+       "DestinationRef": "13311",
+       "DestinationName": "17th St & Castro St",
+       "Monitored": true,
+       "InCongestion": null,
+       "VehicleLocation": {
+        "Longitude": "-122.405746",
+        "Latitude": "37.7859497"
+       },
+       "Bearing": "0.0000000000",
+       "Occupancy": "seatsAvailable",
+       "VehicleRef": "1052",
+       "MonitoredCall": {
+        "StopPointRef": "15694",
+        "StopPointName": "Market St & Stockton St",
+        "DestinationDisplay": "Castro",
+        "VehicleLocationAtStop": "",
+        "VehicleAtStop": "true",
+        "AimedArrivalTime": "2026-11-07T04:12:00Z",
+        "ExpectedArrivalTime": "2026-11-07T04:09:01Z",
+        "AimedDepartureTime": "2026-11-07T04:12:00Z",
+        "ExpectedDepartureTime": null
+       },
+       "OnwardCalls": {
+        "OnwardCall": [
+         {
+          "StopPointRef": "15655",
+          "StopPointName": "Market St & 5th  St",
+          "DestinationDisplay": "Castro",
+          "AimedArrivalTime": "2026-11-07T04:13:39Z",
+          "ExpectedArrivalTime": "2026-11-07T04:10:34Z",
+          "AimedDepartureTime": "2026-11-07T04:13:39Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "15695",
+          "StopPointName": "Market St & Taylor St",
+          "DestinationDisplay": "Castro",
+          "AimedArrivalTime": "2026-11-07T04:15:22Z",
+          "ExpectedArrivalTime": "2026-11-07T04:12:05Z",
+          "AimedDepartureTime": "2026-11-07T04:15:22Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "15656",
+          "StopPointName": "Market St & 7th St",
+          "DestinationDisplay": "Castro",
+          "AimedArrivalTime": "2026-11-07T04:17:00Z",
+          "ExpectedArrivalTime": "2026-11-07T04:13:36Z",
+          "AimedDepartureTime": "2026-11-07T04:17:00Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "15676",
+          "StopPointName": "Market St & Hyde St",
+          "DestinationDisplay": "Castro",
+          "AimedArrivalTime": "2026-11-07T04:18:10Z",
+          "ExpectedArrivalTime": "2026-11-07T04:14:51Z",
+          "AimedDepartureTime": "2026-11-07T04:18:10Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "15680",
+          "StopPointName": "Market St & Larkin St",
+          "DestinationDisplay": "Castro",
+          "AimedArrivalTime": "2026-11-07T04:19:19Z",
+          "ExpectedArrivalTime": "2026-11-07T04:16:21Z",
+          "AimedDepartureTime": "2026-11-07T04:19:19Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "15696",
+          "StopPointName": "Market St & Van Ness Ave",
+          "DestinationDisplay": "Castro",
+          "AimedArrivalTime": "2026-11-07T04:21:00Z",
+          "ExpectedArrivalTime": "2026-11-07T04:18:20Z",
+          "AimedDepartureTime": "2026-11-07T04:21:00Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "15672",
+          "StopPointName": "Market St & Gough St",
+          "DestinationDisplay": "Castro",
+          "AimedArrivalTime": "2026-11-07T04:22:38Z",
+          "ExpectedArrivalTime": "2026-11-07T04:19:51Z",
+          "AimedDepartureTime": "2026-11-07T04:22:38Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "15681",
+          "StopPointName": "Market St & Laguna St",
+          "DestinationDisplay": "Castro",
+          "AimedArrivalTime": "2026-11-07T04:24:34Z",
+          "ExpectedArrivalTime": "2026-11-07T04:22:00Z",
+          "AimedDepartureTime": "2026-11-07T04:24:34Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "15659",
+          "StopPointName": "Market St & Buchanan St",
+          "DestinationDisplay": "Castro",
+          "AimedArrivalTime": "2026-11-07T04:25:32Z",
+          "ExpectedArrivalTime": "2026-11-07T04:23:30Z",
+          "AimedDepartureTime": "2026-11-07T04:25:32Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "15661",
+          "StopPointName": "Market St & Church St",
+          "DestinationDisplay": "Castro",
+          "AimedArrivalTime": "2026-11-07T04:27:00Z",
+          "ExpectedArrivalTime": "2026-11-07T04:25:28Z",
+          "AimedDepartureTime": "2026-11-07T04:27:00Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "15690",
+          "StopPointName": "Market St & Sanchez St",
+          "DestinationDisplay": "Castro",
+          "AimedArrivalTime": "2026-11-07T04:28:14Z",
+          "ExpectedArrivalTime": "2026-11-07T04:26:39Z",
+          "AimedDepartureTime": "2026-11-07T04:28:14Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "15686",
+          "StopPointName": "Market St & Noe St",
+          "DestinationDisplay": "Castro",
+          "AimedArrivalTime": "2026-11-07T04:29:36Z",
+          "ExpectedArrivalTime": "2026-11-07T04:28:20Z",
+          "AimedDepartureTime": "2026-11-07T04:29:36Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "13311",
+          "StopPointName": "17th St & Castro St",
+          "DestinationDisplay": "Castro",
+          "AimedArrivalTime": "2026-11-07T04:32:00Z",
+          "ExpectedArrivalTime": "2026-11-07T04:30:39Z",
+          "AimedDepartureTime": "2026-11-07T04:32:00Z",
+          "ExpectedDepartureTime": null
+         }
+        ]
+       }
+      }
+     },
+     {
+      "RecordedAtTime": "2026-11-07T04:09:04Z",
+      "ValidUntilTime": "",
+      "MonitoredVehicleJourney": {
+       "LineRef": "F",
+       "DirectionRef": "IB",
+       "FramedVehicleJourneyRef": {
+        "DataFrameRef": "2026-11-06",
+        "DatedVehicleJourneyRef": "12131896_M11"
+       },
+       "PublishedLineName": "MARKET & WHARVES",
+       "OperatorRef": "SF",
+       "OriginRef": "13311",
+       "OriginName": "17th St & Castro St",
+       "DestinationRef": "15184",
+       "DestinationName": "Jones St & Beach St",
+       "Monitored": true,
+       "InCongestion": null,
+       "VehicleLocation": {
+        "Longitude": "-122.426514",
+        "Latitude": "37.769413"
+       },
+       "Bearing": "45.0000000000",
+       "Occupancy": "seatsAvailable",
+       "VehicleRef": "1060",
+       "MonitoredCall": {
+        "StopPointRef": "15675",
+        "StopPointName": "Market St & Guerrero St",
+        "DestinationDisplay": "Fisherman`s Wharf",
+        "VehicleLocationAtStop": "",
+        "VehicleAtStop": "",
+        "AimedArrivalTime": "2026-11-07T04:06:26Z",
+        "ExpectedArrivalTime": "2026-11-07T04:09:57Z",
+        "AimedDepartureTime": "2026-11-07T04:06:26Z",
+        "ExpectedDepartureTime": null
+       },
+       "OnwardCalls": {
+        "OnwardCall": [
+         {
+          "StopPointRef": "15673",
+          "StopPointName": "Market St & Gough St",
+          "DestinationDisplay": "Fisherman`s Wharf",
+          "AimedArrivalTime": "2026-11-07T04:08:08Z",
+          "ExpectedArrivalTime": "2026-11-07T04:12:00Z",
+          "AimedDepartureTime": "2026-11-07T04:08:08Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "15692",
+          "StopPointName": "Market St & South Van Ness Ave",
+          "DestinationDisplay": "Fisherman`s Wharf",
+          "AimedArrivalTime": "2026-11-07T04:10:00Z",
+          "ExpectedArrivalTime": "2026-11-07T04:14:08Z",
+          "AimedDepartureTime": "2026-11-07T04:10:00Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "15652",
+          "StopPointName": "Market St & 9th St",
+          "DestinationDisplay": "Fisherman`s Wharf",
+          "AimedArrivalTime": "2026-11-07T04:11:50Z",
+          "ExpectedArrivalTime": "2026-11-07T04:16:20Z",
+          "AimedDepartureTime": "2026-11-07T04:11:50Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "15651",
+          "StopPointName": "Market St & 8th St",
+          "DestinationDisplay": "Fisherman`s Wharf",
+          "AimedArrivalTime": "2026-11-07T04:12:46Z",
+          "ExpectedArrivalTime": "2026-11-07T04:17:18Z",
+          "AimedDepartureTime": "2026-11-07T04:12:46Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "15650",
+          "StopPointName": "Market St & 7th St",
+          "DestinationDisplay": "Fisherman`s Wharf",
+          "AimedArrivalTime": "2026-11-07T04:14:00Z",
+          "ExpectedArrivalTime": "2026-11-07T04:18:44Z",
+          "AimedDepartureTime": "2026-11-07T04:14:00Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "15647",
+          "StopPointName": "Market St & 6th St",
+          "DestinationDisplay": "Fisherman`s Wharf",
+          "AimedArrivalTime": "2026-11-07T04:15:42Z",
+          "ExpectedArrivalTime": "2026-11-07T04:20:30Z",
+          "AimedDepartureTime": "2026-11-07T04:15:42Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "15645",
+          "StopPointName": "Market St & 5th St",
+          "DestinationDisplay": "Fisherman`s Wharf",
+          "AimedArrivalTime": "2026-11-07T04:17:26Z",
+          "ExpectedArrivalTime": "2026-11-07T04:21:57Z",
+          "AimedDepartureTime": "2026-11-07T04:17:26Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "15643",
+          "StopPointName": "Market St & 4th St",
+          "DestinationDisplay": "Fisherman`s Wharf",
+          "AimedArrivalTime": "2026-11-07T04:19:00Z",
+          "ExpectedArrivalTime": "2026-11-07T04:23:44Z",
+          "AimedDepartureTime": "2026-11-07T04:19:00Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "15640",
+          "StopPointName": "Market St & 3rd St",
+          "DestinationDisplay": "Fisherman`s Wharf",
+          "AimedArrivalTime": "2026-11-07T04:20:25Z",
+          "ExpectedArrivalTime": "2026-11-07T04:24:56Z",
+          "AimedDepartureTime": "2026-11-07T04:20:25Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "15685",
+          "StopPointName": "Market St & New Montgomery St",
+          "DestinationDisplay": "Fisherman`s Wharf",
+          "AimedArrivalTime": "2026-11-07T04:21:16Z",
+          "ExpectedArrivalTime": "2026-11-07T04:25:50Z",
+          "AimedDepartureTime": "2026-11-07T04:21:16Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "17264",
+          "StopPointName": "Market St & 1st St",
+          "DestinationDisplay": "Fisherman`s Wharf",
+          "AimedArrivalTime": "2026-11-07T04:23:00Z",
+          "ExpectedArrivalTime": "2026-11-07T04:27:47Z",
+          "AimedDepartureTime": "2026-11-07T04:23:00Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "15682",
+          "StopPointName": "Market St & Main St",
+          "DestinationDisplay": "Fisherman`s Wharf",
+          "AimedArrivalTime": "2026-11-07T04:24:59Z",
+          "ExpectedArrivalTime": "2026-11-07T04:29:14Z",
+          "AimedDepartureTime": "2026-11-07T04:24:59Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "14727",
+          "StopPointName": "Don Chee Way/Steuart St",
+          "DestinationDisplay": "Fisherman`s Wharf",
+          "AimedArrivalTime": "2026-11-07T04:27:00Z",
+          "ExpectedArrivalTime": "2026-11-07T04:31:38Z",
+          "AimedDepartureTime": "2026-11-07T04:27:00Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "14513",
+          "StopPointName": "The Embarcadero & Ferry Building",
+          "DestinationDisplay": "Fisherman`s Wharf",
+          "AimedArrivalTime": "2026-11-07T04:27:32Z",
+          "ExpectedArrivalTime": "2026-11-07T04:32:26Z",
+          "AimedDepartureTime": "2026-11-07T04:27:32Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "14532",
+          "StopPointName": "The Embarcadero & Washington St",
+          "DestinationDisplay": "Fisherman`s Wharf",
+          "AimedArrivalTime": "2026-11-07T04:28:45Z",
+          "ExpectedArrivalTime": "2026-11-07T04:34:31Z",
+          "AimedDepartureTime": "2026-11-07T04:28:45Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "14503",
+          "StopPointName": "The Embarcadero & Broadway",
+          "DestinationDisplay": "Fisherman`s Wharf",
+          "AimedArrivalTime": "2026-11-07T04:30:06Z",
+          "ExpectedArrivalTime": "2026-11-07T04:35:33Z",
+          "AimedDepartureTime": "2026-11-07T04:30:06Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "14517",
+          "StopPointName": "The Embarcadero & Green St",
+          "DestinationDisplay": "Fisherman`s Wharf",
+          "AimedArrivalTime": "2026-11-07T04:31:01Z",
+          "ExpectedArrivalTime": "2026-11-07T04:36:25Z",
+          "AimedDepartureTime": "2026-11-07T04:31:01Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "14515",
+          "StopPointName": "The Embarcadero & Greenwich St",
+          "DestinationDisplay": "Fisherman`s Wharf",
+          "AimedArrivalTime": "2026-11-07T04:32:06Z",
+          "ExpectedArrivalTime": "2026-11-07T04:37:21Z",
+          "AimedDepartureTime": "2026-11-07T04:32:06Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "17281",
+          "StopPointName": "Embarcadero & Sansome St",
+          "DestinationDisplay": "Fisherman`s Wharf",
+          "AimedArrivalTime": "2026-11-07T04:33:13Z",
+          "ExpectedArrivalTime": "2026-11-07T04:38:39Z",
+          "AimedDepartureTime": "2026-11-07T04:33:13Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "14501",
+          "StopPointName": "The Embarcadero & Bay St",
+          "DestinationDisplay": "Fisherman`s Wharf",
+          "AimedArrivalTime": "2026-11-07T04:34:33Z",
+          "ExpectedArrivalTime": "2026-11-07T04:39:47Z",
+          "AimedDepartureTime": "2026-11-07T04:34:33Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "14530",
+          "StopPointName": "The Embarcadero & Stockton St",
+          "DestinationDisplay": "Fisherman`s Wharf",
+          "AimedArrivalTime": "2026-11-07T04:36:00Z",
+          "ExpectedArrivalTime": "2026-11-07T04:41:49Z",
+          "AimedDepartureTime": "2026-11-07T04:36:00Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "15174",
+          "StopPointName": "Jefferson St & Powell St",
+          "DestinationDisplay": "Fisherman`s Wharf",
+          "AimedArrivalTime": "2026-11-07T04:38:07Z",
+          "ExpectedArrivalTime": "2026-11-07T04:43:04Z",
+          "AimedDepartureTime": "2026-11-07T04:38:07Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "15175",
+          "StopPointName": "Jefferson St & Taylor St",
+          "DestinationDisplay": "Fisherman`s Wharf",
+          "AimedArrivalTime": "2026-11-07T04:39:36Z",
+          "ExpectedArrivalTime": "2026-11-07T04:44:14Z",
+          "AimedDepartureTime": "2026-11-07T04:39:36Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "15184",
+          "StopPointName": "Jones St & Beach St",
+          "DestinationDisplay": "Fisherman`s Wharf",
+          "AimedArrivalTime": "2026-11-07T04:41:00Z",
+          "ExpectedArrivalTime": "2026-11-07T04:46:55Z",
+          "AimedDepartureTime": "2026-11-07T04:41:00Z",
+          "ExpectedDepartureTime": null
+         }
+        ]
+       }
+      }
+     },
+     {
+      "RecordedAtTime": "2026-11-07T04:09:04Z",
+      "ValidUntilTime": "",
+      "MonitoredVehicleJourney": {
+       "LineRef": "F",
+       "DirectionRef": "OB",
+       "FramedVehicleJourneyRef": {
+        "DataFrameRef": "2026-11-06",
+        "DatedVehicleJourneyRef": "12131796_M11"
+       },
+       "PublishedLineName": "MARKET & WHARVES",
+       "OperatorRef": "SF",
+       "OriginRef": "15184",
+       "OriginName": "Jones St & Beach St",
+       "DestinationRef": "13311",
+       "DestinationName": "17th St & Castro St",
+       "Monitored": true,
+       "InCongestion": null,
+       "VehicleLocation": {
+        "Longitude": "-122.434532",
+        "Latitude": "37.7625542"
+       },
+       "Bearing": "0.0000000000",
+       "Occupancy": "seatsAvailable",
+       "VehicleRef": "1063",
+       "MonitoredCall": {
+        "StopPointRef": "13311",
+        "StopPointName": "17th St & Castro St",
+        "DestinationDisplay": "Castro",
+        "VehicleLocationAtStop": "",
+        "VehicleAtStop": "",
+        "AimedArrivalTime": "2026-11-07T04:09:00Z",
+        "ExpectedArrivalTime": "2026-11-07T04:08:40Z",
+        "AimedDepartureTime": "2026-11-07T04:09:00Z",
+        "ExpectedDepartureTime": null
+       },
+       "OnwardCalls": {
+        "OnwardCall": []
+       }
+      }
+     },
+     {
+      "RecordedAtTime": "2026-11-07T04:09:04Z",
+      "ValidUntilTime": "",
+      "MonitoredVehicleJourney": {
+       "LineRef": "F",
+       "DirectionRef": "OB",
+       "FramedVehicleJourneyRef": {
+        "DataFrameRef": "2026-11-06",
+        "DatedVehicleJourneyRef": "12131800_M11"
+       },
+       "PublishedLineName": "MARKET & WHARVES",
+       "OperatorRef": "SF",
+       "OriginRef": "15184",
+       "OriginName": "Jones St & Beach St",
+       "DestinationRef": "13311",
+       "DestinationName": "17th St & Castro St",
+       "Monitored": true,
+       "InCongestion": null,
+       "VehicleLocation": {
+        "Longitude": "-122.402573",
+        "Latitude": "37.8045769"
+       },
+       "Bearing": "120.0000000000",
+       "Occupancy": "seatsAvailable",
+       "VehicleRef": "1080",
+       "MonitoredCall": {
+        "StopPointRef": "14504",
+        "StopPointName": "The Embarcadero & Broadway",
+        "DestinationDisplay": "Castro",
+        "VehicleLocationAtStop": "",
+        "VehicleAtStop": "",
+        "AimedArrivalTime": "2026-11-07T04:12:13Z",
+        "ExpectedArrivalTime": "2026-11-07T04:10:21Z",
+        "AimedDepartureTime": "2026-11-07T04:12:13Z",
+        "ExpectedDepartureTime": null
+       },
+       "OnwardCalls": {
+        "OnwardCall": [
+         {
+          "StopPointRef": "14534",
+          "StopPointName": "The Embarcadero & Washington St",
+          "DestinationDisplay": "Castro",
+          "AimedArrivalTime": "2026-11-07T04:13:45Z",
+          "ExpectedArrivalTime": "2026-11-07T04:11:57Z",
+          "AimedDepartureTime": "2026-11-07T04:13:45Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "17283",
+          "StopPointName": "The Embarcadero & Ferry Building",
+          "DestinationDisplay": "Castro",
+          "AimedArrivalTime": "2026-11-07T04:14:42Z",
+          "ExpectedArrivalTime": "2026-11-07T04:13:38Z",
+          "AimedDepartureTime": "2026-11-07T04:14:42Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "14726",
+          "StopPointName": "Don Chee Way/Steuart St",
+          "DestinationDisplay": "Castro",
+          "AimedArrivalTime": "2026-11-07T04:15:00Z",
+          "ExpectedArrivalTime": "2026-11-07T04:15:17Z",
+          "AimedDepartureTime": "2026-11-07T04:15:00Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "15669",
+          "StopPointName": "Market St & Drumm St",
+          "DestinationDisplay": "Castro",
+          "AimedArrivalTime": "2026-11-07T04:17:01Z",
+          "ExpectedArrivalTime": "2026-11-07T04:17:34Z",
+          "AimedDepartureTime": "2026-11-07T04:17:01Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "15657",
+          "StopPointName": "Market St & Battery St",
+          "DestinationDisplay": "Castro",
+          "AimedArrivalTime": "2026-11-07T04:19:00Z",
+          "ExpectedArrivalTime": "2026-11-07T04:19:34Z",
+          "AimedDepartureTime": "2026-11-07T04:19:00Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "15639",
+          "StopPointName": "Market St & 2nd St",
+          "DestinationDisplay": "Castro",
+          "AimedArrivalTime": "2026-11-07T04:20:43Z",
+          "ExpectedArrivalTime": "2026-11-07T04:20:57Z",
+          "AimedDepartureTime": "2026-11-07T04:20:43Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "15678",
+          "StopPointName": "Market St & Kearny St",
+          "DestinationDisplay": "Castro",
+          "AimedArrivalTime": "2026-11-07T04:22:18Z",
+          "ExpectedArrivalTime": "2026-11-07T04:22:16Z",
+          "AimedDepartureTime": "2026-11-07T04:22:18Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "15694",
+          "StopPointName": "Market St & Stockton St",
+          "DestinationDisplay": "Castro",
+          "AimedArrivalTime": "2026-11-07T04:24:00Z",
+          "ExpectedArrivalTime": "2026-11-07T04:24:06Z",
+          "AimedDepartureTime": "2026-11-07T04:24:00Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "15655",
+          "StopPointName": "Market St & 5th  St",
+          "DestinationDisplay": "Castro",
+          "AimedArrivalTime": "2026-11-07T04:25:19Z",
+          "ExpectedArrivalTime": "2026-11-07T04:25:39Z",
+          "AimedDepartureTime": "2026-11-07T04:25:19Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "15695",
+          "StopPointName": "Market St & Taylor St",
+          "DestinationDisplay": "Castro",
+          "AimedArrivalTime": "2026-11-07T04:26:42Z",
+          "ExpectedArrivalTime": "2026-11-07T04:27:10Z",
+          "AimedDepartureTime": "2026-11-07T04:26:42Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "15656",
+          "StopPointName": "Market St & 7th St",
+          "DestinationDisplay": "Castro",
+          "AimedArrivalTime": "2026-11-07T04:28:00Z",
+          "ExpectedArrivalTime": "2026-11-07T04:28:40Z",
+          "AimedDepartureTime": "2026-11-07T04:28:00Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "15676",
+          "StopPointName": "Market St & Hyde St",
+          "DestinationDisplay": "Castro",
+          "AimedArrivalTime": "2026-11-07T04:29:10Z",
+          "ExpectedArrivalTime": "2026-11-07T04:29:56Z",
+          "AimedDepartureTime": "2026-11-07T04:29:10Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "15680",
+          "StopPointName": "Market St & Larkin St",
+          "DestinationDisplay": "Castro",
+          "AimedArrivalTime": "2026-11-07T04:30:19Z",
+          "ExpectedArrivalTime": "2026-11-07T04:31:25Z",
+          "AimedDepartureTime": "2026-11-07T04:30:19Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "15696",
+          "StopPointName": "Market St & Van Ness Ave",
+          "DestinationDisplay": "Castro",
+          "AimedArrivalTime": "2026-11-07T04:32:00Z",
+          "ExpectedArrivalTime": "2026-11-07T04:33:24Z",
+          "AimedDepartureTime": "2026-11-07T04:32:00Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "15672",
+          "StopPointName": "Market St & Gough St",
+          "DestinationDisplay": "Castro",
+          "AimedArrivalTime": "2026-11-07T04:33:38Z",
+          "ExpectedArrivalTime": "2026-11-07T04:34:56Z",
+          "AimedDepartureTime": "2026-11-07T04:33:38Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "15681",
+          "StopPointName": "Market St & Laguna St",
+          "DestinationDisplay": "Castro",
+          "AimedArrivalTime": "2026-11-07T04:35:34Z",
+          "ExpectedArrivalTime": "2026-11-07T04:37:05Z",
+          "AimedDepartureTime": "2026-11-07T04:35:34Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "15659",
+          "StopPointName": "Market St & Buchanan St",
+          "DestinationDisplay": "Castro",
+          "AimedArrivalTime": "2026-11-07T04:36:32Z",
+          "ExpectedArrivalTime": "2026-11-07T04:38:35Z",
+          "AimedDepartureTime": "2026-11-07T04:36:32Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "15661",
+          "StopPointName": "Market St & Church St",
+          "DestinationDisplay": "Castro",
+          "AimedArrivalTime": "2026-11-07T04:38:00Z",
+          "ExpectedArrivalTime": "2026-11-07T04:40:33Z",
+          "AimedDepartureTime": "2026-11-07T04:38:00Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "15690",
+          "StopPointName": "Market St & Sanchez St",
+          "DestinationDisplay": "Castro",
+          "AimedArrivalTime": "2026-11-07T04:39:14Z",
+          "ExpectedArrivalTime": "2026-11-07T04:41:44Z",
+          "AimedDepartureTime": "2026-11-07T04:39:14Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "15686",
+          "StopPointName": "Market St & Noe St",
+          "DestinationDisplay": "Castro",
+          "AimedArrivalTime": "2026-11-07T04:40:36Z",
+          "ExpectedArrivalTime": "2026-11-07T04:43:24Z",
+          "AimedDepartureTime": "2026-11-07T04:40:36Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "13311",
+          "StopPointName": "17th St & Castro St",
+          "DestinationDisplay": "Castro",
+          "AimedArrivalTime": "2026-11-07T04:43:00Z",
+          "ExpectedArrivalTime": "2026-11-07T04:45:44Z",
+          "AimedDepartureTime": "2026-11-07T04:43:00Z",
+          "ExpectedDepartureTime": null
+         }
+        ]
+       }
+      }
+     },
+     {
+      "RecordedAtTime": "2026-11-07T04:09:04Z",
+      "ValidUntilTime": "",
+      "MonitoredVehicleJourney": {
+       "LineRef": "PH",
+       "DirectionRef": "IB",
+       "FramedVehicleJourneyRef": {
+        "DataFrameRef": "2026-11-06",
+        "DatedVehicleJourneyRef": "12136812_M11"
+       },
+       "PublishedLineName": "POWELL-HYDE CABLE CAR",
+       "OperatorRef": "SF",
+       "OriginRef": "15063",
+       "OriginName": "Hyde St & Beach St",
+       "DestinationRef": "16064",
+       "DestinationName": "Powell St & Market St",
+       "Monitored": true,
+       "InCongestion": null,
+       "VehicleLocation": {
+        "Longitude": "-122.416977",
+        "Latitude": "37.7938156"
+       },
+       "Bearing": "75.0000000000",
+       "Occupancy": "seatsAvailable",
+       "VehicleRef": "13",
+       "MonitoredCall": {
+        "StopPointRef": "16920",
+        "StopPointName": "Washington St & Jones St",
+        "DestinationDisplay": "Market & Powell",
+        "VehicleLocationAtStop": "",
+        "VehicleAtStop": "true",
+        "AimedArrivalTime": "2026-11-07T03:52:21Z",
+        "ExpectedArrivalTime": "2026-11-07T04:09:34Z",
+        "AimedDepartureTime": "2026-11-07T03:52:21Z",
+        "ExpectedDepartureTime": null
+       },
+       "OnwardCalls": {
+        "OnwardCall": [
+         {
+          "StopPointRef": "16929",
+          "StopPointName": "Washington St & Taylor St",
+          "DestinationDisplay": "Market & Powell",
+          "AimedArrivalTime": "2026-11-07T03:53:04Z",
+          "ExpectedArrivalTime": "2026-11-07T04:10:17Z",
+          "AimedDepartureTime": "2026-11-07T03:53:04Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "16924",
+          "StopPointName": "Washington St & Mason St",
+          "DestinationDisplay": "Market & Powell",
+          "AimedArrivalTime": "2026-11-07T03:54:00Z",
+          "ExpectedArrivalTime": "2026-11-07T04:11:04Z",
+          "AimedDepartureTime": "2026-11-07T03:54:00Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "15372",
+          "StopPointName": "Washington St & Mason St / Cable Car Museum",
+          "DestinationDisplay": "Market & Powell",
+          "AimedArrivalTime": "2026-11-07T03:54:04Z",
+          "ExpectedArrivalTime": "2026-11-07T04:11:10Z",
+          "AimedDepartureTime": "2026-11-07T03:54:04Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "16927",
+          "StopPointName": "Washington St & Powell St/Chinatown",
+          "DestinationDisplay": "Market & Powell",
+          "AimedArrivalTime": "2026-11-07T03:54:54Z",
+          "ExpectedArrivalTime": "2026-11-07T04:12:10Z",
+          "AimedDepartureTime": "2026-11-07T03:54:54Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "16052",
+          "StopPointName": "Powell St & Clay St",
+          "DestinationDisplay": "Market & Powell",
+          "AimedArrivalTime": "2026-11-07T03:55:56Z",
+          "ExpectedArrivalTime": "2026-11-07T04:12:54Z",
+          "AimedDepartureTime": "2026-11-07T03:55:56Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "16074",
+          "StopPointName": "Powell St & Sacramento St",
+          "DestinationDisplay": "Market & Powell",
+          "AimedArrivalTime": "2026-11-07T03:56:42Z",
+          "ExpectedArrivalTime": "2026-11-07T04:13:21Z",
+          "AimedDepartureTime": "2026-11-07T03:56:42Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "16050",
+          "StopPointName": "Powell St & California St",
+          "DestinationDisplay": "Market & Powell",
+          "AimedArrivalTime": "2026-11-07T03:57:21Z",
+          "ExpectedArrivalTime": "2026-11-07T04:13:54Z",
+          "AimedDepartureTime": "2026-11-07T03:57:21Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "16070",
+          "StopPointName": "Powell St & Pine St",
+          "DestinationDisplay": "Market & Powell",
+          "AimedArrivalTime": "2026-11-07T03:58:21Z",
+          "ExpectedArrivalTime": "2026-11-07T04:14:47Z",
+          "AimedDepartureTime": "2026-11-07T03:58:21Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "16048",
+          "StopPointName": "Powell St & Bush St",
+          "DestinationDisplay": "Market & Powell",
+          "AimedArrivalTime": "2026-11-07T03:59:10Z",
+          "ExpectedArrivalTime": "2026-11-07T04:15:21Z",
+          "AimedDepartureTime": "2026-11-07T03:59:10Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "16076",
+          "StopPointName": "Powell St & Sutter St",
+          "DestinationDisplay": "Market & Powell",
+          "AimedArrivalTime": "2026-11-07T04:00:07Z",
+          "ExpectedArrivalTime": "2026-11-07T04:15:57Z",
+          "AimedDepartureTime": "2026-11-07T04:00:07Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "16071",
+          "StopPointName": "Powell St & Post St/Union Square",
+          "DestinationDisplay": "Market & Powell",
+          "AimedArrivalTime": "2026-11-07T04:00:42Z",
+          "ExpectedArrivalTime": "2026-11-07T04:16:40Z",
+          "AimedDepartureTime": "2026-11-07T04:00:42Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "16057",
+          "StopPointName": "Powell St & Geary St/Union Square",
+          "DestinationDisplay": "Market & Powell",
+          "AimedArrivalTime": "2026-11-07T04:01:31Z",
+          "ExpectedArrivalTime": "2026-11-07T04:17:32Z",
+          "AimedDepartureTime": "2026-11-07T04:01:31Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "16067",
+          "StopPointName": "Powell St & O'Farrell St",
+          "DestinationDisplay": "Market & Powell",
+          "AimedArrivalTime": "2026-11-07T04:02:21Z",
+          "ExpectedArrivalTime": "2026-11-07T04:18:13Z",
+          "AimedDepartureTime": "2026-11-07T04:02:21Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "16064",
+          "StopPointName": "Powell St & Market St",
+          "DestinationDisplay": "Market & Powell",
+          "AimedArrivalTime": "2026-11-07T04:04:00Z",
+          "ExpectedArrivalTime": "2026-11-07T04:20:22Z",
+          "AimedDepartureTime": "2026-11-07T04:04:00Z",
+          "ExpectedDepartureTime": null
+         }
+        ]
+       }
+      }
+     },
+     {
+      "RecordedAtTime": "2026-11-07T04:09:04Z",
+      "ValidUntilTime": "",
+      "MonitoredVehicleJourney": {
+       "LineRef": "L",
+       "DirectionRef": "IB",
+       "FramedVehicleJourneyRef": {
+        "DataFrameRef": "2026-11-06",
+        "DatedVehicleJourneyRef": "12134517_M11"
+       },
+       "PublishedLineName": "TARAVAL",
+       "OperatorRef": "SF",
+       "OriginRef": "16932",
+       "OriginName": "Wawona/46th Ave /Sf Zoo",
+       "DestinationRef": "14509",
+       "DestinationName": "The Embarcadero & Folsom St",
+       "Monitored": true,
+       "InCongestion": null,
+       "VehicleLocation": {
+        "Longitude": "-122.417931",
+        "Latitude": "37.7761612"
+       },
+       "Bearing": "45.0000000000",
+       "Occupancy": "seatsAvailable",
+       "VehicleRef": "2001",
+       "MonitoredCall": {
+        "StopPointRef": "15727",
+        "StopPointName": "Metro Civic Center Station/Downtn",
+        "DestinationDisplay": "Third St & 23rd St",
+        "VehicleLocationAtStop": "",
+        "VehicleAtStop": "",
+        "AimedArrivalTime": "2026-11-07T04:11:15Z",
+        "ExpectedArrivalTime": "2026-11-07T04:09:48Z",
+        "AimedDepartureTime": "2026-11-07T04:11:15Z",
+        "ExpectedDepartureTime": null
+       },
+       "OnwardCalls": {
+        "OnwardCall": [
+         {
+          "StopPointRef": "15417",
+          "StopPointName": "Metro Powell Station/Downtown",
+          "DestinationDisplay": "Third St & 23rd St",
+          "AimedArrivalTime": "2026-11-07T04:12:35Z",
+          "ExpectedArrivalTime": "2026-11-07T04:11:01Z",
+          "AimedDepartureTime": "2026-11-07T04:12:35Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "15731",
+          "StopPointName": "Metro Montgomery Station/Downtown",
+          "DestinationDisplay": "Third St & 23rd St",
+          "AimedArrivalTime": "2026-11-07T04:13:49Z",
+          "ExpectedArrivalTime": "2026-11-07T04:12:23Z",
+          "AimedDepartureTime": "2026-11-07T04:13:49Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "16992",
+          "StopPointName": "Metro Embarcadero Station",
+          "DestinationDisplay": "Third St & 23rd St",
+          "AimedArrivalTime": "2026-11-07T04:15:00Z",
+          "ExpectedArrivalTime": "2026-11-07T04:14:17Z",
+          "AimedDepartureTime": "2026-11-07T04:15:00Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "14509",
+          "StopPointName": "The Embarcadero & Folsom St",
+          "DestinationDisplay": "Third St & 23rd St",
+          "AimedArrivalTime": "2026-11-07T04:18:00Z",
+          "ExpectedArrivalTime": "2026-11-07T04:16:40Z",
+          "AimedDepartureTime": "2026-11-07T04:18:00Z",
+          "ExpectedDepartureTime": null
+         }
+        ]
+       }
+      }
+     },
+     {
+      "RecordedAtTime": "2026-11-07T04:09:04Z",
+      "ValidUntilTime": "",
+      "MonitoredVehicleJourney": {
+       "LineRef": "L",
+       "DirectionRef": "IB",
+       "FramedVehicleJourneyRef": {
+        "DataFrameRef": "2026-11-06",
+        "DatedVehicleJourneyRef": "12134519_M11"
+       },
+       "PublishedLineName": "TARAVAL",
+       "OperatorRef": "SF",
+       "OriginRef": "16932",
+       "OriginName": "Wawona/46th Ave /Sf Zoo",
+       "DestinationRef": "16992",
+       "DestinationName": "Metro Embarcadero Station",
+       "Monitored": true,
+       "InCongestion": null,
+       "VehicleLocation": {
+        "Longitude": "-122.504608",
+        "Latitude": "37.7413445"
+       },
+       "Bearing": "345.0000000000",
+       "Occupancy": "seatsAvailable",
+       "VehicleRef": "2016",
+       "MonitoredCall": {
+        "StopPointRef": "16637",
+        "StopPointName": "Taraval St & 44th Ave",
+        "DestinationDisplay": "Embarcadero Station",
+        "VehicleLocationAtStop": "",
+        "VehicleAtStop": "true",
+        "AimedArrivalTime": "2026-11-07T04:08:32Z",
+        "ExpectedArrivalTime": "2026-11-07T04:09:27Z",
+        "AimedDepartureTime": "2026-11-07T04:08:32Z",
+        "ExpectedDepartureTime": null
+       },
+       "OnwardCalls": {
+        "OnwardCall": [
+         {
+          "StopPointRef": "16635",
+          "StopPointName": "Taraval St & 42nd Ave",
+          "DestinationDisplay": "Embarcadero Station",
+          "AimedArrivalTime": "2026-11-07T04:09:07Z",
+          "ExpectedArrivalTime": "2026-11-07T04:10:08Z",
+          "AimedDepartureTime": "2026-11-07T04:09:07Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "16633",
+          "StopPointName": "Taraval St & 40th Ave",
+          "DestinationDisplay": "Embarcadero Station",
+          "AimedArrivalTime": "2026-11-07T04:09:42Z",
+          "ExpectedArrivalTime": "2026-11-07T04:10:55Z",
+          "AimedDepartureTime": "2026-11-07T04:09:42Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "16641",
+          "StopPointName": "Taraval St & Sunset Blvd",
+          "DestinationDisplay": "Embarcadero Station",
+          "AimedArrivalTime": "2026-11-07T04:11:00Z",
+          "ExpectedArrivalTime": "2026-11-07T04:12:30Z",
+          "AimedDepartureTime": "2026-11-07T04:11:00Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "16629",
+          "StopPointName": "Taraval St & 32nd Ave",
+          "DestinationDisplay": "Embarcadero Station",
+          "AimedArrivalTime": "2026-11-07T04:12:48Z",
+          "ExpectedArrivalTime": "2026-11-07T04:14:16Z",
+          "AimedDepartureTime": "2026-11-07T04:12:48Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "16627",
+          "StopPointName": "Taraval St & 30th Ave",
+          "DestinationDisplay": "Embarcadero Station",
+          "AimedArrivalTime": "2026-11-07T04:13:36Z",
+          "ExpectedArrivalTime": "2026-11-07T04:15:15Z",
+          "AimedDepartureTime": "2026-11-07T04:13:36Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "16623",
+          "StopPointName": "Taraval St & 26th Ave",
+          "DestinationDisplay": "Embarcadero Station",
+          "AimedArrivalTime": "2026-11-07T04:15:15Z",
+          "ExpectedArrivalTime": "2026-11-07T04:16:45Z",
+          "AimedDepartureTime": "2026-11-07T04:15:15Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "16619",
+          "StopPointName": "Taraval St & 22nd Ave",
+          "DestinationDisplay": "Embarcadero Station",
+          "AimedArrivalTime": "2026-11-07T04:17:09Z",
+          "ExpectedArrivalTime": "2026-11-07T04:18:23Z",
+          "AimedDepartureTime": "2026-11-07T04:17:09Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "16617",
+          "StopPointName": "Taraval St & 19th Ave",
+          "DestinationDisplay": "Embarcadero Station",
+          "AimedArrivalTime": "2026-11-07T04:18:00Z",
+          "ExpectedArrivalTime": "2026-11-07T04:20:03Z",
+          "AimedDepartureTime": "2026-11-07T04:18:00Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "16615",
+          "StopPointName": "Taraval St & 17th Ave",
+          "DestinationDisplay": "Embarcadero Station",
+          "AimedArrivalTime": "2026-11-07T04:19:10Z",
+          "ExpectedArrivalTime": "2026-11-07T04:21:04Z",
+          "AimedDepartureTime": "2026-11-07T04:19:10Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "18137",
+          "StopPointName": "Ulloa St & 14th Ave",
+          "DestinationDisplay": "Embarcadero Station",
+          "AimedArrivalTime": "2026-11-07T04:21:40Z",
+          "ExpectedArrivalTime": "2026-11-07T04:23:23Z",
+          "AimedDepartureTime": "2026-11-07T04:21:40Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "16740",
+          "StopPointName": "West Portal Station",
+          "DestinationDisplay": "Embarcadero Station",
+          "AimedArrivalTime": "2026-11-07T04:24:00Z",
+          "ExpectedArrivalTime": "2026-11-07T04:25:37Z",
+          "AimedDepartureTime": "2026-11-07T04:24:00Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "15730",
+          "StopPointName": "Metro Forest Hill Station/Downtown",
+          "DestinationDisplay": "Embarcadero Station",
+          "AimedArrivalTime": "2026-11-07T04:25:53Z",
+          "ExpectedArrivalTime": "2026-11-07T04:28:19Z",
+          "AimedDepartureTime": "2026-11-07T04:25:53Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "15728",
+          "StopPointName": "Metro Castro Station/Downtown",
+          "DestinationDisplay": "Embarcadero Station",
+          "AimedArrivalTime": "2026-11-07T04:31:00Z",
+          "ExpectedArrivalTime": "2026-11-07T04:31:04Z",
+          "AimedDepartureTime": "2026-11-07T04:31:00Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "15726",
+          "StopPointName": "Metro Church Station/Downtown",
+          "DestinationDisplay": "Embarcadero Station",
+          "AimedArrivalTime": "2026-11-07T04:32:08Z",
+          "ExpectedArrivalTime": "2026-11-07T04:32:41Z",
+          "AimedDepartureTime": "2026-11-07T04:32:08Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "15419",
+          "StopPointName": "Metro Van Ness Station",
+          "DestinationDisplay": "Embarcadero Station",
+          "AimedArrivalTime": "2026-11-07T04:34:00Z",
+          "ExpectedArrivalTime": "2026-11-07T04:34:45Z",
+          "AimedDepartureTime": "2026-11-07T04:34:00Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "15727",
+          "StopPointName": "Metro Civic Center Station/Downtn",
+          "DestinationDisplay": "Embarcadero Station",
+          "AimedArrivalTime": "2026-11-07T04:35:15Z",
+          "ExpectedArrivalTime": "2026-11-07T04:36:16Z",
+          "AimedDepartureTime": "2026-11-07T04:35:15Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "15417",
+          "StopPointName": "Metro Powell Station/Downtown",
+          "DestinationDisplay": "Embarcadero Station",
+          "AimedArrivalTime": "2026-11-07T04:36:35Z",
+          "ExpectedArrivalTime": "2026-11-07T04:37:25Z",
+          "AimedDepartureTime": "2026-11-07T04:36:35Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "15731",
+          "StopPointName": "Metro Montgomery Station/Downtown",
+          "DestinationDisplay": "Embarcadero Station",
+          "AimedArrivalTime": "2026-11-07T04:37:49Z",
+          "ExpectedArrivalTime": "2026-11-07T04:39:00Z",
+          "AimedDepartureTime": "2026-11-07T04:37:49Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "16992",
+          "StopPointName": "Metro Embarcadero Station",
+          "DestinationDisplay": "Embarcadero Station",
+          "AimedArrivalTime": "2026-11-07T04:39:00Z",
+          "ExpectedArrivalTime": "2026-11-07T04:40:44Z",
+          "AimedDepartureTime": "2026-11-07T04:39:00Z",
+          "ExpectedDepartureTime": null
+         }
+        ]
+       }
+      }
+     },
+     {
+      "RecordedAtTime": "2026-11-07T04:09:04Z",
+      "ValidUntilTime": "",
+      "MonitoredVehicleJourney": {
+       "LineRef": "N",
+       "DirectionRef": "OB",
+       "FramedVehicleJourneyRef": {
+        "DataFrameRef": "2026-11-06",
+        "DatedVehicleJourneyRef": "12135819_M11"
+       },
+       "PublishedLineName": "JUDAH",
+       "OperatorRef": "SF",
+       "OriginRef": "15240",
+       "OriginName": "King St & 4th St",
+       "DestinationRef": "17219",
+       "DestinationName": "Judah/La Playa/Ocean Beach",
+       "Monitored": true,
+       "InCongestion": null,
+       "VehicleLocation": {
+        "Longitude": "-122.387939",
+        "Latitude": "37.7854042"
+       },
+       "Bearing": "0.0000000000",
+       "Occupancy": "seatsAvailable",
+       "VehicleRef": "2017",
+       "MonitoredCall": {
+        "StopPointRef": "14510",
+        "StopPointName": "The Embarcadero & Folsom St",
+        "DestinationDisplay": "Ocean Beach",
+        "VehicleLocationAtStop": "",
+        "VehicleAtStop": "",
+        "AimedArrivalTime": "2026-11-07T04:14:00Z",
+        "ExpectedArrivalTime": "2026-11-07T04:11:50Z",
+        "AimedDepartureTime": "2026-11-07T04:14:00Z",
+        "ExpectedDepartureTime": null
+       },
+       "OnwardCalls": {
+        "OnwardCall": [
+         {
+          "StopPointRef": "17217",
+          "StopPointName": "Metro Embarcadero Station",
+          "DestinationDisplay": "Ocean Beach",
+          "AimedArrivalTime": "2026-11-07T04:17:00Z",
+          "ExpectedArrivalTime": "2026-11-07T04:14:12Z",
+          "AimedDepartureTime": "2026-11-07T04:17:00Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "16994",
+          "StopPointName": "Metro Montgomery Station/Outbound",
+          "DestinationDisplay": "Ocean Beach",
+          "AimedArrivalTime": "2026-11-07T04:18:07Z",
+          "ExpectedArrivalTime": "2026-11-07T04:16:06Z",
+          "AimedDepartureTime": "2026-11-07T04:18:07Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "16995",
+          "StopPointName": "Metro Powell Station/Outbound",
+          "DestinationDisplay": "Ocean Beach",
+          "AimedArrivalTime": "2026-11-07T04:19:25Z",
+          "ExpectedArrivalTime": "2026-11-07T04:17:28Z",
+          "AimedDepartureTime": "2026-11-07T04:19:25Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "16997",
+          "StopPointName": "Metro Civic Center Station/Outbd",
+          "DestinationDisplay": "Ocean Beach",
+          "AimedArrivalTime": "2026-11-07T04:20:52Z",
+          "ExpectedArrivalTime": "2026-11-07T04:19:01Z",
+          "AimedDepartureTime": "2026-11-07T04:20:52Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "16996",
+          "StopPointName": "Van Ness Station Outbound",
+          "DestinationDisplay": "Ocean Beach",
+          "AimedArrivalTime": "2026-11-07T04:22:00Z",
+          "ExpectedArrivalTime": "2026-11-07T04:20:20Z",
+          "AimedDepartureTime": "2026-11-07T04:22:00Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "14447",
+          "StopPointName": "Duboce Ave & Church St",
+          "DestinationDisplay": "Ocean Beach",
+          "AimedArrivalTime": "2026-11-07T04:26:04Z",
+          "ExpectedArrivalTime": "2026-11-07T04:23:36Z",
+          "AimedDepartureTime": "2026-11-07T04:26:04Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "17252",
+          "StopPointName": "Duboce St/Noe St/Duboce Park",
+          "DestinationDisplay": "Ocean Beach",
+          "AimedArrivalTime": "2026-11-07T04:27:17Z",
+          "ExpectedArrivalTime": "2026-11-07T04:25:39Z",
+          "AimedDepartureTime": "2026-11-07T04:27:17Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "13909",
+          "StopPointName": "Carl St & Cole St",
+          "DestinationDisplay": "Ocean Beach",
+          "AimedArrivalTime": "2026-11-07T04:32:13Z",
+          "ExpectedArrivalTime": "2026-11-07T04:28:48Z",
+          "AimedDepartureTime": "2026-11-07T04:32:13Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "13914",
+          "StopPointName": "Carl St & Stanyan St",
+          "DestinationDisplay": "Ocean Beach",
+          "AimedArrivalTime": "2026-11-07T04:33:03Z",
+          "ExpectedArrivalTime": "2026-11-07T04:30:03Z",
+          "AimedDepartureTime": "2026-11-07T04:33:03Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "13912",
+          "StopPointName": "Carl St & Hillway Ave",
+          "DestinationDisplay": "Ocean Beach",
+          "AimedArrivalTime": "2026-11-07T04:34:00Z",
+          "ExpectedArrivalTime": "2026-11-07T04:31:28Z",
+          "AimedDepartureTime": "2026-11-07T04:34:00Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "15118",
+          "StopPointName": "Irving St & 2nd Ave",
+          "DestinationDisplay": "Ocean Beach",
+          "AimedArrivalTime": "2026-11-07T04:35:03Z",
+          "ExpectedArrivalTime": "2026-11-07T04:32:40Z",
+          "AimedDepartureTime": "2026-11-07T04:35:03Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "18032",
+          "StopPointName": "Irving St & 6th Ave",
+          "DestinationDisplay": "Ocean Beach",
+          "AimedArrivalTime": "2026-11-07T04:36:53Z",
+          "ExpectedArrivalTime": "2026-11-07T04:34:08Z",
+          "AimedDepartureTime": "2026-11-07T04:36:53Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "17999",
+          "StopPointName": "9th Ave & Irving St",
+          "DestinationDisplay": "Ocean Beach",
+          "AimedArrivalTime": "2026-11-07T04:38:41Z",
+          "ExpectedArrivalTime": "2026-11-07T04:36:15Z",
+          "AimedDepartureTime": "2026-11-07T04:38:41Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "15193",
+          "StopPointName": "Judah St & 9th Ave",
+          "DestinationDisplay": "Ocean Beach",
+          "AimedArrivalTime": "2026-11-07T04:39:29Z",
+          "ExpectedArrivalTime": "2026-11-07T04:37:35Z",
+          "AimedDepartureTime": "2026-11-07T04:39:29Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "15195",
+          "StopPointName": "Judah St & 12th Ave",
+          "DestinationDisplay": "Ocean Beach",
+          "AimedArrivalTime": "2026-11-07T04:40:36Z",
+          "ExpectedArrivalTime": "2026-11-07T04:38:53Z",
+          "AimedDepartureTime": "2026-11-07T04:40:36Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "15219",
+          "StopPointName": "Judah St & Funston Ave",
+          "DestinationDisplay": "Ocean Beach",
+          "AimedArrivalTime": "2026-11-07T04:41:01Z",
+          "ExpectedArrivalTime": "2026-11-07T04:39:25Z",
+          "AimedDepartureTime": "2026-11-07T04:41:01Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "15198",
+          "StopPointName": "Judah St & 16th Ave",
+          "DestinationDisplay": "Ocean Beach",
+          "AimedArrivalTime": "2026-11-07T04:42:24Z",
+          "ExpectedArrivalTime": "2026-11-07T04:40:28Z",
+          "AimedDepartureTime": "2026-11-07T04:42:24Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "15199",
+          "StopPointName": "Judah St & 19th Ave",
+          "DestinationDisplay": "Ocean Beach",
+          "AimedArrivalTime": "2026-11-07T04:44:00Z",
+          "ExpectedArrivalTime": "2026-11-07T04:42:06Z",
+          "AimedDepartureTime": "2026-11-07T04:44:00Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "15202",
+          "StopPointName": "Judah St & 23rd Ave",
+          "DestinationDisplay": "Ocean Beach",
+          "AimedArrivalTime": "2026-11-07T04:45:37Z",
+          "ExpectedArrivalTime": "2026-11-07T04:43:48Z",
+          "AimedDepartureTime": "2026-11-07T04:45:37Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "15203",
+          "StopPointName": "Judah St & 25th Ave",
+          "DestinationDisplay": "Ocean Beach",
+          "AimedArrivalTime": "2026-11-07T04:46:26Z",
+          "ExpectedArrivalTime": "2026-11-07T04:44:37Z",
+          "AimedDepartureTime": "2026-11-07T04:46:26Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "15205",
+          "StopPointName": "Judah St & 28th Ave",
+          "DestinationDisplay": "Ocean Beach",
+          "AimedArrivalTime": "2026-11-07T04:47:40Z",
+          "ExpectedArrivalTime": "2026-11-07T04:45:35Z",
+          "AimedDepartureTime": "2026-11-07T04:47:40Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "15207",
+          "StopPointName": "Judah St & 31st Ave",
+          "DestinationDisplay": "Ocean Beach",
+          "AimedArrivalTime": "2026-11-07T04:48:53Z",
+          "ExpectedArrivalTime": "2026-11-07T04:46:54Z",
+          "AimedDepartureTime": "2026-11-07T04:48:53Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "15209",
+          "StopPointName": "Judah St & 34th Ave",
+          "DestinationDisplay": "Ocean Beach",
+          "AimedArrivalTime": "2026-11-07T04:50:07Z",
+          "ExpectedArrivalTime": "2026-11-07T04:48:00Z",
+          "AimedDepartureTime": "2026-11-07T04:50:07Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "15224",
+          "StopPointName": "Judah St & Sunset Blvd",
+          "DestinationDisplay": "Ocean Beach",
+          "AimedArrivalTime": "2026-11-07T04:51:00Z",
+          "ExpectedArrivalTime": "2026-11-07T04:49:03Z",
+          "AimedDepartureTime": "2026-11-07T04:51:00Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "15211",
+          "StopPointName": "Judah St & 40th Ave",
+          "DestinationDisplay": "Ocean Beach",
+          "AimedArrivalTime": "2026-11-07T04:52:26Z",
+          "ExpectedArrivalTime": "2026-11-07T04:50:23Z",
+          "AimedDepartureTime": "2026-11-07T04:52:26Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "15213",
+          "StopPointName": "Judah St & 43rd Ave",
+          "DestinationDisplay": "Ocean Beach",
+          "AimedArrivalTime": "2026-11-07T04:53:41Z",
+          "ExpectedArrivalTime": "2026-11-07T04:51:34Z",
+          "AimedDepartureTime": "2026-11-07T04:53:41Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "15215",
+          "StopPointName": "Judah St & 46th Ave",
+          "DestinationDisplay": "Ocean Beach",
+          "AimedArrivalTime": "2026-11-07T04:54:58Z",
+          "ExpectedArrivalTime": "2026-11-07T04:52:49Z",
+          "AimedDepartureTime": "2026-11-07T04:54:58Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "17219",
+          "StopPointName": "Judah/La Playa/Ocean Beach",
+          "DestinationDisplay": "Ocean Beach",
+          "AimedArrivalTime": "2026-11-07T04:56:00Z",
+          "ExpectedArrivalTime": "2026-11-07T04:54:54Z",
+          "AimedDepartureTime": "2026-11-07T04:56:00Z",
+          "ExpectedDepartureTime": null
+         }
+        ]
+       }
+      }
+     },
+     {
+      "RecordedAtTime": "2026-11-07T04:09:04Z",
+      "ValidUntilTime": "",
+      "MonitoredVehicleJourney": {
+       "LineRef": "M",
+       "DirectionRef": "OB",
+       "FramedVehicleJourneyRef": {
+        "DataFrameRef": "2026-11-06",
+        "DatedVehicleJourneyRef": "12135225_M11"
+       },
+       "PublishedLineName": "OCEAN VIEW",
+       "OperatorRef": "SF",
+       "OriginRef": "17217",
+       "OriginName": "Metro Embarcadero Station",
+       "DestinationRef": "16269",
+       "DestinationName": "San Jose Ave & Niagra Ave",
+       "Monitored": true,
+       "InCongestion": null,
+       "VehicleLocation": {
+        "Longitude": "-122.473587",
+        "Latitude": "37.7182045"
+       },
+       "Bearing": "135.0000000000",
+       "Occupancy": "seatsAvailable",
+       "VehicleRef": "2019",
+       "MonitoredCall": {
+        "StopPointRef": "13376",
+        "StopPointName": "19th Ave & Randolph St",
+        "DestinationDisplay": "Balboa Park via S.F. State",
+        "VehicleLocationAtStop": "",
+        "VehicleAtStop": "true",
+        "AimedArrivalTime": "2026-11-07T04:10:58Z",
+        "ExpectedArrivalTime": "2026-11-07T04:09:23Z",
+        "AimedDepartureTime": "2026-11-07T04:10:58Z",
+        "ExpectedDepartureTime": null
+       },
+       "OnwardCalls": {
+        "OnwardCall": [
+         {
+          "StopPointRef": "13387",
+          "StopPointName": "19th Ave & Randolph St",
+          "DestinationDisplay": "Balboa Park via S.F. State",
+          "AimedArrivalTime": "2026-11-07T04:12:03Z",
+          "ExpectedArrivalTime": "2026-11-07T04:10:18Z",
+          "AimedDepartureTime": "2026-11-07T04:12:03Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "16173",
+          "StopPointName": "Randolph St & Arch St",
+          "DestinationDisplay": "Balboa Park via S.F. State",
+          "AimedArrivalTime": "2026-11-07T04:13:10Z",
+          "ExpectedArrivalTime": "2026-11-07T04:11:17Z",
+          "AimedDepartureTime": "2026-11-07T04:13:10Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "16175",
+          "StopPointName": "Randolph St & Bright St",
+          "DestinationDisplay": "Balboa Park via S.F. State",
+          "AimedArrivalTime": "2026-11-07T04:14:33Z",
+          "ExpectedArrivalTime": "2026-11-07T04:12:44Z",
+          "AimedDepartureTime": "2026-11-07T04:14:33Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "15825",
+          "StopPointName": "Orizaba Ave & Broad St",
+          "DestinationDisplay": "Balboa Park via S.F. State",
+          "AimedArrivalTime": "2026-11-07T04:15:27Z",
+          "ExpectedArrivalTime": "2026-11-07T04:13:49Z",
+          "AimedDepartureTime": "2026-11-07T04:15:27Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "13716",
+          "StopPointName": "Broad St & Capitol Ave",
+          "DestinationDisplay": "Balboa Park via S.F. State",
+          "AimedArrivalTime": "2026-11-07T04:16:53Z",
+          "ExpectedArrivalTime": "2026-11-07T04:14:57Z",
+          "AimedDepartureTime": "2026-11-07T04:16:53Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "13719",
+          "StopPointName": "Broad St & Plymouth Ave",
+          "DestinationDisplay": "Balboa Park via S.F. State",
+          "AimedArrivalTime": "2026-11-07T04:18:00Z",
+          "ExpectedArrivalTime": "2026-11-07T04:16:17Z",
+          "AimedDepartureTime": "2026-11-07T04:18:00Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "16259",
+          "StopPointName": "San Jose Ave & Farallones St",
+          "DestinationDisplay": "Balboa Park via S.F. State",
+          "AimedArrivalTime": "2026-11-07T04:20:18Z",
+          "ExpectedArrivalTime": "2026-11-07T04:17:46Z",
+          "AimedDepartureTime": "2026-11-07T04:20:18Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "16266",
+          "StopPointName": "San Jose Ave & Lakeview Ave",
+          "DestinationDisplay": "Balboa Park via S.F. State",
+          "AimedArrivalTime": "2026-11-07T04:22:06Z",
+          "ExpectedArrivalTime": "2026-11-07T04:18:39Z",
+          "AimedDepartureTime": "2026-11-07T04:22:06Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "16269",
+          "StopPointName": "San Jose Ave & Niagra Ave",
+          "DestinationDisplay": "Balboa Park via S.F. State",
+          "AimedArrivalTime": "2026-11-07T04:25:00Z",
+          "ExpectedArrivalTime": "2026-11-07T04:20:49Z",
+          "AimedDepartureTime": "2026-11-07T04:25:00Z",
+          "ExpectedDepartureTime": null
+         }
+        ]
+       }
+      }
+     },
+     {
+      "RecordedAtTime": "2026-11-07T04:09:04Z",
+      "ValidUntilTime": "",
+      "MonitoredVehicleJourney": {
+       "LineRef": "N",
+       "DirectionRef": "IB",
+       "FramedVehicleJourneyRef": {
+        "DataFrameRef": "2026-11-06",
+        "DatedVehicleJourneyRef": "12135944_M11"
+       },
+       "PublishedLineName": "JUDAH",
+       "OperatorRef": "SF",
+       "OriginRef": "15223",
+       "OriginName": "Judah/La Playa/Ocean Beach",
+       "DestinationRef": "15239",
+       "DestinationName": "King St & 4th St",
+       "Monitored": true,
+       "InCongestion": null,
+       "VehicleLocation": {
+        "Longitude": "-122.499962",
+        "Latitude": "37.760685"
+       },
+       "Bearing": "255.0000000000",
+       "Occupancy": "seatsAvailable",
+       "VehicleRef": "2020",
+       "MonitoredCall": {
+        "StopPointRef": "15212",
+        "StopPointName": "Judah St & 40th Ave",
+        "DestinationDisplay": "Caltrain/Ballpark",
+        "VehicleLocationAtStop": "",
+        "VehicleAtStop": "true",
+        "AimedArrivalTime": "2026-11-07T04:07:48Z",
+        "ExpectedArrivalTime": "2026-11-07T04:09:13Z",
+        "AimedDepartureTime": "2026-11-07T04:07:48Z",
+        "ExpectedDepartureTime": null
+       },
+       "OnwardCalls": {
+        "OnwardCall": [
+         {
+          "StopPointRef": "15225",
+          "StopPointName": "Judah St & Sunset Blvd",
+          "DestinationDisplay": "Caltrain/Ballpark",
+          "AimedArrivalTime": "2026-11-07T04:09:00Z",
+          "ExpectedArrivalTime": "2026-11-07T04:10:47Z",
+          "AimedDepartureTime": "2026-11-07T04:09:00Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "15210",
+          "StopPointName": "Judah St & 34th Ave",
+          "DestinationDisplay": "Caltrain/Ballpark",
+          "AimedArrivalTime": "2026-11-07T04:09:59Z",
+          "ExpectedArrivalTime": "2026-11-07T04:11:37Z",
+          "AimedDepartureTime": "2026-11-07T04:09:59Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "15208",
+          "StopPointName": "Judah St & 31st Ave",
+          "DestinationDisplay": "Caltrain/Ballpark",
+          "AimedArrivalTime": "2026-11-07T04:11:24Z",
+          "ExpectedArrivalTime": "2026-11-07T04:12:51Z",
+          "AimedDepartureTime": "2026-11-07T04:11:24Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "15206",
+          "StopPointName": "Judah St & 28th Ave",
+          "DestinationDisplay": "Caltrain/Ballpark",
+          "AimedArrivalTime": "2026-11-07T04:12:27Z",
+          "ExpectedArrivalTime": "2026-11-07T04:14:03Z",
+          "AimedDepartureTime": "2026-11-07T04:12:27Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "15204",
+          "StopPointName": "Judah St & 25th Ave",
+          "DestinationDisplay": "Caltrain/Ballpark",
+          "AimedArrivalTime": "2026-11-07T04:13:41Z",
+          "ExpectedArrivalTime": "2026-11-07T04:14:58Z",
+          "AimedDepartureTime": "2026-11-07T04:13:41Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "15201",
+          "StopPointName": "Judah St & 22nd Ave",
+          "DestinationDisplay": "Caltrain/Ballpark",
+          "AimedArrivalTime": "2026-11-07T04:15:05Z",
+          "ExpectedArrivalTime": "2026-11-07T04:16:28Z",
+          "AimedDepartureTime": "2026-11-07T04:15:05Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "15200",
+          "StopPointName": "Judah St & 19th Ave",
+          "DestinationDisplay": "Caltrain/Ballpark",
+          "AimedArrivalTime": "2026-11-07T04:16:00Z",
+          "ExpectedArrivalTime": "2026-11-07T04:18:16Z",
+          "AimedDepartureTime": "2026-11-07T04:16:00Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "15197",
+          "StopPointName": "Judah St & 15th Ave",
+          "DestinationDisplay": "Caltrain/Ballpark",
+          "AimedArrivalTime": "2026-11-07T04:17:51Z",
+          "ExpectedArrivalTime": "2026-11-07T04:19:36Z",
+          "AimedDepartureTime": "2026-11-07T04:17:51Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "15220",
+          "StopPointName": "Judah St & Funston Ave",
+          "DestinationDisplay": "Caltrain/Ballpark",
+          "AimedArrivalTime": "2026-11-07T04:18:47Z",
+          "ExpectedArrivalTime": "2026-11-07T04:20:18Z",
+          "AimedDepartureTime": "2026-11-07T04:18:47Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "15196",
+          "StopPointName": "Judah St & 12th Ave",
+          "DestinationDisplay": "Caltrain/Ballpark",
+          "AimedArrivalTime": "2026-11-07T04:19:13Z",
+          "ExpectedArrivalTime": "2026-11-07T04:20:49Z",
+          "AimedDepartureTime": "2026-11-07T04:19:13Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "15194",
+          "StopPointName": "Judah St & 9th Ave",
+          "DestinationDisplay": "Caltrain/Ballpark",
+          "AimedArrivalTime": "2026-11-07T04:20:34Z",
+          "ExpectedArrivalTime": "2026-11-07T04:22:35Z",
+          "AimedDepartureTime": "2026-11-07T04:20:34Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "17996",
+          "StopPointName": "Irving St & 8th Ave",
+          "DestinationDisplay": "Caltrain/Ballpark",
+          "AimedArrivalTime": "2026-11-07T04:21:59Z",
+          "ExpectedArrivalTime": "2026-11-07T04:24:22Z",
+          "AimedDepartureTime": "2026-11-07T04:21:59Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "18031",
+          "StopPointName": "Irving St & 5th Ave",
+          "DestinationDisplay": "Caltrain/Ballpark",
+          "AimedArrivalTime": "2026-11-07T04:23:22Z",
+          "ExpectedArrivalTime": "2026-11-07T04:26:01Z",
+          "AimedDepartureTime": "2026-11-07T04:23:22Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "15124",
+          "StopPointName": "Irving St & Arguello Blvd",
+          "DestinationDisplay": "Caltrain/Ballpark",
+          "AimedArrivalTime": "2026-11-07T04:25:06Z",
+          "ExpectedArrivalTime": "2026-11-07T04:27:41Z",
+          "AimedDepartureTime": "2026-11-07T04:25:06Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "13913",
+          "StopPointName": "Carl St & Hillway Ave",
+          "DestinationDisplay": "Caltrain/Ballpark",
+          "AimedArrivalTime": "2026-11-07T04:26:00Z",
+          "ExpectedArrivalTime": "2026-11-07T04:28:40Z",
+          "AimedDepartureTime": "2026-11-07T04:26:00Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "13915",
+          "StopPointName": "Carl St & Stanyan St",
+          "DestinationDisplay": "Caltrain/Ballpark",
+          "AimedArrivalTime": "2026-11-07T04:27:03Z",
+          "ExpectedArrivalTime": "2026-11-07T04:30:07Z",
+          "AimedDepartureTime": "2026-11-07T04:27:03Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "13911",
+          "StopPointName": "Carl St & Cole St",
+          "DestinationDisplay": "Caltrain/Ballpark",
+          "AimedArrivalTime": "2026-11-07T04:27:52Z",
+          "ExpectedArrivalTime": "2026-11-07T04:31:29Z",
+          "AimedDepartureTime": "2026-11-07T04:27:52Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "17318",
+          "StopPointName": "Sunset Tunnel East Portal",
+          "DestinationDisplay": "Caltrain/Ballpark",
+          "AimedArrivalTime": "2026-11-07T04:32:55Z",
+          "ExpectedArrivalTime": "2026-11-07T04:34:40Z",
+          "AimedDepartureTime": "2026-11-07T04:32:55Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "14448",
+          "StopPointName": "Duboce Ave & Church St",
+          "DestinationDisplay": "Caltrain/Ballpark",
+          "AimedArrivalTime": "2026-11-07T04:34:00Z",
+          "ExpectedArrivalTime": "2026-11-07T04:37:01Z",
+          "AimedDepartureTime": "2026-11-07T04:34:00Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "15419",
+          "StopPointName": "Metro Van Ness Station",
+          "DestinationDisplay": "Caltrain/Ballpark",
+          "AimedArrivalTime": "2026-11-07T04:38:00Z",
+          "ExpectedArrivalTime": "2026-11-07T04:39:51Z",
+          "AimedDepartureTime": "2026-11-07T04:38:00Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "15727",
+          "StopPointName": "Metro Civic Center Station/Downtn",
+          "DestinationDisplay": "Caltrain/Ballpark",
+          "AimedArrivalTime": "2026-11-07T04:39:15Z",
+          "ExpectedArrivalTime": "2026-11-07T04:41:25Z",
+          "AimedDepartureTime": "2026-11-07T04:39:15Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "15417",
+          "StopPointName": "Metro Powell Station/Downtown",
+          "DestinationDisplay": "Caltrain/Ballpark",
+          "AimedArrivalTime": "2026-11-07T04:40:35Z",
+          "ExpectedArrivalTime": "2026-11-07T04:42:40Z",
+          "AimedDepartureTime": "2026-11-07T04:40:35Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "15731",
+          "StopPointName": "Metro Montgomery Station/Downtown",
+          "DestinationDisplay": "Caltrain/Ballpark",
+          "AimedArrivalTime": "2026-11-07T04:41:49Z",
+          "ExpectedArrivalTime": "2026-11-07T04:44:18Z",
+          "AimedDepartureTime": "2026-11-07T04:41:49Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "16992",
+          "StopPointName": "Metro Embarcadero Station",
+          "DestinationDisplay": "Caltrain/Ballpark",
+          "AimedArrivalTime": "2026-11-07T04:43:00Z",
+          "ExpectedArrivalTime": "2026-11-07T04:46:00Z",
+          "AimedDepartureTime": "2026-11-07T04:43:00Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "14509",
+          "StopPointName": "The Embarcadero & Folsom St",
+          "DestinationDisplay": "Caltrain/Ballpark",
+          "AimedArrivalTime": "2026-11-07T04:46:00Z",
+          "ExpectedArrivalTime": "2026-11-07T04:48:25Z",
+          "AimedDepartureTime": "2026-11-07T04:46:00Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "14506",
+          "StopPointName": "The Embarcadero & Brannan St",
+          "DestinationDisplay": "Caltrain/Ballpark",
+          "AimedArrivalTime": "2026-11-07T04:49:49Z",
+          "ExpectedArrivalTime": "2026-11-07T04:50:41Z",
+          "AimedDepartureTime": "2026-11-07T04:49:49Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "15234",
+          "StopPointName": "King St & 2nd St",
+          "DestinationDisplay": "Caltrain/Ballpark",
+          "AimedArrivalTime": "2026-11-07T04:52:45Z",
+          "ExpectedArrivalTime": "2026-11-07T04:53:33Z",
+          "AimedDepartureTime": "2026-11-07T04:52:45Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "15239",
+          "StopPointName": "King St & 4th St",
+          "DestinationDisplay": "Caltrain/Ballpark",
+          "AimedArrivalTime": "2026-11-07T04:56:00Z",
+          "ExpectedArrivalTime": "2026-11-07T04:57:50Z",
+          "AimedDepartureTime": "2026-11-07T04:56:00Z",
+          "ExpectedDepartureTime": null
+         }
+        ]
+       }
+      }
+     },
+     {
+      "RecordedAtTime": "2026-11-07T04:09:04Z",
+      "ValidUntilTime": "",
+      "MonitoredVehicleJourney": {
+       "LineRef": "F",
+       "DirectionRef": "IB",
+       "FramedVehicleJourneyRef": {
+        "DataFrameRef": "2026-11-06",
+        "DatedVehicleJourneyRef": "12131895_M11"
+       },
+       "PublishedLineName": "MARKET & WHARVES",
+       "OperatorRef": "SF",
+       "OriginRef": "13311",
+       "OriginName": "17th St & Castro St",
+       "DestinationRef": "15184",
+       "DestinationName": "Jones St & Beach St",
+       "Monitored": true,
+       "InCongestion": null,
+       "VehicleLocation": {
+        "Longitude": "-122.403511",
+        "Latitude": "37.7877235"
+       },
+       "Bearing": "45.0000000000",
+       "Occupancy": "seatsAvailable",
+       "VehicleRef": "1010"
+      }
+     },
+     {
+      "RecordedAtTime": "2026-11-07T04:09:04Z",
+      "ValidUntilTime": "",
+      "MonitoredVehicleJourney": {
+       "LineRef": "F",
+       "DirectionRef": "IB",
+       "FramedVehicleJourneyRef": {
+        "DataFrameRef": "2026-11-06",
+        "DatedVehicleJourneyRef": "12131893_M11"
+       },
+       "PublishedLineName": "MARKET & WHARVES",
+       "OperatorRef": "SF",
+       "OriginRef": "13311",
+       "OriginName": "17th St & Castro St",
+       "DestinationRef": "15184",
+       "DestinationName": "Jones St & Beach St",
+       "Monitored": true,
+       "InCongestion": null,
+       "VehicleLocation": {
+        "Longitude": "-122.417389",
+        "Latitude": "37.808033"
+       },
+       "Bearing": "225.0000000000",
+       "Occupancy": "seatsAvailable",
+       "VehicleRef": "1050"
+      }
+     },
+     {
+      "RecordedAtTime": "2026-11-07T04:09:04Z",
+      "ValidUntilTime": "",
+      "MonitoredVehicleJourney": {
+       "LineRef": "F",
+       "DirectionRef": "IB",
+       "FramedVehicleJourneyRef": {
+        "DataFrameRef": "2026-11-06",
+        "DatedVehicleJourneyRef": "12131894_M11"
+       },
+       "PublishedLineName": "MARKET & WHARVES",
+       "OperatorRef": "SF",
+       "OriginRef": "13311",
+       "OriginName": "17th St & Castro St",
+       "DestinationRef": "15184",
+       "DestinationName": "Jones St & Beach St",
+       "Monitored": true,
+       "InCongestion": null,
+       "VehicleLocation": {
+        "Longitude": "-122.401009",
+        "Latitude": "37.8030167"
+       },
+       "Bearing": "315.0000000000",
+       "Occupancy": "seatsAvailable",
+       "VehicleRef": "1061"
+      }
+     },
+     {
+      "RecordedAtTime": "2026-11-07T04:09:04Z",
+      "ValidUntilTime": "",
+      "MonitoredVehicleJourney": {
+       "LineRef": "T",
+       "DirectionRef": "N",
+       "FramedVehicleJourneyRef": {
+        "DataFrameRef": "2026-11-06",
+        "DatedVehicleJourneyRef": "12138605_M11"
+       },
+       "PublishedLineName": "THIRD",
+       "OperatorRef": "SF",
+       "OriginRef": "17398",
+       "OriginName": "Bayshore Blvd & Sunnydale Ave",
+       "DestinationRef": "17876",
+       "DestinationName": "Chinatown - Rose Pak Station",
+       "Monitored": true,
+       "InCongestion": null,
+       "VehicleLocation": {
+        "Longitude": "-122.394112",
+        "Latitude": "37.7257881"
+       },
+       "Bearing": "15.0000000000",
+       "Occupancy": "seatsAvailable",
+       "VehicleRef": "2070",
+       "MonitoredCall": {
+        "StopPointRef": "17345",
+        "StopPointName": "Third Street & Williams Ave",
+        "DestinationDisplay": "Chinatown",
+        "VehicleLocationAtStop": "",
+        "VehicleAtStop": "",
+        "AimedArrivalTime": "2026-11-07T04:09:20Z",
+        "ExpectedArrivalTime": "2026-11-07T04:09:45Z",
+        "AimedDepartureTime": "2026-11-07T04:09:20Z",
+        "ExpectedDepartureTime": null
+       },
+       "OnwardCalls": {
+        "OnwardCall": [
+         {
+          "StopPointRef": "17401",
+          "StopPointName": "Third Street/Revere/Shafter",
+          "DestinationDisplay": "Chinatown",
+          "AimedArrivalTime": "2026-11-07T04:10:46Z",
+          "ExpectedArrivalTime": "2026-11-07T04:11:56Z",
+          "AimedDepartureTime": "2026-11-07T04:10:46Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "17402",
+          "StopPointName": "Third Street/Oakdale/Palou",
+          "DestinationDisplay": "Chinatown",
+          "AimedArrivalTime": "2026-11-07T04:12:00Z",
+          "ExpectedArrivalTime": "2026-11-07T04:13:17Z",
+          "AimedDepartureTime": "2026-11-07T04:12:00Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "17403",
+          "StopPointName": "Third Street/Kirkwood/La Salle",
+          "DestinationDisplay": "Chinatown",
+          "AimedArrivalTime": "2026-11-07T04:13:38Z",
+          "ExpectedArrivalTime": "2026-11-07T04:15:12Z",
+          "AimedDepartureTime": "2026-11-07T04:13:38Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "17404",
+          "StopPointName": "Third Street/Hudson/Innes",
+          "DestinationDisplay": "Chinatown",
+          "AimedArrivalTime": "2026-11-07T04:14:47Z",
+          "ExpectedArrivalTime": "2026-11-07T04:16:35Z",
+          "AimedDepartureTime": "2026-11-07T04:14:47Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "17352",
+          "StopPointName": "Third Street & Evans Ave",
+          "DestinationDisplay": "Chinatown",
+          "AimedArrivalTime": "2026-11-07T04:16:11Z",
+          "ExpectedArrivalTime": "2026-11-07T04:18:34Z",
+          "AimedDepartureTime": "2026-11-07T04:16:11Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "17353",
+          "StopPointName": "Third Street & Marin St",
+          "DestinationDisplay": "Chinatown",
+          "AimedArrivalTime": "2026-11-07T04:19:00Z",
+          "ExpectedArrivalTime": "2026-11-07T04:22:05Z",
+          "AimedDepartureTime": "2026-11-07T04:19:00Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "17354",
+          "StopPointName": "Third Street & 23rd St",
+          "DestinationDisplay": "Chinatown",
+          "AimedArrivalTime": "2026-11-07T04:21:46Z",
+          "ExpectedArrivalTime": "2026-11-07T04:25:42Z",
+          "AimedDepartureTime": "2026-11-07T04:21:46Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "17355",
+          "StopPointName": "Third Street & 20th St",
+          "DestinationDisplay": "Chinatown",
+          "AimedArrivalTime": "2026-11-07T04:24:00Z",
+          "ExpectedArrivalTime": "2026-11-07T04:27:50Z",
+          "AimedDepartureTime": "2026-11-07T04:24:00Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "17356",
+          "StopPointName": "Ucsf Medical Center (Mariposa)",
+          "DestinationDisplay": "Chinatown",
+          "AimedArrivalTime": "2026-11-07T04:26:28Z",
+          "ExpectedArrivalTime": "2026-11-07T04:30:22Z",
+          "AimedDepartureTime": "2026-11-07T04:26:28Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "17357",
+          "StopPointName": "Ucsf / Chase Center (16th St)",
+          "DestinationDisplay": "Chinatown",
+          "AimedArrivalTime": "2026-11-07T04:29:06Z",
+          "ExpectedArrivalTime": "2026-11-07T04:33:44Z",
+          "AimedDepartureTime": "2026-11-07T04:29:06Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "17358",
+          "StopPointName": "Third Street & Mission Rock St",
+          "DestinationDisplay": "Chinatown",
+          "AimedArrivalTime": "2026-11-07T04:31:57Z",
+          "ExpectedArrivalTime": "2026-11-07T04:36:31Z",
+          "AimedDepartureTime": "2026-11-07T04:31:57Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "17166",
+          "StopPointName": "4th St & King St",
+          "DestinationDisplay": "Chinatown",
+          "AimedArrivalTime": "2026-11-07T04:36:00Z",
+          "ExpectedArrivalTime": "2026-11-07T04:41:10Z",
+          "AimedDepartureTime": "2026-11-07T04:36:00Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "17879",
+          "StopPointName": "Fourth Street & Brannan Northbound",
+          "DestinationDisplay": "Chinatown",
+          "AimedArrivalTime": "2026-11-07T04:39:00Z",
+          "ExpectedArrivalTime": "2026-11-07T04:43:00Z",
+          "AimedDepartureTime": "2026-11-07T04:39:00Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "17878",
+          "StopPointName": "Yerba Buena/Moscone Station Northbound",
+          "DestinationDisplay": "Chinatown",
+          "AimedArrivalTime": "2026-11-07T04:42:00Z",
+          "ExpectedArrivalTime": "2026-11-07T04:45:47Z",
+          "AimedDepartureTime": "2026-11-07T04:42:00Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "17877",
+          "StopPointName": "Union Square/Market St Station Northbound",
+          "DestinationDisplay": "Chinatown",
+          "AimedArrivalTime": "2026-11-07T04:44:00Z",
+          "ExpectedArrivalTime": "2026-11-07T04:48:13Z",
+          "AimedDepartureTime": "2026-11-07T04:44:00Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "17876",
+          "StopPointName": "Chinatown - Rose Pak Station",
+          "DestinationDisplay": "Chinatown",
+          "AimedArrivalTime": "2026-11-07T04:46:00Z",
+          "ExpectedArrivalTime": "2026-11-07T04:49:44Z",
+          "AimedDepartureTime": "2026-11-07T04:46:00Z",
+          "ExpectedDepartureTime": null
+         }
+        ]
+       }
+      }
+     },
+     {
+      "RecordedAtTime": "2026-11-07T04:09:04Z",
+      "ValidUntilTime": "",
+      "MonitoredVehicleJourney": {
+       "LineRef": "T",
+       "DirectionRef": "N",
+       "FramedVehicleJourneyRef": {
+        "DataFrameRef": "2026-11-06",
+        "DatedVehicleJourneyRef": "12138606_M11"
+       },
+       "PublishedLineName": "THIRD",
+       "OperatorRef": "SF",
+       "OriginRef": "17398",
+       "OriginName": "Bayshore Blvd & Sunnydale Ave",
+       "DestinationRef": "17876",
+       "DestinationName": "Chinatown - Rose Pak Station",
+       "Monitored": true,
+       "InCongestion": null,
+       "VehicleLocation": {
+        "Longitude": "-122.405533",
+        "Latitude": "37.7080269"
+       },
+       "Bearing": "0.0000000000",
+       "Occupancy": "seatsAvailable",
+       "VehicleRef": "2073",
+       "MonitoredCall": {
+        "StopPointRef": "17398",
+        "StopPointName": "Bayshore Blvd & Sunnydale Ave",
+        "DestinationDisplay": "Chinatown",
+        "VehicleLocationAtStop": "",
+        "VehicleAtStop": "",
+        "AimedArrivalTime": "2026-11-07T04:15:00Z",
+        "ExpectedArrivalTime": null,
+        "AimedDepartureTime": "2026-11-07T04:15:00Z",
+        "ExpectedDepartureTime": "2026-11-07T04:15:00Z"
+       },
+       "OnwardCalls": {
+        "OnwardCall": [
+         {
+          "StopPointRef": "17399",
+          "StopPointName": "Bayshore Blvd & Areta Ave",
+          "DestinationDisplay": "Chinatown",
+          "AimedArrivalTime": "2026-11-07T04:16:33Z",
+          "ExpectedArrivalTime": "2026-11-07T04:17:04Z",
+          "AimedDepartureTime": "2026-11-07T04:16:33Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "17400",
+          "StopPointName": "Third Street & Le Conte Ave",
+          "DestinationDisplay": "Chinatown",
+          "AimedArrivalTime": "2026-11-07T04:19:36Z",
+          "ExpectedArrivalTime": "2026-11-07T04:20:10Z",
+          "AimedDepartureTime": "2026-11-07T04:19:36Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "17347",
+          "StopPointName": "Third Street/Gilman/Paul",
+          "DestinationDisplay": "Chinatown",
+          "AimedArrivalTime": "2026-11-07T04:21:00Z",
+          "ExpectedArrivalTime": "2026-11-07T04:21:58Z",
+          "AimedDepartureTime": "2026-11-07T04:21:00Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "17343",
+          "StopPointName": "Third Street & Carroll Ave",
+          "DestinationDisplay": "Chinatown",
+          "AimedArrivalTime": "2026-11-07T04:22:29Z",
+          "ExpectedArrivalTime": "2026-11-07T04:23:25Z",
+          "AimedDepartureTime": "2026-11-07T04:22:29Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "17345",
+          "StopPointName": "Third Street & Williams Ave",
+          "DestinationDisplay": "Chinatown",
+          "AimedArrivalTime": "2026-11-07T04:24:20Z",
+          "ExpectedArrivalTime": "2026-11-07T04:25:55Z",
+          "AimedDepartureTime": "2026-11-07T04:24:20Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "17401",
+          "StopPointName": "Third Street/Revere/Shafter",
+          "DestinationDisplay": "Chinatown",
+          "AimedArrivalTime": "2026-11-07T04:25:46Z",
+          "ExpectedArrivalTime": "2026-11-07T04:28:07Z",
+          "AimedDepartureTime": "2026-11-07T04:25:46Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "17402",
+          "StopPointName": "Third Street/Oakdale/Palou",
+          "DestinationDisplay": "Chinatown",
+          "AimedArrivalTime": "2026-11-07T04:27:00Z",
+          "ExpectedArrivalTime": "2026-11-07T04:29:28Z",
+          "AimedDepartureTime": "2026-11-07T04:27:00Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "17403",
+          "StopPointName": "Third Street/Kirkwood/La Salle",
+          "DestinationDisplay": "Chinatown",
+          "AimedArrivalTime": "2026-11-07T04:28:38Z",
+          "ExpectedArrivalTime": "2026-11-07T04:31:22Z",
+          "AimedDepartureTime": "2026-11-07T04:28:38Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "17404",
+          "StopPointName": "Third Street/Hudson/Innes",
+          "DestinationDisplay": "Chinatown",
+          "AimedArrivalTime": "2026-11-07T04:29:47Z",
+          "ExpectedArrivalTime": "2026-11-07T04:32:46Z",
+          "AimedDepartureTime": "2026-11-07T04:29:47Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "17352",
+          "StopPointName": "Third Street & Evans Ave",
+          "DestinationDisplay": "Chinatown",
+          "AimedArrivalTime": "2026-11-07T04:31:11Z",
+          "ExpectedArrivalTime": "2026-11-07T04:34:45Z",
+          "AimedDepartureTime": "2026-11-07T04:31:11Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "17353",
+          "StopPointName": "Third Street & Marin St",
+          "DestinationDisplay": "Chinatown",
+          "AimedArrivalTime": "2026-11-07T04:34:00Z",
+          "ExpectedArrivalTime": "2026-11-07T04:38:15Z",
+          "AimedDepartureTime": "2026-11-07T04:34:00Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "17354",
+          "StopPointName": "Third Street & 23rd St",
+          "DestinationDisplay": "Chinatown",
+          "AimedArrivalTime": "2026-11-07T04:36:46Z",
+          "ExpectedArrivalTime": "2026-11-07T04:41:52Z",
+          "AimedDepartureTime": "2026-11-07T04:36:46Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "17355",
+          "StopPointName": "Third Street & 20th St",
+          "DestinationDisplay": "Chinatown",
+          "AimedArrivalTime": "2026-11-07T04:39:00Z",
+          "ExpectedArrivalTime": "2026-11-07T04:44:00Z",
+          "AimedDepartureTime": "2026-11-07T04:39:00Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "17356",
+          "StopPointName": "Ucsf Medical Center (Mariposa)",
+          "DestinationDisplay": "Chinatown",
+          "AimedArrivalTime": "2026-11-07T04:41:28Z",
+          "ExpectedArrivalTime": "2026-11-07T04:46:32Z",
+          "AimedDepartureTime": "2026-11-07T04:41:28Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "17357",
+          "StopPointName": "Ucsf / Chase Center (16th St)",
+          "DestinationDisplay": "Chinatown",
+          "AimedArrivalTime": "2026-11-07T04:44:06Z",
+          "ExpectedArrivalTime": "2026-11-07T04:49:54Z",
+          "AimedDepartureTime": "2026-11-07T04:44:06Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "17358",
+          "StopPointName": "Third Street & Mission Rock St",
+          "DestinationDisplay": "Chinatown",
+          "AimedArrivalTime": "2026-11-07T04:46:57Z",
+          "ExpectedArrivalTime": "2026-11-07T04:52:41Z",
+          "AimedDepartureTime": "2026-11-07T04:46:57Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "17166",
+          "StopPointName": "4th St & King St",
+          "DestinationDisplay": "Chinatown",
+          "AimedArrivalTime": "2026-11-07T04:51:00Z",
+          "ExpectedArrivalTime": "2026-11-07T04:57:20Z",
+          "AimedDepartureTime": "2026-11-07T04:51:00Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "17879",
+          "StopPointName": "Fourth Street & Brannan Northbound",
+          "DestinationDisplay": "Chinatown",
+          "AimedArrivalTime": "2026-11-07T04:54:00Z",
+          "ExpectedArrivalTime": "2026-11-07T04:59:10Z",
+          "AimedDepartureTime": "2026-11-07T04:54:00Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "17878",
+          "StopPointName": "Yerba Buena/Moscone Station Northbound",
+          "DestinationDisplay": "Chinatown",
+          "AimedArrivalTime": "2026-11-07T04:57:00Z",
+          "ExpectedArrivalTime": "2026-11-07T05:01:58Z",
+          "AimedDepartureTime": "2026-11-07T04:57:00Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "17877",
+          "StopPointName": "Union Square/Market St Station Northbound",
+          "DestinationDisplay": "Chinatown",
+          "AimedArrivalTime": "2026-11-07T04:59:00Z",
+          "ExpectedArrivalTime": "2026-11-07T05:04:24Z",
+          "AimedDepartureTime": "2026-11-07T04:59:00Z",
+          "ExpectedDepartureTime": null
+         },
+         {
+          "StopPointRef": "17876",
+          "StopPointName": "Chinatown - Rose Pak Station",
+          "DestinationDisplay": "Chinatown",
+          "AimedArrivalTime": "2026-11-07T05:01:00Z",
+          "ExpectedArrivalTime": "2026-11-07T05:05:55Z",
+          "AimedDepartureTime": "2026-11-07T05:01:00Z",
+          "ExpectedDepartureTime": null
+         }
+        ]
+       }
+      }
+     },
+     {
+      "RecordedAtTime": "2026-11-07T04:09:04Z",
+      "ValidUntilTime": "",
+      "MonitoredVehicleJourney": {
+       "LineRef": null,
+       "DirectionRef": null,
+       "FramedVehicleJourneyRef": {
+        "DataFrameRef": "2026-11-06",
+        "DatedVehicleJourneyRef": null
+       },
+       "PublishedLineName": null,
+       "OperatorRef": "SF",
+       "OriginRef": null,
+       "OriginName": null,
+       "DestinationRef": null,
+       "DestinationName": null,
+       "Monitored": true,
+       "InCongestion": null,
+       "VehicleLocation": {
+        "Longitude": "-122.420898",
+        "Latitude": "37.8068352"
+       },
+       "Bearing": "0.0000000000",
+       "Occupancy": "seatsAvailable",
+       "VehicleRef": "10"
+      }
+     },
+     {
+      "RecordedAtTime": "2026-11-07T04:09:04Z",
+      "ValidUntilTime": "",
+      "MonitoredVehicleJourney": {
+       "LineRef": null,
+       "DirectionRef": null,
+       "FramedVehicleJourneyRef": {
+        "DataFrameRef": "2026-11-06",
+        "DatedVehicleJourneyRef": null
+       },
+       "PublishedLineName": null,
+       "OperatorRef": "SF",
+       "OriginRef": null,
+       "OriginName": null,
+       "DestinationRef": null,
+       "DestinationName": null,
+       "Monitored": true,
+       "InCongestion": null,
+       "VehicleLocation": {
+        "Longitude": "-122.424553",
+        "Latitude": "37.7422371"
+       },
+       "Bearing": "75.0000000000",
+       "Occupancy": "seatsAvailable",
+       "VehicleRef": "1072"
+      }
+     },
+     {
+      "RecordedAtTime": "2026-11-07T04:09:04Z",
+      "ValidUntilTime": "",
+      "MonitoredVehicleJourney": {
+       "LineRef": null,
+       "DirectionRef": null,
+       "FramedVehicleJourneyRef": {
+        "DataFrameRef": "2026-11-06",
+        "DatedVehicleJourneyRef": null
+       },
+       "PublishedLineName": null,
+       "OperatorRef": "SF",
+       "OriginRef": null,
+       "OriginName": null,
+       "DestinationRef": null,
+       "DestinationName": null,
+       "Monitored": true,
+       "InCongestion": null,
+       "VehicleLocation": {
+        "Longitude": "-122.415123",
+        "Latitude": "37.8047981"
+       },
+       "Bearing": "0.0000000000",
+       "Occupancy": "seatsAvailable",
+       "VehicleRef": "11"
+      }
+     }
+    ]
+   }
+  }
+ }
+}

@@ -1,0 +1,44 @@
+# 511 / Muni data findings (Phase 1, 2026-11-06)
+
+Based on a live VehicleMonitoring snapshot at about 8 pm on a Friday: 609 vehicles, 51 routes. Plus the GTFS feed from `datafeeds?operator_id=SF`.
+
+## VehicleMonitoring response shape
+
+`Siri.ServiceDelivery.VehicleMonitoringDelivery.VehicleActivity[]`. In this feed, `VehicleMonitoringDelivery` is a single **object**, not a list. The raw response is about 2.2 MB.
+
+Per vehicle, under `MonitoredVehicleJourney`:
+
+| Field | Path | Present | Notes |
+|---|---|---|---|
+| vehicle ID | `VehicleRef` | 609/609 | |
+| lat/lon | `VehicleLocation.Latitude/Longitude` | 609/609 | **strings**; convert with `float()` |
+| bearing | `Bearing` | 609/609 | string degrees; could rotate map markers |
+| route | `LineRef` | 375/609 | matches GTFS `route_id` exactly |
+| route name | `PublishedLineName` | 375/609 | e.g. "MARKET & WHARVES" |
+| direction | `DirectionRef` | 375/609 | `IB`/`OB` for most routes, but **`N`/`S` on the T Third** |
+| destination | `DestinationName` | 375/609 | |
+| trip | `FramedVehicleJourneyRef.DatedVehicleJourneyRef` | 375/609 | matches GTFS `trips.txt` `trip_id`, which gives the exact `shape_id` |
+| next stop | `MonitoredCall.StopPointName/StopPointRef` | 292/609 | ref matches GTFS `stop_id`; also has `ExpectedArrivalTime` |
+| upcoming stops | `OnwardCalls.OnwardCall[]` | 292/609 | free arrival predictions, with no StopMonitoring call needed |
+| occupancy | `Occupancy` | 609/609 | 600 of 609 say "seatsAvailable", so not useful |
+
+### Gotchas
+- **234 vehicles have no route.** All their route fields are `null`. These are likely out of service or deadheading. Filter them out of `/vehicles`.
+- **83 in-service vehicles have no `MonitoredCall`.** Next stop is legitimately optional.
+- **No per-vehicle GPS timestamp.** `RecordedAtTime` was identical for all 609 vehicles (the snapshot time). Phase 7's "updated X seconds ago" and stale-vehicle fading can't rely on it. Instead, track when each vehicle's position last *changed* between polls.
+- Some fields hold empty strings `""` rather than null (`ValidUntilTime`, `VehicleLocationAtStop`).
+
+## GTFS (static)
+
+17 files, 74 MB unzipped (mostly `stop_times.txt`).
+
+- `routes.txt`: 68 routes, with `route_color` and `route_text_color` hex (no `#`). `route_type` values:
+  - `0` (tram/light rail): J K L M N T, **and F**. F is the historic streetcar; it needs a manual override to group it as "streetcar" in Phase 6.
+  - `5` (cable car): CA, PH, PM
+  - `3` (bus): the other 58, including variants like `14R`, `30X`, and `FBUS`
+- `shapes.txt`: 45,014 points. Routes have 1–13 shapes each (one per branch and direction). Link shapes to routes through `trips.txt` (`route_id` → `shape_id`).
+- `stops.txt`: 3,240 stops. Every live next-stop ID was found here.
+
+## Implications for later phases
+- Phase 3 `/vehicles` should drop vehicles without a route and convert lat/lon to floats. Consider including `bearing`.
+- Phase 8: `OnwardCalls` already gives predictions for stops that vehicles are approaching. These could cover many stop clicks without spending StopMonitoring requests.
