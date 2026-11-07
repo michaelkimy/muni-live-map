@@ -28,13 +28,13 @@ Done when you can print a table of every Muni vehicle running right now.
 
 The most important habit to practice: a clear spec makes every later prompt shorter and the output better.
 
-- [ ] In plan mode, discuss the architecture, then have Claude Code write `SPEC.md`: features, data sources, the rate-limit constraint, folder structure.
-- [ ] Record conventions in CLAUDE.md: API key in `.env`, never committed; FastAPI backend; plain HTML/JS frontend with Leaflet, no build tools.
-- [ ] Add `.env` to `.gitignore` immediately.
+- [x] In plan mode, discuss the architecture, then have Claude Code write `SPEC.md`: features, data sources, the rate-limit constraint, folder structure.
+- [x] Record conventions in CLAUDE.md: API key in `.env`, never committed; FastAPI backend; plain HTML/JS frontend with Leaflet, no build tools.
+- [x] Add `.env` to `.gitignore` immediately.
 
 ## Phase 3: Backend MVP
 
-Done when `localhost:8000/vehicles` shows fresh data in your browser.
+Done when `localhost:8000/api/vehicles` shows fresh data in your browser. (SPEC.md moved the endpoints under `/api/`.)
 
 - [ ] Build a `/vehicles` endpoint returning a clean JSON list with only the Phase 1 fields, not 511's verbose format.
 - [ ] Add a background poller fetching from 511 every 60 to 90 seconds into an in-memory cache; the endpoint serves only from the cache.
