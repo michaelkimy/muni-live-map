@@ -58,3 +58,11 @@ These are covered in detail in SPEC.md.
 ## Data reference
 
 `notes/data.md` records what the live 511 feed and the GTFS files actually contain: field paths, presence counts, how IDs join to GTFS, and quirks such as vehicles with no route and the lack of per-vehicle timestamps. Check it before writing parsing code. `tests/fixtures/vehicles_sample.json` is a trimmed real response that includes the BOM and the edge cases.
+
+## Deployment
+
+- Live at **https://muni-live-map.onrender.com** (Render free plan, `render.yaml`). Code is at https://github.com/michaelkimy/muni-live-map (public).
+- Every push to `main` redeploys automatically, which takes about 1–2 minutes. `API_KEY_511` is set only in Render's dashboard.
+- **The live site and a local server share one 511 key (60 requests/hour) and must not both poll.** For local work while the site is up, run `POLLER_ENABLED=false .venv/bin/uvicorn app.main:app --reload`. That shows the page and data files without calling 511. Check `remaining_511` at `/api/health` for 511's own count.
+- Pushing uses HTTPS with a token stored in the macOS Keychain. This repo sets `http.version=HTTP/1.1` because git 2.28 failed larger pushes over HTTP/2 with `RPC failed; HTTP 400`.
+- Python scripts that fetch over HTTPS need certifi (`scripts/_env.urlopen`), because the python.org macOS Python has no CA bundle.
