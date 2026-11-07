@@ -50,8 +50,8 @@ Done when you have a working app; everything after this is a feature.
 
 ## Phase 5: Route paths
 
-- [ ] Write a one-time Python script turning `shapes.txt` and `routes.txt` into a GeoJSON file of colored route lines (GeoPandas helps, and is good practice for the real estate project).
-- [ ] Serve the file as static data, draw the lines under the vehicle markers, and color each marker to match its route.
+- [x] Write a one-time Python script turning `shapes.txt` and `routes.txt` into a GeoJSON file of colored route lines (GeoPandas helps, and is good practice for the real estate project).
+- [x] Serve the file as static data, draw the lines under the vehicle markers, and color each marker to match its route.
 
 ## Phase 6: Filter by line
 

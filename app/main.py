@@ -10,6 +10,7 @@ import logging
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
+from fastapi.middleware.gzip import GZipMiddleware
 from fastapi.staticfiles import StaticFiles
 
 from app.client import Client511, RateLimited, Upstream511Error
@@ -73,6 +74,8 @@ def create_app(settings: Settings | None = None, state: AppState | None = None) 
 
     app = FastAPI(title="Muni Live Map", lifespan=lifespan)
     app.state.muni = state
+    # GeoJSON compresses about 5x; browsers decompress automatically.
+    app.add_middleware(GZipMiddleware, minimum_size=1000)
 
     @app.get("/api/vehicles")
     def vehicles():

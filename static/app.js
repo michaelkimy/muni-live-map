@@ -1,5 +1,5 @@
-// Muni Live Map frontend (Phase 4): a map of SF with one marker per vehicle,
-// refreshed every 30 seconds from our own backend (/api/vehicles).
+// Muni Live Map frontend: a map of SF with route lines (Phase 5) and one marker
+// per vehicle, refreshed every 30 seconds from our own backend (/api/vehicles).
 //
 // 'use strict' turns some silent JavaScript mistakes (like typos that create
 // accidental global variables) into errors you can see in the browser console.
@@ -7,22 +7,25 @@
 
 const POLL_MS = 30_000;            // the _ is just a digit separator: 30000 ms = 30 s
 const SF_CENTER = [37.7599, -122.4370];
+const FALLBACK_COLOR = '#666666';  // used if a route isn't in routes.json
 
-// Until Phase 5 adds the real GTFS route colors, color by vehicle type.
-const LIGHT_RAIL = new Set(['J', 'K', 'L', 'M', 'N', 'T']);
-const CABLE_CAR = new Set(['CA', 'PH', 'PM']);
-const CATEGORY_STYLE = {
-  bus:       { color: '#005B95', icon: 'icons/bus.svg' },
-  lightrail: { color: '#942D83', icon: 'icons/train.svg' },
-  streetcar: { color: '#B49A36', icon: 'icons/train.svg' },
-  cablecar:  { color: '#8B4513', icon: 'icons/train.svg' },
+const ICON_BY_CATEGORY = {
+  bus: 'icons/bus.svg',
+  lightrail: 'icons/train.svg',
+  streetcar: 'icons/train.svg',
+  cablecar: 'icons/train.svg',
 };
 
-function categoryOf(route) {
-  if (route === 'F') return 'streetcar';
-  if (LIGHT_RAIL.has(route)) return 'lightrail';
-  if (CABLE_CAR.has(route)) return 'cablecar';
-  return 'bus';
+// Filled in from /data/routes.json at startup: route_id → {color, category, long_name, ...}.
+// It's generated from Muni's GTFS by scripts/build_geojson.py.
+const routeInfo = new Map();
+
+function styleFor(route) {
+  const info = routeInfo.get(route);
+  return {
+    color: info ? info.color : FALLBACK_COLOR,
+    icon: ICON_BY_CATEGORY[info ? info.category : 'bus'],
+  };
 }
 
 // ---- Map setup ----
@@ -36,6 +39,39 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
                '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
 }).addTo(map);
 
+// ---- Route lines ----
+// Rail lines are drawn thicker and on top of bus lines, so lower numbers go first.
+const DRAW_ORDER = { bus: 0, cablecar: 1, streetcar: 2, lightrail: 3 };
+
+// Loads the route list and the route shapes at the same time.
+// Promise.all waits for both downloads to finish.
+async function loadRoutes() {
+  const [list, shapes] = await Promise.all([
+    fetch('data/routes.json').then((r) => r.json()),
+    fetch('data/routes.geojson').then((r) => r.json()),
+  ]);
+  for (const route of list) routeInfo.set(route.route_id, route);
+
+  shapes.features.sort((a, b) =>
+    DRAW_ORDER[a.properties.category] - DRAW_ORDER[b.properties.category]);
+
+  // L.geoJSON draws GeoJSON features. `style` is called once per route to pick
+  // its line color and width; `onEachFeature` attaches a hover tooltip.
+  L.geoJSON(shapes, {
+    style: (feature) => ({
+      color: feature.properties.color,
+      weight: feature.properties.category === 'bus' ? 3 : 5,
+      opacity: 0.55,
+    }),
+    onEachFeature: (feature, layer) => {
+      const p = feature.properties;
+      layer.bindTooltip(`${escapeHtml(p.short_name)} ${escapeHtml(p.long_name)}`, { sticky: true });
+    },
+  }).addTo(map);
+  // Leaflet always keeps lines (overlay pane) below markers (marker pane),
+  // so vehicles stay on top without extra work.
+}
+
 // ---- Markers ----
 // We keep one marker per vehicle id in a Map (a key → value dictionary), so on
 // each refresh we can move existing markers instead of deleting and re-creating
@@ -45,7 +81,7 @@ const markers = new Map();
 // Builds the marker's HTML. L.divIcon lets a marker be any HTML we like
 // (styled in style.css) instead of Leaflet's default blue pin image.
 function makeIcon(v) {
-  const style = CATEGORY_STYLE[categoryOf(v.route)];
+  const style = styleFor(v.route);
   // A bearing of null means "unknown": hide the arrow rather than point north.
   const arrow = v.bearing == null
     ? ''
@@ -132,5 +168,16 @@ async function refresh() {
   }
 }
 
-refresh();
-setInterval(refresh, POLL_MS);
+// Start-up: draw the routes first so the markers can use their colors. If the
+// route files fail to load, still show vehicles (in grey) instead of nothing.
+async function start() {
+  try {
+    await loadRoutes();
+  } catch (err) {
+    console.error('Failed to load route data:', err);
+  }
+  refresh();
+  setInterval(refresh, POLL_MS);
+}
+
+start();

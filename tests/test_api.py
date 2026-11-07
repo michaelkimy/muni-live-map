@@ -58,3 +58,17 @@ def test_frontend_is_served_at_root():
         assert c.get("/icons/bus.svg").status_code == 200
         # API routes still win over the static mount
         assert c.get("/api/health").json()["poller"] == "disabled"
+
+
+def test_route_data_is_built_and_gzipped():
+    app, _ = make_app()
+    with TestClient(app) as c:
+        routes = c.get("/data/routes.json").json()
+        by_id = {r["route_id"]: r for r in routes}
+        assert by_id["F"]["category"] == "streetcar"
+        assert by_id["N"]["category"] == "lightrail"
+        assert by_id["PH"]["category"] == "cablecar"
+        assert all(r["color"].startswith("#") for r in routes)
+        resp = c.get("/data/routes.geojson", headers={"Accept-Encoding": "gzip"})
+        assert resp.headers["content-encoding"] == "gzip"
+        assert len(resp.json()["features"]) == len(routes)
