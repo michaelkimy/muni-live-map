@@ -341,12 +341,18 @@ async function drawStops() {
   if (!stopsData) {
     // Reuse a download already in progress, so quick zooms only fetch the file once.
     stopsLoading = stopsLoading || fetch('data/stops.geojson').then((r) => r.json());
+    statusState.loadingStops = true;
+    renderStatus();
     try {
       stopsData = await stopsLoading;
     } catch (err) {
       console.error('Failed to load stops:', err);
       stopsLoading = null;     // allow a retry on the next zoom
       return;
+    } finally {
+      // `finally` runs whether the download worked or failed.
+      statusState.loadingStops = false;
+      renderStatus();
     }
     if (map.getZoom() < STOPS_MIN_ZOOM) return;  // zoomed back out while downloading
   }
@@ -563,20 +569,63 @@ window.addEventListener('hashchange', () => {
   zoomToSelection();
 });
 
-// ---- Polling ----
+// ---- Status: corner pill, problem banner, first-load overlay ----
 const statusEl = document.getElementById('status');
-let statusTime = null;
+const bannerEl = document.getElementById('banner');
+const loadingEl = document.getElementById('loading');
 
-function setStatus(text, isError = false) {
-  statusEl.textContent = text;
-  statusEl.classList.toggle('error', isError);
-}
+// Everything the status display depends on, so renderStatus() can redraw it
+// from scratch whenever any of it changes.
+const statusState = {
+  data: null,           // last /api/vehicles response (null until the first one arrives)
+  fetchFailed: false,   // the last request to our server failed
+  shown: 0,             // vehicles currently drawn (after the route filter)
+  loadingStops: false,  // stops.geojson is downloading
+};
 
 function updateCount(shown) {
-  if (!statusTime) return;
-  setStatus(`${shown} vehicles · updated ${statusTime}`);
+  statusState.shown = shown;
+  renderStatus();
 }
 
+function renderStatus() {
+  const data = statusState.data;
+  const age = data && data.updated_at
+    ? Math.max(0, (serverNowMs() - Date.parse(data.updated_at)) / 1000)
+    : null;
+
+  // Corner pill: vehicle count and how old the data is.
+  let pill = 'Loading live vehicles…';
+  if (age !== null) {
+    pill = `${statusState.shown} vehicles · updated ${formatAge(age)}`;
+    // Hovering (desktop) shows the exact clock time.
+    statusEl.title = `Last update from 511: ${new Date(data.updated_at).toLocaleTimeString()}`;
+  }
+  if (statusState.loadingStops) pill += ' · loading stops…';
+  statusEl.textContent = pill;
+
+  // Banner: only when something is wrong, in plain language.
+  let banner = '';
+  let level = '';
+  if (statusState.fetchFailed) {
+    banner = "Can't reach the server. Retrying every 30 seconds…";
+    level = 'error';
+  } else if (data && data.updated_at === null) {
+    banner = 'Waiting for the first update from 511…';
+    level = 'info';
+  } else if (data && data.stale) {
+    banner = `Live data is delayed: 511 isn't responding. Positions are from ${formatAge(age)}.`;
+    level = 'warn';
+  }
+  bannerEl.textContent = banner;
+  bannerEl.className = `banner ${level}`;
+  bannerEl.hidden = !banner;
+
+  // Full-screen loading overlay: only until we have something to show or say.
+  loadingEl.hidden = Boolean(age !== null || banner);
+}
+
+// ---- Polling ----
 // `async` functions can use `await`, which pauses until a network request
 // finishes without freezing the page.
 async function refresh() {
@@ -586,25 +635,46 @@ async function refresh() {
     const data = await response.json();
     clockOffsetMs = Date.parse(data.now) - Date.now();
     lastVehicles = data.vehicles;
-    const shown = updateMarkers(lastVehicles);
-    if (data.updated_at === null) {
-      setStatus('Waiting for first update…');
-    } else if (data.stale) {
-      setStatus('Data is out of date. 511 may be down.', true);
-    } else {
-      statusTime = new Date(data.updated_at).toLocaleTimeString();
-      updateCount(shown);
-    }
+    statusState.data = data;
+    statusState.fetchFailed = false;
+    statusState.shown = updateMarkers(lastVehicles);
   } catch (err) {
     console.error('Failed to load vehicles:', err);
-    setStatus("Can't reach the server.", true);
+    statusState.fetchFailed = true;
   }
+  renderStatus();
 }
+
+// Poll only while the page is visible. A phone with the tab in the background
+// shouldn't keep downloading; when it comes back, update right away.
+let pollTimer = null;
+function startPolling() {
+  if (pollTimer) return;
+  refresh();
+  pollTimer = setInterval(refresh, POLL_MS);
+}
+function stopPolling() {
+  clearInterval(pollTimer);
+  pollTimer = null;
+}
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) stopPolling();
+  else startPolling();
+});
+
+// Smaller badges when zoomed out, so the whole city isn't a wall of numbers.
+// A CSS class on the map container lets style.css do the resizing.
+function updateZoomClass() {
+  map.getContainer().classList.toggle('zoom-far', map.getZoom() <= 13);
+}
+map.on('zoomend', updateZoomClass);
 
 // Start-up: load routes first so markers get their colors and the URL filter
 // can be checked against real route ids. If the route files fail to load,
 // still show vehicles (in grey, unfiltered) instead of nothing.
 async function start() {
+  updateZoomClass();
+  renderStatus();
   try {
     await loadRoutes();
     buildPanel();
@@ -614,12 +684,12 @@ async function start() {
   } catch (err) {
     console.error('Failed to load route data:', err);
   }
-  refresh();
-  setInterval(refresh, POLL_MS);
-  // Between data updates, keep ages and fading current (no network needed).
+  if (!document.hidden) startPolling();
+  // Between data updates, keep ages, fading and the status current (no network needed).
   setInterval(() => {
     markers.forEach(refreshMarker);
     refreshStopPopup();
+    renderStatus();
   }, TICK_MS);
 }
 

@@ -20,10 +20,6 @@ html, body {
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
   font-size: 13px;
 }
-.status.error {
-  background: #c0392b;
-  color: #fff;
-}
 
 /* ---- Vehicle marker ----
    .vehicle is a 28x28 box centered on the vehicle's position. Inside it:
@@ -180,12 +176,6 @@ html, body {
     width: auto;
     max-height: 60%;
   }
-  .status {
-    top: auto;
-    bottom: 24px;
-    right: auto;
-    left: 10px;
-  }
 }
 
 /* ---- Vehicle details (Phase 7) ---- */
@@ -292,4 +282,120 @@ html, body {
   color: #777;
   font-weight: 600;
   font-style: italic;
+}
+
+/* ---- Status, banner, loading (Phase 9) ---- */
+.banner {
+  position: absolute;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  max-width: calc(100% - 140px); /* stay clear of the zoom buttons */
+  padding: 8px 14px;
+  border-radius: 8px;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.3);
+  font-size: 14px;
+  text-align: center;
+}
+.banner[hidden] {
+  display: none;
+}
+.banner.info {
+  background: #fff;
+  color: #333;
+}
+.banner.warn {
+  background: #fff4d6;
+  color: #7a5200;
+  border: 1px solid #e0b44c;
+}
+.banner.error {
+  background: #c0392b;
+  color: #fff;
+}
+
+.loading {
+  position: absolute;
+  inset: 0;
+  z-index: 1100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.6);
+  font-size: 15px;
+  pointer-events: none; /* the map stays usable underneath */
+}
+.loading[hidden] {
+  display: none;
+}
+.spinner {
+  width: 36px;
+  height: 36px;
+  border: 4px solid #ccc;
+  border-top-color: #005b95;
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .spinner { animation-duration: 3s; }
+}
+
+/* Zoomed out (zoom 13 and below): smaller badges and arrows. */
+.zoom-far .vehicle .badge {
+  min-width: 20px;
+  height: 20px;
+  padding: 0 3px;
+  border-width: 1.5px;
+  line-height: 17px;
+  font-size: 10px;
+}
+.zoom-far .vehicle .badge.medium {
+  font-size: 9px;
+}
+.zoom-far .vehicle .badge.long {
+  font-size: 8px;
+}
+.zoom-far .vehicle.rail .badge {
+  border-radius: 4px;
+}
+.zoom-far .vehicle .heading::before {
+  top: -6px;
+  border-left-width: 4px;
+  border-right-width: 4px;
+  border-bottom-width: 5px;
+}
+
+/* ---- Phone layout ---- */
+@media (max-width: 640px) {
+  /* Status pill sits under the panel header instead of fighting the map credits. */
+  .status {
+    top: 56px;
+    right: auto;
+    left: 10px;
+    font-size: 12px;
+  }
+  .banner {
+    bottom: 24px;
+    font-size: 13px;
+  }
+  /* 16px text stops iPhones from zooming the whole page when the box is tapped. */
+  #route-search {
+    font-size: 16px;
+  }
+  /* Bigger tap targets. */
+  .route-item {
+    padding: 7px 4px;
+  }
+  .panel button {
+    padding: 8px 12px;
+  }
+  .leaflet-control-attribution {
+    font-size: 9px;
+  }
 }
