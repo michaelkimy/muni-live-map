@@ -26,7 +26,9 @@ def test_vehicles_empty_and_stale_before_first_poll():
     app, _ = make_app()
     with TestClient(app) as c:
         body = c.get("/api/vehicles").json()
-    assert body == {"updated_at": None, "stale": True, "vehicles": []}
+    assert body["now"].endswith("Z")
+    assert {k: body[k] for k in ("updated_at", "stale", "vehicles")} == {
+        "updated_at": None, "stale": True, "vehicles": []}
 
 
 def test_vehicles_after_poll_match_spec_shape(vehicles_raw):

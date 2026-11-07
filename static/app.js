@@ -9,6 +9,10 @@
 const POLL_MS = 30_000;            // the _ is just a digit separator: 30000 ms = 30 s
 const SF_CENTER = [37.7599, -122.4370];
 const FALLBACK_COLOR = '#666666';  // used if a route isn't in routes.json
+const STALE_AFTER_S = 180;         // fade vehicles that haven't moved in 3 minutes
+const TICK_MS = 15_000;            // how often to refresh "moved X ago" and fading
+
+const DIRECTION_LABEL = { IB: 'Inbound', OB: 'Outbound', N: 'Northbound', S: 'Southbound' };
 
 const ICON_BY_CATEGORY = {
   bus: 'icons/bus.svg',
@@ -39,6 +43,33 @@ const selected = new Set();
 
 function isVisible(route) {
   return selected.size === 0 || selected.has(route);
+}
+
+// ---- Time ----
+// The server sends its own clock ("now") with every update. We remember how far
+// the browser's clock is from it, so ages stay right even if the phone's clock
+// is wrong. Date.parse turns an ISO time string into milliseconds.
+let clockOffsetMs = 0;
+
+function serverNowMs() {
+  return Date.now() + clockOffsetMs;
+}
+
+function secondsSinceMoved(v) {
+  if (!v.last_moved) return null;
+  return Math.max(0, (serverNowMs() - Date.parse(v.last_moved)) / 1000);
+}
+
+function isStale(v) {
+  const age = secondsSinceMoved(v);
+  return age !== null && age > STALE_AFTER_S;
+}
+
+function formatAge(seconds) {
+  if (seconds === null) return 'unknown';
+  if (seconds < 60) return `${Math.round(seconds)} s ago`;
+  if (seconds < 3600) return `${Math.floor(seconds / 60)} min ago`;
+  return 'over an hour ago';
 }
 
 function styleFor(route) {
@@ -117,7 +148,7 @@ const markers = new Map();
 
 // Builds the marker's HTML. L.divIcon lets a marker be any HTML we like
 // (styled in style.css) instead of Leaflet's default blue pin image.
-function makeIcon(v) {
+function makeIcon(v, stale) {
   const style = styleFor(v.route);
   // A bearing of null means "unknown": hide the arrow rather than point north.
   const arrow = v.bearing == null
@@ -129,12 +160,52 @@ function makeIcon(v) {
     className: '',              // drop Leaflet's default white-box styling
     iconSize: [28, 28],
     iconAnchor: [14, 14],       // the center of the circle sits on the vehicle's position
-    html: `<div class="vehicle" style="--route-color:${style.color}; --icon:url('${style.icon}')">
+    html: `<div class="vehicle${stale ? ' stale' : ''}" style="--route-color:${style.color}; --icon:url('${style.icon}')">
              ${arrow}
              <div class="badge"></div>
              <div class="label">${escapeHtml(v.route)}</div>
            </div>`,
   });
+}
+
+// ---- Vehicle popup ----
+// Built as an HTML string, so every value from the network goes through escapeHtml.
+function popupHtml(v) {
+  const info = routeInfo.get(v.route);
+  const color = info ? info.color : FALLBACK_COLOR;
+  const textColor = info ? info.text_color : '#FFFFFF';
+  const name = info ? info.long_name : '';
+  const direction = DIRECTION_LABEL[v.direction] || v.direction || '';
+  const age = secondsSinceMoved(v);
+  const rows = [
+    ['To', v.destination],
+    ['Direction', direction],
+    ['Next stop', v.next_stop_name || 'Not reported'],
+  ].filter(([, value]) => value)   // skip rows with no value; [, value] ignores the label
+   .map(([label, value]) => `<dt>${label}</dt><dd>${escapeHtml(value)}</dd>`)
+   .join('');
+  return `
+    <div class="popup">
+      <div class="popup-title">
+        <span class="chip" style="background:${color};color:${textColor}">${escapeHtml(v.route)}</span>
+        ${escapeHtml(name)}
+      </div>
+      <dl>${rows}</dl>
+      <div class="popup-age${isStale(v) ? ' stale' : ''}">Moved ${formatAge(age)} · vehicle ${escapeHtml(v.id)}</div>
+    </div>`;
+}
+
+// Brings one marker's look up to date: rebuilds the icon only if something
+// drawn on it changed, and refreshes the popup text if it's open.
+function refreshMarker(marker) {
+  const v = marker.vehicle;
+  const stale = isStale(v);
+  const drawn = marker.drawn;
+  if (!drawn || drawn.route !== v.route || drawn.bearing !== v.bearing || drawn.stale !== stale) {
+    marker.setIcon(makeIcon(v, stale));
+    marker.drawn = { route: v.route, bearing: v.bearing, stale };
+  }
+  if (marker.isPopupOpen()) marker.setPopupContent(popupHtml(v));
 }
 
 // Makes the markers on the map match `vehicles`, showing only routes that pass the filter.
@@ -143,18 +214,18 @@ function updateMarkers(vehicles) {
   for (const v of vehicles) {
     if (!isVisible(v.route)) continue;
     seen.add(v.id);
-    const existing = markers.get(v.id);
-    if (existing) {
-      existing.setLatLng([v.lat, v.lon]);
-      // Rebuilding the icon replaces its HTML, so only do it when something
-      // drawn on it changed.
-      if (existing.vehicle.route !== v.route || existing.vehicle.bearing !== v.bearing) {
-        existing.setIcon(makeIcon(v));
-      }
-      existing.vehicle = v;
+    let marker = markers.get(v.id);
+    if (marker) {
+      marker.setLatLng([v.lat, v.lon]);
+      marker.vehicle = v;       // remember the latest data for this vehicle
+      refreshMarker(marker);
     } else {
-      const marker = L.marker([v.lat, v.lon], { icon: makeIcon(v), title: `Route ${v.route}` });
-      marker.vehicle = v;       // remember the data we drew it with
+      marker = L.marker([v.lat, v.lon], { title: `Route ${v.route}` });
+      marker.vehicle = v;
+      refreshMarker(marker);    // set our icon before it's shown, so Leaflet's default pin never flashes
+      // Passing a function means the popup is built when it opens, so it
+      // always shows the latest data for this vehicle.
+      marker.bindPopup(() => popupHtml(marker.vehicle), { maxWidth: 260 });
       marker.addTo(map);
       markers.set(v.id, marker);
     }
@@ -324,6 +395,7 @@ async function refresh() {
     const response = await fetch('/api/vehicles');
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     const data = await response.json();
+    clockOffsetMs = Date.parse(data.now) - Date.now();
     lastVehicles = data.vehicles;
     const shown = updateMarkers(lastVehicles);
     if (data.updated_at === null) {
@@ -355,6 +427,8 @@ async function start() {
   }
   refresh();
   setInterval(refresh, POLL_MS);
+  // Between data updates, keep ages and fading current (no network needed).
+  setInterval(() => markers.forEach(refreshMarker), TICK_MS);
 }
 
 start();

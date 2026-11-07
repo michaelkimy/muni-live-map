@@ -86,7 +86,11 @@ class AppState:
         return age > 3 * self.poll_interval_s
 
     def vehicles_response(self, now: datetime | None = None) -> dict:
+        now = now or utcnow()
         return {
+            # The browser measures "moved X ago" against this, not its own clock,
+            # which may be off.
+            "now": iso(now),
             "updated_at": iso(self.updated_at),
             "stale": self.is_stale(now),
             "vehicles": [

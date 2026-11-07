@@ -63,6 +63,7 @@ All times are ISO 8601 UTC strings.
 ```
 GET /api/vehicles
 {
+  "now": "2026-11-07T04:09:40Z",
   "updated_at": "2026-11-07T04:09:15Z",
   "stale": false,
   "vehicles": [
@@ -73,7 +74,7 @@ GET /api/vehicles
   ]
 }
 ```
-`next_stop_id` and `next_stop_name` may be `null`. Vehicles without a route are never included.
+`now` is the server's clock. The frontend computes "moved X ago" as `now − last_moved`, plus the time since the response arrived, so a wrong phone clock doesn't matter. `next_stop_id` and `next_stop_name` may be `null`. Vehicles without a route are never included.
 
 ```
 GET /api/predictions/{stop_id}

@@ -190,3 +190,43 @@ html, body {
     left: 10px;
   }
 }
+
+/* ---- Vehicle details (Phase 7) ---- */
+/* Vehicles that haven't moved in 3+ minutes: faded and partly grey. */
+.vehicle.stale {
+  opacity: 0.4;
+  filter: grayscale(0.7);
+}
+
+.popup {
+  font-size: 13px;
+  min-width: 190px;
+}
+.popup-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 700;
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+.popup dl {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 2px 8px;
+  margin: 0 0 6px;
+}
+.popup dt {
+  color: #666;
+}
+.popup dd {
+  margin: 0;
+}
+.popup-age {
+  font-size: 12px;
+  color: #666;
+}
+.popup-age.stale {
+  color: #b9770e;
+  font-weight: 600;
+}
