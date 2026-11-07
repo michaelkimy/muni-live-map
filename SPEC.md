@@ -117,7 +117,8 @@ Plain HTML, CSS and JS with no framework or build step. The files are `index.htm
 - **Polling:** fetch `/api/vehicles` every 30 s and update markers by vehicle id: move the existing ones, add new ones, remove missing ones. Never clear and redraw everything.
 - **Layers:** route lines go below vehicles. Stops are drawn only at zoom 16 and closer, and only for stops in view.
 - **State:** the filter selection lives in `location.hash`.
-- **Filter panel:** each category heading is a checkbox that selects or clears all of that category's routes. It shows a dash when only some are selected. After any selection change, the map zooms to fit the selected lines, or back to the whole city when the selection is cleared. The zoom waits about 350 ms after the last click so several quick clicks give one zoom. Shared links zoom on load without animation.
+- **Pick on the map:** clicking a route line selects only that route; Shift-click adds or removes it. Every visible line within 8px of the click (16px on touch screens) counts. If several routes overlap there (e.g. 38/38R on Geary), a small "Which route?" popup lists them. Vehicle and stop clicks don't reach the map, so they never pick a route.
+- **Filter panel:** compact (220px wide, at most 420px tall, with the list scrolling inside). Each category heading is a checkbox that selects or clears all of that category's routes. It shows a dash when only some are selected. After any selection change, the map zooms to fit the selected lines, or back to the whole city when the selection is cleared. The zoom waits about 350 ms after the last click so several quick clicks give one zoom. Shared links zoom on load without animation.
 - **Staleness:** fade a vehicle when `now − last_moved > 3 min`. Show a banner when `stale` is true or the fetch fails.
 - **Mobile:** a full-screen map with the filter in a collapsible panel.
 

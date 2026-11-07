@@ -110,7 +110,9 @@ const linesLayer = L.geoJSON(null, {
   // `onEachFeature` runs once per route line; here it attaches a hover tooltip.
   onEachFeature: (feature, layer) => {
     const p = feature.properties;
-    layer.bindTooltip(`${escapeHtml(p.short_name)} ${escapeHtml(p.long_name)}`, { sticky: true });
+    layer.bindTooltip(
+      `<b>${escapeHtml(p.short_name)}</b> ${escapeHtml(p.long_name)}<br><span class="tip-hint">Click to show only this route</span>`,
+      { sticky: true });
   },
 }).addTo(map);
 // Leaflet always keeps lines (overlay pane) below markers (marker pane),
@@ -327,6 +329,9 @@ const stopsLayer = L.geoJSON(null, {
     color: '#333',
     fillColor: '#fff',
     fillOpacity: 1,
+    // Don't pass the click on to the map, or it would also count as a click
+    // on the route line underneath the stop.
+    bubblingMouseEvents: false,
   }),
   onEachFeature: (feature, layer) => {
     layer.on('click', () => openStop(feature.properties, layer.getLatLng()));
@@ -449,6 +454,77 @@ function refreshStopPopup() {
     openStopState.popup.setContent(stopPopupHtml(openStopState.stop, openStopState.data));
   }
 }
+
+// ---- Pick a route by clicking its line (no searching needed) ----
+// Lines are thin and many routes share a street, so instead of relying on
+// exactly hitting one, we look for every visible line within a few pixels of
+// the click: a bigger margin on touch screens, where fingers are less precise.
+const LINE_HIT_PX = window.matchMedia('(pointer: coarse)').matches ? 16 : 8;
+
+function routesNear(containerPoint) {
+  const point = map.containerPointToLayerPoint(containerPoint);
+  const hits = [];
+  linesLayer.eachLayer((layer) => {
+    // closestLayerPoint returns the nearest point on the line, with its distance in pixels.
+    const closest = layer.closestLayerPoint(point);
+    if (closest && closest.distance <= LINE_HIT_PX) {
+      hits.push({ route: layer.feature.properties, distance: closest.distance });
+    }
+  });
+  hits.sort((a, b) => a.distance - b.distance);
+  return hits.map((h) => h.route);
+}
+
+// Show only this route. With Shift held, add or remove it from the current
+// selection instead.
+function pickRoute(routeId, addToSelection) {
+  if (addToSelection) {
+    if (selected.has(routeId)) selected.delete(routeId);
+    else selected.add(routeId);
+  } else {
+    selected.clear();
+    selected.add(routeId);
+  }
+  map.closePopup();
+  selectionChanged();
+}
+
+// Several lines under the click: ask which one. Built with createElement so
+// each button can have its own click handler.
+function showRouteChooser(routes, latlng) {
+  const box = document.createElement('div');
+  box.className = 'popup route-chooser';
+  const title = document.createElement('div');
+  title.className = 'popup-title';
+  title.textContent = 'Which route?';
+  box.append(title);
+  for (const r of routes.slice(0, 8)) {
+    const button = document.createElement('button');
+    button.type = 'button';
+    const chip = document.createElement('span');
+    chip.className = 'chip';
+    chip.style.background = r.color;
+    chip.style.color = r.text_color;
+    chip.textContent = r.short_name;
+    const name = document.createElement('span');
+    name.textContent = r.long_name;
+    button.append(chip, name);
+    button.addEventListener('click', (event) => pickRoute(r.route_id, event.shiftKey));
+    box.append(button);
+  }
+  L.popup({ maxWidth: 240 }).setLatLng(latlng).setContent(box).openOn(map);
+}
+
+// Vehicle markers and stop dots don't pass their clicks on to the map, so a
+// map click here really is a click on a line or on empty map.
+map.on('click', (event) => {
+  const routes = routesNear(event.containerPoint);
+  if (routes.length === 1) {
+    pickRoute(routes[0].route_id, event.originalEvent.shiftKey);
+  } else if (routes.length > 1) {
+    showRouteChooser(routes, event.latlng);
+  }
+});
 
 // ---- Route panel ----
 const panel = document.getElementById('panel');

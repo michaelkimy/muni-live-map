@@ -85,23 +85,24 @@ html, body {
   top: 10px;
   left: 10px;
   z-index: 1000;
-  width: 260px;
-  max-height: calc(100% - 60px);
+  width: 220px;
+  /* No taller than ~420px on big screens; the list scrolls inside. */
+  max-height: min(420px, calc(100% - 60px));
   display: flex;
   flex-direction: column;
   background: #fff;
   border-radius: 8px;
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.3);
-  font-size: 14px;
+  font-size: 13px;
 }
 .panel-header {
   display: flex;
-  gap: 6px;
-  padding: 6px;
+  gap: 5px;
+  padding: 5px;
 }
 .panel button {
   font: inherit;
-  padding: 4px 10px;
+  padding: 3px 8px;
   border: 1px solid #ccc;
   border-radius: 6px;
   background: #f6f6f6;
@@ -120,24 +121,29 @@ html, body {
   display: flex;
   flex-direction: column;
   min-height: 0; /* lets the list below scroll instead of growing the panel */
-  padding: 0 6px 6px;
+  padding: 0 5px 5px;
 }
 .panel.collapsed .panel-body {
   display: none;
 }
 #route-search {
   font: inherit;
-  padding: 6px 8px;
+  padding: 4px 7px;
   border: 1px solid #ccc;
   border-radius: 6px;
-  margin-bottom: 6px;
+  margin-bottom: 3px;
+}
+.panel-hint {
+  margin: 0 2px 2px;
+  font-size: 11px;
+  color: #777;
 }
 #route-list {
   overflow-y: auto;
 }
 .route-group h3 {
-  margin: 8px 4px 2px;
-  font-size: 11px;
+  margin: 6px 4px 1px;
+  font-size: 10px;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   color: #666;
@@ -145,8 +151,8 @@ html, body {
 .route-item {
   display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 3px 4px;
+  gap: 5px;
+  padding: 1px 4px;
   border-radius: 4px;
   cursor: pointer;
 }
@@ -157,10 +163,10 @@ html, body {
   display: none;
 }
 .chip {
-  min-width: 36px;
+  min-width: 30px;
   padding: 1px 4px;
   border-radius: 4px;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 700;
   text-align: center;
 }
@@ -174,7 +180,7 @@ html, body {
   .panel {
     right: 10px;
     width: auto;
-    max-height: 60%;
+    max-height: 55%;
   }
 }
 
@@ -397,5 +403,33 @@ html, body {
   }
   .leaflet-control-attribution {
     font-size: 9px;
+  }
+}
+
+/* ---- Route chooser (click a line where several routes overlap) ---- */
+.route-chooser button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  margin: 2px 0;
+  padding: 4px;
+  border: 0;
+  border-radius: 4px;
+  background: none;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.route-chooser button:hover {
+  background: #f0f0f0;
+}
+.tip-hint {
+  font-size: 11px;
+  color: #777;
+}
+@media (max-width: 640px) {
+  .route-chooser button {
+    padding: 8px 4px; /* bigger tap targets */
   }
 }
