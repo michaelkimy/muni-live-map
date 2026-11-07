@@ -85,3 +85,108 @@ html, body {
   line-height: 13px;
   white-space: nowrap;
 }
+
+/* ---- Route panel (Phase 6) ---- */
+.panel {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 1000;
+  width: 260px;
+  max-height: calc(100% - 60px);
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.3);
+  font-size: 14px;
+}
+.panel-header {
+  display: flex;
+  gap: 6px;
+  padding: 6px;
+}
+.panel button {
+  font: inherit;
+  padding: 4px 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background: #f6f6f6;
+  cursor: pointer;
+}
+.panel-toggle {
+  flex: 1;
+  font-weight: 600;
+  text-align: left;
+}
+.panel button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+.panel-body {
+  display: flex;
+  flex-direction: column;
+  min-height: 0; /* lets the list below scroll instead of growing the panel */
+  padding: 0 6px 6px;
+}
+.panel.collapsed .panel-body {
+  display: none;
+}
+#route-search {
+  font: inherit;
+  padding: 6px 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin-bottom: 6px;
+}
+#route-list {
+  overflow-y: auto;
+}
+.route-group h3 {
+  margin: 8px 4px 2px;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #666;
+}
+.route-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 4px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.route-item:hover {
+  background: #f0f0f0;
+}
+.route-item[hidden] {
+  display: none;
+}
+.chip {
+  min-width: 36px;
+  padding: 1px 4px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 700;
+  text-align: center;
+}
+.route-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  .panel {
+    right: 10px;
+    width: auto;
+    max-height: 60%;
+  }
+  .status {
+    top: auto;
+    bottom: 24px;
+    right: auto;
+    left: 10px;
+  }
+}

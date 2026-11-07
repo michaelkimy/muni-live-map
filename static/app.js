@@ -1,5 +1,6 @@
-// Muni Live Map frontend: a map of SF with route lines (Phase 5) and one marker
-// per vehicle, refreshed every 30 seconds from our own backend (/api/vehicles).
+// Muni Live Map frontend: a map of SF with route lines (Phase 5), a route
+// filter saved in the URL (Phase 6), and one marker per vehicle, refreshed
+// every 30 seconds from our own backend (/api/vehicles).
 //
 // 'use strict' turns some silent JavaScript mistakes (like typos that create
 // accidental global variables) into errors you can see in the browser console.
@@ -16,9 +17,29 @@ const ICON_BY_CATEGORY = {
   cablecar: 'icons/train.svg',
 };
 
+// Panel group order and headings.
+const CATEGORIES = [
+  ['lightrail', 'Light rail'],
+  ['streetcar', 'Streetcar'],
+  ['cablecar', 'Cable car'],
+  ['bus', 'Bus'],
+];
+
+// Rail lines are drawn thicker and on top of bus lines, so lower numbers go first.
+const DRAW_ORDER = { bus: 0, cablecar: 1, streetcar: 2, lightrail: 3 };
+
+// ---- App state ----
 // Filled in from /data/routes.json at startup: route_id → {color, category, long_name, ...}.
 // It's generated from Muni's GTFS by scripts/build_geojson.py.
 const routeInfo = new Map();
+let routeShapes = null;         // the routes.geojson data, kept so we can redraw filtered lines
+let lastVehicles = [];          // latest /api/vehicles list, kept so the filter can re-apply instantly
+// The routes the user picked. An empty set means "no filter: show everything".
+const selected = new Set();
+
+function isVisible(route) {
+  return selected.size === 0 || selected.has(route);
+}
 
 function styleFor(route) {
   const info = routeInfo.get(route);
@@ -28,10 +49,21 @@ function styleFor(route) {
   };
 }
 
+// Never put text from the network straight into HTML: a value like
+// "<img onerror=...>" would run as code. This turns <, >, & and quotes into
+// harmless text.
+function escapeHtml(text) {
+  return String(text).replace(/[&<>"']/g, (ch) => (
+    { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]
+  ));
+}
+
 // ---- Map setup ----
 // L is the global object that leaflet.js creates. L.map('map') turns the
-// <div id="map"> into an interactive map.
-const map = L.map('map').setView(SF_CENTER, 13);
+// <div id="map"> into an interactive map. The zoom buttons move to the bottom
+// right so the route panel can have the top left.
+const map = L.map('map', { zoomControl: false }).setView(SF_CENTER, 13);
+L.control.zoom({ position: 'bottomright' }).addTo(map);
 
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
   maxZoom: 19,
@@ -40,8 +72,29 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 
 // ---- Route lines ----
-// Rail lines are drawn thicker and on top of bus lines, so lower numbers go first.
-const DRAW_ORDER = { bus: 0, cablecar: 1, streetcar: 2, lightrail: 3 };
+// One L.geoJSON layer holds every visible route line. When the filter changes
+// we empty it and add back only the selected routes; with ~70 routes that's instant.
+const linesLayer = L.geoJSON(null, {
+  // `style` is called once per route to pick its line color and width.
+  style: (feature) => ({
+    color: feature.properties.color,
+    weight: feature.properties.category === 'bus' ? 3 : 5,
+    opacity: 0.55,
+  }),
+  // `onEachFeature` runs once per route line; here it attaches a hover tooltip.
+  onEachFeature: (feature, layer) => {
+    const p = feature.properties;
+    layer.bindTooltip(`${escapeHtml(p.short_name)} ${escapeHtml(p.long_name)}`, { sticky: true });
+  },
+}).addTo(map);
+// Leaflet always keeps lines (overlay pane) below markers (marker pane),
+// so vehicles stay on top without extra work.
+
+function drawLines() {
+  if (!routeShapes) return;
+  linesLayer.clearLayers();
+  linesLayer.addData(routeShapes.features.filter((f) => isVisible(f.properties.route_id)));
+}
 
 // Loads the route list and the route shapes at the same time.
 // Promise.all waits for both downloads to finish.
@@ -51,25 +104,9 @@ async function loadRoutes() {
     fetch('data/routes.geojson').then((r) => r.json()),
   ]);
   for (const route of list) routeInfo.set(route.route_id, route);
-
   shapes.features.sort((a, b) =>
     DRAW_ORDER[a.properties.category] - DRAW_ORDER[b.properties.category]);
-
-  // L.geoJSON draws GeoJSON features. `style` is called once per route to pick
-  // its line color and width; `onEachFeature` attaches a hover tooltip.
-  L.geoJSON(shapes, {
-    style: (feature) => ({
-      color: feature.properties.color,
-      weight: feature.properties.category === 'bus' ? 3 : 5,
-      opacity: 0.55,
-    }),
-    onEachFeature: (feature, layer) => {
-      const p = feature.properties;
-      layer.bindTooltip(`${escapeHtml(p.short_name)} ${escapeHtml(p.long_name)}`, { sticky: true });
-    },
-  }).addTo(map);
-  // Leaflet always keeps lines (overlay pane) below markers (marker pane),
-  // so vehicles stay on top without extra work.
+  routeShapes = shapes;
 }
 
 // ---- Markers ----
@@ -100,18 +137,11 @@ function makeIcon(v) {
   });
 }
 
-// Never put text from the network straight into HTML: a value like
-// "<img onerror=...>" would run as code. This turns <, >, & and quotes into
-// harmless text.
-function escapeHtml(text) {
-  return String(text).replace(/[&<>"']/g, (ch) => (
-    { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]
-  ));
-}
-
+// Makes the markers on the map match `vehicles`, showing only routes that pass the filter.
 function updateMarkers(vehicles) {
   const seen = new Set();
   for (const v of vehicles) {
+    if (!isVisible(v.route)) continue;
     seen.add(v.id);
     const existing = markers.get(v.id);
     if (existing) {
@@ -129,21 +159,162 @@ function updateMarkers(vehicles) {
       markers.set(v.id, marker);
     }
   }
-  // Vehicles missing from this update have gone out of service: remove them.
+  // Remove vehicles that left service or are now filtered out.
   for (const [id, marker] of markers) {
     if (!seen.has(id)) {
       marker.remove();
       markers.delete(id);
     }
   }
+  return seen.size;
 }
+
+// ---- Filter state in the URL ----
+// The selection lives in the part of the URL after '#', e.g. #routes=38,N.
+// That part never goes to the server, so changing it doesn't reload the page,
+// and copying the URL shares the exact view.
+function readHash() {
+  const params = new URLSearchParams(location.hash.slice(1));   // drop the leading '#'
+  const ids = (params.get('routes') || '').split(',').filter((id) => routeInfo.has(id));
+  return new Set(ids);
+}
+
+function writeHash() {
+  const hash = selected.size ? `#routes=${[...selected].join(',')}` : '';
+  // replaceState changes the URL without adding a Back-button entry per click.
+  history.replaceState(null, '', hash || location.pathname);
+}
+
+// Called whenever the selection changes: redraw lines, markers, panel and URL.
+function applyFilter({ updateUrl = true } = {}) {
+  drawLines();
+  const shown = updateMarkers(lastVehicles);
+  syncPanel();
+  if (updateUrl) writeHash();
+  updateCount(shown);
+}
+
+// Zooms the map to fit the selected routes' lines (used for shared links).
+function zoomToSelection() {
+  if (selected.size && linesLayer.getLayers().length) {
+    // Leave room for the panel so the routes aren't hidden under it.
+    // On phones the panel spans the top instead of the left side.
+    const wide = window.innerWidth >= 640 && !panel.classList.contains('collapsed');
+    map.fitBounds(linesLayer.getBounds(), {
+      paddingTopLeft: wide ? [panel.offsetWidth + 30, 30] : [30, 70],
+      paddingBottomRight: [30, 30],
+      animate: false,   // jump straight there; animating on page load just delays the tiles
+    });
+  }
+}
+
+// ---- Route panel ----
+const panel = document.getElementById('panel');
+const panelToggle = document.getElementById('panel-toggle');
+const searchInput = document.getElementById('route-search');
+const routeListEl = document.getElementById('route-list');
+const clearButton = document.getElementById('clear-routes');
+
+// Builds the grouped checkbox list once. We use createElement and textContent
+// instead of an HTML string: textContent always treats data as plain text, so
+// no escaping is needed.
+function buildPanel() {
+  for (const [category, heading] of CATEGORIES) {
+    const routes = [...routeInfo.values()].filter((r) => r.category === category);
+    if (!routes.length) continue;
+
+    const group = document.createElement('section');
+    group.className = 'route-group';
+    const h = document.createElement('h3');
+    h.textContent = heading;
+    group.append(h);
+
+    for (const r of routes) {
+      const label = document.createElement('label');
+      label.className = 'route-item';
+      // Saved on the element so search can match without re-reading routeInfo.
+      label.dataset.search = `${r.short_name} ${r.long_name}`.toLowerCase();
+
+      const box = document.createElement('input');
+      box.type = 'checkbox';
+      box.value = r.route_id;
+      // 'change' fires when the box is ticked or unticked.
+      box.addEventListener('change', () => {
+        if (box.checked) selected.add(r.route_id);
+        else selected.delete(r.route_id);
+        applyFilter();
+      });
+
+      const chip = document.createElement('span');
+      chip.className = 'chip';
+      chip.style.background = r.color;
+      chip.style.color = r.text_color;
+      chip.textContent = r.short_name;
+
+      const name = document.createElement('span');
+      name.className = 'route-name';
+      name.textContent = r.long_name;
+
+      label.append(box, chip, name);
+      group.append(label);
+    }
+    routeListEl.append(group);
+  }
+}
+
+// Ticks the checkboxes that match `selected` (e.g. after loading a shared link).
+function syncPanel() {
+  for (const box of routeListEl.querySelectorAll('input[type=checkbox]')) {
+    box.checked = selected.has(box.value);
+  }
+  clearButton.disabled = selected.size === 0;
+  panelToggle.textContent = selected.size ? `Routes (${selected.size})` : 'Routes';
+}
+
+// Hides routes (and whole groups) that don't match the search text.
+function filterPanel() {
+  const query = searchInput.value.trim().toLowerCase();
+  for (const group of routeListEl.querySelectorAll('.route-group')) {
+    let anyVisible = false;
+    for (const item of group.querySelectorAll('.route-item')) {
+      const match = !query || item.dataset.search.includes(query);
+      item.hidden = !match;
+      if (match) anyVisible = true;
+    }
+    group.hidden = !anyVisible;
+  }
+}
+
+searchInput.addEventListener('input', filterPanel);
+clearButton.addEventListener('click', () => {
+  selected.clear();
+  applyFilter();
+});
+panelToggle.addEventListener('click', () => panel.classList.toggle('collapsed'));
+// Start collapsed on phones so the map isn't covered.
+if (window.innerWidth < 640) panel.classList.add('collapsed');
+
+// If someone edits the URL by hand or pastes a link into this tab, follow it.
+window.addEventListener('hashchange', () => {
+  const fromUrl = readHash();
+  selected.clear();
+  fromUrl.forEach((id) => selected.add(id));
+  applyFilter({ updateUrl: false });
+  zoomToSelection();
+});
 
 // ---- Polling ----
 const statusEl = document.getElementById('status');
+let statusTime = null;
 
 function setStatus(text, isError = false) {
   statusEl.textContent = text;
   statusEl.classList.toggle('error', isError);
+}
+
+function updateCount(shown) {
+  if (!statusTime) return;
+  setStatus(`${shown} vehicles · updated ${statusTime}`);
 }
 
 // `async` functions can use `await`, which pauses until a network request
@@ -153,14 +324,15 @@ async function refresh() {
     const response = await fetch('/api/vehicles');
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     const data = await response.json();
-    updateMarkers(data.vehicles);
+    lastVehicles = data.vehicles;
+    const shown = updateMarkers(lastVehicles);
     if (data.updated_at === null) {
       setStatus('Waiting for first update…');
     } else if (data.stale) {
       setStatus('Data is out of date. 511 may be down.', true);
     } else {
-      const time = new Date(data.updated_at).toLocaleTimeString();
-      setStatus(`${data.vehicles.length} vehicles · updated ${time}`);
+      statusTime = new Date(data.updated_at).toLocaleTimeString();
+      updateCount(shown);
     }
   } catch (err) {
     console.error('Failed to load vehicles:', err);
@@ -168,11 +340,16 @@ async function refresh() {
   }
 }
 
-// Start-up: draw the routes first so the markers can use their colors. If the
-// route files fail to load, still show vehicles (in grey) instead of nothing.
+// Start-up: load routes first so markers get their colors and the URL filter
+// can be checked against real route ids. If the route files fail to load,
+// still show vehicles (in grey, unfiltered) instead of nothing.
 async function start() {
   try {
     await loadRoutes();
+    buildPanel();
+    readHash().forEach((id) => selected.add(id));
+    applyFilter({ updateUrl: false });
+    zoomToSelection();
   } catch (err) {
     console.error('Failed to load route data:', err);
   }

@@ -55,9 +55,9 @@ Done when you have a working app; everything after this is a feature.
 
 ## Phase 6: Filter by line
 
-- [ ] Add a searchable route picker grouped by type: bus, light rail (N Judah, T Third), cable car, streetcar.
-- [ ] Selecting routes shows only their lines and vehicles.
-- [ ] Bonus: save the filter in the URL so links like "show me the 38 Geary" are shareable.
+- [x] Add a searchable route picker grouped by type: bus, light rail (N Judah, T Third), cable car, streetcar.
+- [x] Selecting routes shows only their lines and vehicles.
+- [x] Bonus: save the filter in the URL so links like "show me the 38 Geary" are shareable.
 
 ## Phase 7: Click a vehicle for details
 

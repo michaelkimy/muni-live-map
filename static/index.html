@@ -12,6 +12,18 @@
   <div id="map"></div>
   <div id="status" class="status">Loading vehicles…</div>
 
+  <aside id="panel" class="panel">
+    <div class="panel-header">
+      <button id="panel-toggle" type="button" class="panel-toggle">Routes</button>
+      <button id="clear-routes" type="button" class="clear" disabled>Show all</button>
+    </div>
+    <div class="panel-body">
+      <input id="route-search" type="search" placeholder="Search routes, e.g. 38 or Geary"
+             autocomplete="off" aria-label="Search routes">
+      <div id="route-list"></div>
+    </div>
+  </aside>
+
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
           integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
   <script src="app.js"></script>
