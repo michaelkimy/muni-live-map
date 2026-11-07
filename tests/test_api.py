@@ -47,3 +47,14 @@ def test_health_reports_disabled_poller():
         body = c.get("/api/health").json()
     assert body == {"poller": "disabled", "snapshot_age_s": None,
                     "requests_last_hour": 0, "prediction_budget_left": 10}
+
+
+def test_frontend_is_served_at_root():
+    app, _ = make_app()
+    with TestClient(app) as c:
+        page = c.get("/")
+        assert page.status_code == 200 and "leaflet" in page.text
+        assert c.get("/app.js").status_code == 200
+        assert c.get("/icons/bus.svg").status_code == 200
+        # API routes still win over the static mount
+        assert c.get("/api/health").json()["poller"] == "disabled"

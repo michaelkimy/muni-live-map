@@ -44,9 +44,9 @@ Done when `localhost:8000/api/vehicles` shows fresh data in your browser. (SPEC.
 
 Done when you have a working app; everything after this is a feature.
 
-- [ ] Create a single `index.html` with a Leaflet map centered on SF.
-- [ ] Fetch `/vehicles` every 30 seconds and draw a marker per vehicle. Ask Claude Code to explain the JavaScript it writes.
-- [ ] Commit and tag this version.
+- [x] Create a single `index.html` with a Leaflet map centered on SF.
+- [x] Fetch `/vehicles` every 30 seconds and draw a marker per vehicle. Ask Claude Code to explain the JavaScript it writes.
+- [x] Commit and tag this version.
 
 ## Phase 5: Route paths
 
