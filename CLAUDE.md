@@ -24,7 +24,14 @@ Phase 1 scripts use only the standard library and read `API_KEY_511` from `.env`
 - `.venv/bin/python scripts/fetch_vehicles.py data/raw/vehicles_X.json`: re-parse a saved response without calling 511 (use this while iterating)
 - `.venv/bin/python scripts/fetch_gtfs.py`: download and unzip Muni GTFS to `data/raw/gtfs/` and summarize routes, shapes, and stops
 
-No lint or test commands exist yet.
+Backend and tests:
+
+- `.venv/bin/pip install -r requirements-dev.txt`: install runtime and test dependencies (pinned)
+- `.venv/bin/uvicorn app.main:app --reload`: run the server at http://localhost:8000. It polls 511 every 75 s, about 48 requests/hour while running. Set `POLLER_ENABLED=false` to run it without calling 511.
+- `.venv/bin/python -m pytest`: run all tests (offline; `conftest.py` disables the poller)
+- `.venv/bin/python -m pytest tests/test_parse.py::test_no_route_vehicles_are_dropped`: run a single test
+
+`app.main.create_app(settings, state)` is the app factory. Tests build their own `AppState` and fill it with `poll_once()` and a fake client, so no network is needed.
 
 ## Must-not-break rules
 

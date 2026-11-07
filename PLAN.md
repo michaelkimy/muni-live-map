@@ -36,9 +36,9 @@ The most important habit to practice: a clear spec makes every later prompt shor
 
 Done when `localhost:8000/api/vehicles` shows fresh data in your browser. (SPEC.md moved the endpoints under `/api/`.)
 
-- [ ] Build a `/vehicles` endpoint returning a clean JSON list with only the Phase 1 fields, not 511's verbose format.
-- [ ] Add a background poller fetching from 511 every 60 to 90 seconds into an in-memory cache; the endpoint serves only from the cache.
-- [ ] Have Claude Code write tests that use a saved sample response, so testing doesn't spend your rate limit.
+- [x] Build a `/vehicles` endpoint returning a clean JSON list with only the Phase 1 fields, not 511's verbose format.
+- [x] Add a background poller fetching from 511 every 60 to 90 seconds into an in-memory cache; the endpoint serves only from the cache.
+- [x] Have Claude Code write tests that use a saved sample response, so testing doesn't spend your rate limit.
 
 ## Phase 4: Frontend MVP
 
